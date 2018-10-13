@@ -204,6 +204,7 @@
     <Content Include="Account\VerifyPhoneNumber.aspx" />
     <Content Include="Administracion\Usuarios\TipoUsuarios.aspx" />
     <Content Include="Administracion\Usuarios\Usuarios.aspx" />
+    <Content Include="Catalogos\Clientes.aspx" />
     <Content Include="Catalogos\Vehiculos\Lineas.aspx" />
     <Content Include="Catalogos\Vehiculos\Marcas.aspx" />
     <Content Include="Catalogos\Vehiculos\Modelos.aspx" />
@@ -405,6 +406,13 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Catalogos\Clientes.aspx.cs">
+      <DependentUpon>Clientes.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Catalogos\Clientes.aspx.designer.cs">
+      <DependentUpon>Clientes.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Catalogos\Vehiculos\Lineas.aspx.cs">
       <DependentUpon>Lineas.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
