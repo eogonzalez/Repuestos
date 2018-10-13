@@ -46,7 +46,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Administracion\Usuarios\TipoUsuarios.cs" />
+    <Compile Include="Administracion\Usuarios\Usuarios.cs" />
     <Compile Include="Catalogos\Proveedores.cs" />
+    <Compile Include="Catalogos\Vehiculos\Lineas.cs" />
+    <Compile Include="Catalogos\Vehiculos\Marcas.cs" />
+    <Compile Include="Catalogos\Vehiculos\Modelos.cs" />
+    <Compile Include="Catalogos\Vehiculos\TipoVehiculos.cs" />
+    <Compile Include="Catalogos\Vehiculos\Vehiculos.cs" />
     <Compile Include="General\Conexion.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

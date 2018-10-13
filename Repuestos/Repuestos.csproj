@@ -202,7 +202,14 @@
     <Content Include="Account\ResetPasswordConfirmation.aspx" />
     <Content Include="Account\TwoFactorAuthenticationSignIn.aspx" />
     <Content Include="Account\VerifyPhoneNumber.aspx" />
+    <Content Include="Administracion\Usuarios\TipoUsuarios.aspx" />
+    <Content Include="Administracion\Usuarios\Usuarios.aspx" />
+    <Content Include="Catalogos\Vehiculos\Lineas.aspx" />
+    <Content Include="Catalogos\Vehiculos\Marcas.aspx" />
+    <Content Include="Catalogos\Vehiculos\Modelos.aspx" />
     <Content Include="Catalogos\Proveedores.aspx" />
+    <Content Include="Catalogos\Vehiculos\TipoVehiculos.aspx" />
+    <Content Include="Catalogos\Vehiculos\Vehiculos.aspx" />
     <Content Include="Contact.aspx" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
@@ -373,6 +380,20 @@
     <Compile Include="Account\VerifyPhoneNumber.aspx.designer.cs">
       <DependentUpon>VerifyPhoneNumber.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Administracion\Usuarios\TipoUsuarios.aspx.cs">
+      <DependentUpon>TipoUsuarios.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Administracion\Usuarios\TipoUsuarios.aspx.designer.cs">
+      <DependentUpon>TipoUsuarios.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Administracion\Usuarios\Usuarios.aspx.cs">
+      <DependentUpon>Usuarios.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Administracion\Usuarios\Usuarios.aspx.designer.cs">
+      <DependentUpon>Usuarios.aspx</DependentUpon>
+    </Compile>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="About.aspx.cs">
       <DependentUpon>About.aspx</DependentUpon>
@@ -384,12 +405,47 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Catalogos\Vehiculos\Lineas.aspx.cs">
+      <DependentUpon>Lineas.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Catalogos\Vehiculos\Lineas.aspx.designer.cs">
+      <DependentUpon>Lineas.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Catalogos\Vehiculos\Marcas.aspx.cs">
+      <DependentUpon>Marcas.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Catalogos\Vehiculos\Marcas.aspx.designer.cs">
+      <DependentUpon>Marcas.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Catalogos\Vehiculos\Modelos.aspx.cs">
+      <DependentUpon>Modelos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Catalogos\Vehiculos\Modelos.aspx.designer.cs">
+      <DependentUpon>Modelos.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Catalogos\Proveedores.aspx.cs">
       <DependentUpon>Proveedores.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Catalogos\Proveedores.aspx.designer.cs">
       <DependentUpon>Proveedores.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Catalogos\Vehiculos\TipoVehiculos.aspx.cs">
+      <DependentUpon>TipoVehiculos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Catalogos\Vehiculos\TipoVehiculos.aspx.designer.cs">
+      <DependentUpon>TipoVehiculos.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Catalogos\Vehiculos\Vehiculos.aspx.cs">
+      <DependentUpon>Vehiculos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Catalogos\Vehiculos\Vehiculos.aspx.designer.cs">
+      <DependentUpon>Vehiculos.aspx</DependentUpon>
     </Compile>
     <Compile Include="Contact.aspx.cs">
       <DependentUpon>Contact.aspx</DependentUpon>

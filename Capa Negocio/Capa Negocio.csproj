@@ -40,7 +40,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Administracion\Usuarios\CN_TipoUsuarios.cs" />
+    <Compile Include="Administracion\Usuarios\Usuarios.cs" />
     <Compile Include="Catalogos\CN_Proveedores.cs" />
+    <Compile Include="Catalogos\Vehiculos\CN_Lineas.cs" />
+    <Compile Include="Catalogos\Vehiculos\CN_Marcas.cs" />
+    <Compile Include="Catalogos\Vehiculos\CN_Modelos.cs" />
+    <Compile Include="Catalogos\Vehiculos\CN_TipoVehiculos.cs" />
+    <Compile Include="Catalogos\Vehiculos\CN_Vehiculos.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -53,6 +60,7 @@
       <Name>Capa Objetos</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

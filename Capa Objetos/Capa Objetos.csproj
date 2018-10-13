@@ -40,7 +40,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Administracion\Usuarios\CO_TipoUsuarios.cs" />
+    <Compile Include="Administracion\Usuarios\CO_Usuarios.cs" />
     <Compile Include="Catalogos\CO_Proveedores.cs" />
+    <Compile Include="Catalogos\Vehiculos\CO_Lineas.cs" />
+    <Compile Include="Catalogos\Vehiculos\CO_Marcas.cs" />
+    <Compile Include="Catalogos\Vehiculos\CO_Modelos.cs" />
+    <Compile Include="Catalogos\Vehiculos\CO_TipoVehiculos.cs" />
+    <Compile Include="Catalogos\Vehiculos\CO_Vehiculos.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
