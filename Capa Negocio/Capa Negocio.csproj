@@ -41,7 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Administracion\Usuarios\CN_TipoUsuarios.cs" />
-    <Compile Include="Administracion\Usuarios\Usuarios.cs" />
+    <Compile Include="Administracion\Usuarios\CN_Usuarios.cs" />
     <Compile Include="Catalogos\CN_Proveedores.cs" />
     <Compile Include="Catalogos\Vehiculos\CN_Lineas.cs" />
     <Compile Include="Catalogos\Vehiculos\CN_Marcas.cs" />

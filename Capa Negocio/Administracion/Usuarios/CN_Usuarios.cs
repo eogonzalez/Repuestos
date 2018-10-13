@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Capa_Negocio.Administracion.Usuarios
 {
-    class Usuarios
+    class CN_Usuarios
     {
     }
 }
