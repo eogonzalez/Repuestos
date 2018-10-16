@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
 using System.Web.UI.WebControls;
 using Capa_Negocio.Catalogos;
 using Capa_Objetos.Catalogos;
@@ -23,8 +19,6 @@ namespace Repuestos.Catalogos
         {
             if (!IsPostBack)
             {
-
-                
                 //Llamado a la funcion para llenar el gridview
                 Llenar_gvProveedores();
             }
@@ -76,11 +70,7 @@ namespace Repuestos.Catalogos
 
                 default:
                     break;
-            }
-
-
-           
-
+            }           
         }
 
         protected void gvProveedores_RowCommand(object sender, GridViewCommandEventArgs e)
@@ -126,7 +116,6 @@ namespace Repuestos.Catalogos
 
         #endregion
 
-
         #region Funciones 
 
         //Funcion para llenar GridView
@@ -159,7 +148,7 @@ namespace Repuestos.Catalogos
 
         }
 
-        protected Boolean GuardarProveedor()
+        protected bool GuardarProveedor()
         {
 
             Boolean respuesta = false;
@@ -177,7 +166,7 @@ namespace Repuestos.Catalogos
             return respuesta;
         }
 
-        protected Boolean ActualizarProveedor(int id_proveedor)
+        protected bool ActualizarProveedor(int id_proveedor)
         {
             Boolean respuesta = false;
 
@@ -209,7 +198,6 @@ namespace Repuestos.Catalogos
         }
 
         #endregion
-
 
     }
 }

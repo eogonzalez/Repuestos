@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Capa_Objetos.Catalogos;
 namespace Capa_Datos.Catalogos
 {
@@ -36,7 +32,6 @@ namespace Capa_Datos.Catalogos
                 }
             }
 
-
             return respuesta;
         }
 
@@ -67,11 +62,10 @@ namespace Capa_Datos.Catalogos
                 }
             }
 
-
             return respuesta;
         }
 
-        public Boolean GuardarFormulario(CO_Proveedores objProveedores)
+        public bool GuardarFormulario(CO_Proveedores objProveedores)
         {
             var respuesta = false;
             var sql_query = string.Empty;
@@ -92,23 +86,28 @@ namespace Capa_Datos.Catalogos
                 comando.Parameters.AddWithValue("telefono", objProveedores.Telefono);
                 comando.Parameters.AddWithValue("correo", objProveedores.Correo);
 
-                //Se abre la sesion para transaccion
-                conecta.Open();
-                //Ejecuta la consulta
-                comando.ExecuteScalar();
+                try
+                {
+                    //Se abre la sesion para transaccion
+                    conecta.Open();
+                    //Ejecuta la consulta
+                    comando.ExecuteScalar();
+                    respuesta = true;
+                }
+                catch (Exception)
+                {
 
-                respuesta = true;
+                    throw;
+                }
+                
             }
-
 
             return respuesta;
         }
 
-        public Boolean ActualizarProveedor(CO_Proveedores objProveedores)
+        public bool ActualizarProveedor(CO_Proveedores objProveedores)
         {
-            Boolean respuesta = false;
-
-
+            var respuesta = false;
             var sql_query = string.Empty;
 
             sql_query = " UPDATE [dbo].[proveedores] " +
@@ -129,20 +128,28 @@ namespace Capa_Datos.Catalogos
                 comando.Parameters.AddWithValue("telefono", objProveedores.Telefono);
                 comando.Parameters.AddWithValue("correo", objProveedores.Correo);
 
-                //Se abre la sesion para transaccion
-                conecta.Open();
+                try
+                {
+                    //Se abre la sesion para transaccion
+                    conecta.Open();
 
-                //Ejecuta la consulta
-                comando.ExecuteScalar();
+                    //Ejecuta la consulta
+                    comando.ExecuteScalar();
 
-                respuesta = true;
+                    respuesta = true;
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
             }
 
             return respuesta;
             
         }
 
-        public Boolean DeleteProveedor(int id_proveedor)
+        public bool DeleteProveedor(int id_proveedor)
         {
             Boolean respuesta = false;
 
@@ -155,14 +162,25 @@ namespace Capa_Datos.Catalogos
             {
                 var comando = new SqlCommand(sql_query, conecta);
                 comando.Parameters.AddWithValue("id_proveedor", id_proveedor);
-                
-                //Se abre la sesion para transaccion
-                conecta.Open();
 
-                //Ejecuta la consulta
-                comando.ExecuteScalar();
+                try
+                {
 
-                respuesta = true;
+                    //Se abre la sesion para transaccion
+                    conecta.Open();
+
+                    //Ejecuta la consulta
+                    comando.ExecuteScalar();
+
+                    respuesta = true;
+
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
+
             }
 
             return respuesta;

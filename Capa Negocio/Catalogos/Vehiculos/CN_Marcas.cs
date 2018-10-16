@@ -1,12 +1,36 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Capa_Datos.Catalogos.Vehiculos;
+using Capa_Objetos.Catalogos.Vehiculos;
+using System.Data;
 
 namespace Capa_Negocio.Catalogos.Vehiculos
 {
-    class CN_Marcas
+    public class CN_Marcas
     {
+        Marcas obj_Datos_Marcas = new Marcas();
+
+        public DataTable SelectMarcas()
+        {
+            return obj_Datos_Marcas.SelectMarcas();
+        }
+
+        public DataTable SelectMarcas(int id_marca)
+        {
+            return obj_Datos_Marcas.SelectMarcas(id_marca);
+        }
+
+        public bool InsertMarca(CO_Marcas objMarcas)
+        {
+            return obj_Datos_Marcas.InsertMarca(objMarcas);
+        }
+
+        public bool UpdateMarca(CO_Marcas objMarcas)
+        {
+            return obj_Datos_Marcas.UpdateMarca(objMarcas);
+        }
+
+        public bool DeleteMarca(int id_marca)
+        {
+            return obj_Datos_Marcas.DeleteMarca(id_marca);
+        }
     }
 }

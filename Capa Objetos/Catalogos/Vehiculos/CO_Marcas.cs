@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace Capa_Objetos.Catalogos.Vehiculos
 {
-    class CO_Marcas
+    public class CO_Marcas
     {
+        public int Id_Marca { get; set; }
+        public string Marca { get; set; }
+        public string Descripcion { get; set; }
     }
 }
