@@ -13,9 +13,9 @@ namespace Capa_Negocio.Catalogos.Vehiculos
             return obj_Datos_Modelos.SelectModelos();
         }
 
-        public DataTable SelectModelos(int id_modelo)
+        public DataTable SelectModelos(int id_linea)
         {
-            return obj_Datos_Modelos.SelectModelos(id_modelo);
+            return obj_Datos_Modelos.SelectModelos(id_linea);
         }
 
         public bool InsertModelo(CO_Modelos objModelos)

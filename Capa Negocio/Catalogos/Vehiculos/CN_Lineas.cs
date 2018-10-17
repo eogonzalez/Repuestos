@@ -13,14 +13,14 @@ namespace Capa_Negocio.Catalogos.Vehiculos
             return obj_Datos_Lineas.SelectLineas();            
         }
 
-        public DataTable SelectLineas(int id_linea)
+        public DataTable SelectLineas(int id_linea, bool combo = false)
         {
-            return obj_Datos_Lineas.SelectLineas(id_linea);
+            return obj_Datos_Lineas.SelectLineas(id_linea, combo);
         }
 
-        public DataTable SelectLineasCBO()
+        public DataTable SelectLineas(int id_marca)
         {
-            return obj_Datos_Lineas.SelectLineasCBO();
+            return obj_Datos_Lineas.SelectLineas(id_marca);
         }
 
         public bool InsertLinea(CO_Lineas objLineas)

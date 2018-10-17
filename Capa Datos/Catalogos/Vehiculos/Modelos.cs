@@ -37,22 +37,24 @@ namespace Capa_Datos.Catalogos.Vehiculos
             return respuesta;
         }
 
-        public DataTable SelectModelos(int id_modelo)
+        public DataTable SelectModelos(int id_linea)
         {
             var respuesta = new DataTable();
 
             var sql_query = string.Empty;
 
-            sql_query = "select modelo " +
-                " from modelos " +
-                " where id_modelo = @id_modelo; ";
+            sql_query = " select a.id_modelo, modelo "+
+                " from Modelos A "+
+                " join Lineas B on "+
+                " A.id_modelo = B.id_modelo "+
+                " where B.id_linea = @id_linea; ";
 
             using (var conecta = objConexion.Conectar())
             {
                 try
                 {
                     var comando = new SqlCommand(sql_query, conecta);
-                    comando.Parameters.AddWithValue("id_modelo", id_modelo);
+                    comando.Parameters.AddWithValue("id_linea", id_linea);
 
                     var dataAdapter = new SqlDataAdapter(comando);
                     dataAdapter.Fill(respuesta);

@@ -42,22 +42,41 @@ namespace Capa_Datos.Catalogos.Vehiculos
             return respuesta;
         }
 
-        public DataTable SelectLineas(int id_linea)
+        public DataTable SelectLineas(int id_linea, bool combo = false)
         {
             var respuesta = new DataTable();
 
             var sql_query = string.Empty;
 
-            sql_query = "select id_marca, id_modelo, Linea "+          
-                " from lineas "+
+            if (!combo)
+            {
+                sql_query = "select id_marca, id_modelo, Linea " +
+                " from lineas " +
                 " where id_linea = @id_linea; ";
+            }
+            else
+            {
+                sql_query = " select A.id_linea, concat(B.Marca,' - ', A.Linea,' - ',C.modelo) as linea " +
+                " from lineas A " +
+                " inner join marcas B on " +
+                " A.id_marca = B.id_marca " +
+                " inner join modelos C on " +
+                " A.id_modelo = c.id_modelo; ";
+            }
+
+            
 
             using (var conecta = objConexion.Conectar())
             {
                 try
                 {
                     var comando = new SqlCommand(sql_query, conecta);
-                    comando.Parameters.AddWithValue("id_linea", id_linea);
+
+                    if (!combo)
+                    {
+                        comando.Parameters.AddWithValue("id_linea", id_linea);
+                    }
+                    
 
                     var dataAdapter = new SqlDataAdapter(comando);
                     dataAdapter.Fill(respuesta);
@@ -71,25 +90,25 @@ namespace Capa_Datos.Catalogos.Vehiculos
 
             return respuesta;
         }
-
-        public DataTable SelectLineasCBO()
+        
+        public DataTable SelectLineas(int id_marca)
         {
             var respuesta = new DataTable();
 
             var sql_query = string.Empty;
 
-            sql_query = " select A.id_linea, concat(B.Marca,' - ', A.Linea,' - ',C.modelo) as linea " +
-                " from lineas A " +
-                " inner join marcas B on " +
-                " A.id_marca = B.id_marca " +
-                " inner join modelos C on " +
-                " A.id_modelo = c.id_modelo; ";
+
+            sql_query = "select id_linea, linea "+
+            " from Lineas "+
+            " where id_marca = @id_marca; ";
 
             using (var conecta = objConexion.Conectar())
             {
                 try
                 {
                     var comando = new SqlCommand(sql_query, conecta);
+                    comando.Parameters.AddWithValue("id_marca", id_marca);
+                    
 
                     var dataAdapter = new SqlDataAdapter(comando);
                     dataAdapter.Fill(respuesta);

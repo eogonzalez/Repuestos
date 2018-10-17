@@ -52,7 +52,7 @@
                         <asp:BoundField DataField="marca" HeaderText="Marca" />
                         <asp:BoundField DataField="modelo" HeaderText="Modelo" />
                         <asp:BoundField DataField="linea" HeaderText="Linea" />
-                        <asp:BoundField DataField="tipoVehiculo" HeaderText="Tipo" />
+                        <asp:BoundField DataField="tipo" HeaderText="Tipo" />
 
                         <%--Boton de Modificar--%>
                         <asp:ButtonField ButtonType="Button" Text="Modificar" HeaderText="Modificar" CommandName="modificar" ControlStyle-CssClass="btn btn-success" />
@@ -86,20 +86,12 @@
             <%--Cuerpo del Formulario--%>
             <div class="panel-body form-horizontal">
 
+
                 <%--Campo Marca--%>
                 <div class="form-group">
                     <asp:Label runat="server" AssociatedControlID="ddl_marca" CssClass="control-label col-xs-2" Text="Marca: "></asp:Label>
                     <div class="col-xs-10">
-                        <asp:DropDownList runat="server" ID="ddl_marca" CssClass="form-control">
-                        </asp:DropDownList>
-                    </div>
-                </div>
-
-                <%--Campo Modelo--%>
-                <div class="form-group">
-                    <asp:Label runat="server" AssociatedControlID="ddl_modelo" CssClass="control-label col-xs-2" Text="Modelo: "></asp:Label>
-                    <div class="col-xs-10">
-                        <asp:DropDownList runat="server" ID="ddl_modelo" CssClass="form-control">
+                        <asp:DropDownList runat="server" ID="ddl_marca" CssClass="form-control" OnSelectedIndexChanged="ddl_marca_SelectedIndexChanged" AutoPostBack="true">
                         </asp:DropDownList>
                     </div>
                 </div>
@@ -108,17 +100,25 @@
                 <div class="form-group">
                     <asp:Label runat="server" AssociatedControlID="ddl_linea" CssClass="control-label col-xs-2" Text="Linea: "></asp:Label>
                     <div class="col-xs-10">
-                        <asp:DropDownList runat="server" ID="ddl_linea" CssClass="form-control">
+                        <asp:DropDownList runat="server" ID="ddl_linea" CssClass="form-control" AutoPostBack="true" OnSelectedIndexChanged="ddl_linea_SelectedIndexChanged" Enabled="false">
                         </asp:DropDownList>
                     </div>
                 </div>
 
+                <%--Campo Modelo--%>
+                <div class="form-group">
+                    <asp:Label runat="server" AssociatedControlID="ddl_modelo" CssClass="control-label col-xs-2" Text="Modelo: "></asp:Label>
+                    <div class="col-xs-10">
+                        <asp:DropDownList runat="server" ID="ddl_modelo" CssClass="form-control" Enabled="false">
+                        </asp:DropDownList>
+                    </div>
+                </div>
 
                 <%--Campo Linea--%>
                 <div class="form-group">
                     <asp:Label runat="server" AssociatedControlID="ddl_tipo_vehiculo" CssClass="control-label col-xs-2" Text="Tipo: "></asp:Label>
                     <div class="col-xs-10">
-                        <asp:DropDownList runat="server" ID="ddl_tipo_vehiculo" CssClass="form-control">
+                        <asp:DropDownList runat="server" ID="ddl_tipo_vehiculo" CssClass="form-control" Enabled="false">
                         </asp:DropDownList>
                     </div>
                 </div>

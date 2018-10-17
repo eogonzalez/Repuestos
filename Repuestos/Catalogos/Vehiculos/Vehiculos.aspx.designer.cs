@@ -85,15 +85,6 @@ namespace Repuestos.Catalogos.Vehiculos {
         protected global::System.Web.UI.WebControls.DropDownList ddl_marca;
         
         /// <summary>
-        /// Control ddl_modelo.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddl_modelo;
-        
-        /// <summary>
         /// Control ddl_linea.
         /// </summary>
         /// <remarks>
@@ -101,6 +92,15 @@ namespace Repuestos.Catalogos.Vehiculos {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddl_linea;
+        
+        /// <summary>
+        /// Control ddl_modelo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddl_modelo;
         
         /// <summary>
         /// Control ddl_tipo_vehiculo.
