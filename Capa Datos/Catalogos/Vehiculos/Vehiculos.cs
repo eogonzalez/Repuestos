@@ -9,22 +9,40 @@ namespace Capa_Datos.Catalogos.Vehiculos
     {
         General.Conexion objConexion = new General.Conexion();
 
-        public DataTable SelectVehiculos()
+        public DataTable SelectVehiculos(bool combo = false)
         {
             var respuesta = new DataTable();
 
             var sql_query = string.Empty;
 
-            sql_query = " select A.Id_Vehiculo, B.Marca, C.modelo, D.Linea, E.Tipo " +
-                " from vehiculos A " +
-                " inner join marcas B on " +
-                " A.id_marca = B.id_marca " +
-                " inner join modelos C on " +
-                " A.id_modelo = c.id_modelo "+
-                " inner join lineas D on "+
-                " A.id_linea = D.id_linea "+
-                " inner join tipo_vehiculo E on "+
-                " A.id_tipo_vehiculo = E.id_tipo_vehiculo; ";
+            if (!combo)
+            {
+                sql_query = " select A.Id_Vehiculo, B.Marca, C.modelo, D.Linea, E.Tipo " +
+                    " from vehiculos A " +
+                    " inner join marcas B on " +
+                    " A.id_marca = B.id_marca " +
+                    " inner join modelos C on " +
+                    " A.id_modelo = c.id_modelo " +
+                    " inner join lineas D on " +
+                    " A.id_linea = D.id_linea " +
+                    " inner join tipo_vehiculo E on " +
+                    " A.id_tipo_vehiculo = E.id_tipo_vehiculo; ";
+            }
+            else
+            {
+                sql_query = " select A.Id_Vehiculo, CONCAT(B.Marca,' ',D.Linea,' ',C.modelo,' ', E.Tipo ) as vehiculo "+
+                    " from vehiculos A "+
+                    " inner join marcas B on "+
+                    " A.id_marca = B.id_marca "+
+                    " inner join modelos C on "+
+                    " A.id_modelo = c.id_modelo "+
+                    " inner join lineas D on "+
+                    " A.id_linea = D.id_linea "+
+                    " inner join tipo_vehiculo E on "+
+                    " A.id_tipo_vehiculo = E.id_tipo_vehiculo; ";
+            }
+
+
 
             using (var conecta = objConexion.Conectar())
             {

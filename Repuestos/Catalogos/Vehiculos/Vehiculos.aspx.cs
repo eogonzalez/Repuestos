@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
 using System.Web.UI.WebControls;
 using Capa_Negocio.Catalogos.Vehiculos;
 using Capa_Objetos.Catalogos.Vehiculos;
@@ -27,45 +23,6 @@ namespace Repuestos.Catalogos.Vehiculos
                 Llenar_ddlLinea();
                 Llenar_ddlTipoVehiculo();
             }
-        }
-
-        protected void gvVehiculos_RowCommand(object sender, GridViewCommandEventArgs e)
-        {
-            if (e.CommandName != "Page")
-            {//Cuando no haga click en cambiar de pagina
-                //Convierto en  entero  lo que venga  en e.commandargument
-                int index = Convert.ToInt32(e.CommandArgument);
-
-                //Defino una variable de tipo  fila del  grid  
-                //y le  asigno el  numero de   fila que obtengo  de la variable index
-                GridViewRow row = gvVehiculos.Rows[index];
-
-                //Obtengo  en un numero  entero el  id del  registro que deseo modificar
-                int id_vehiculo = Convert.ToInt32(row.Cells[0].Text);
-
-                Session.Add("IDVehiculo", id_vehiculo);
-
-                switch (e.CommandName)
-                {
-                    case "modificar":
-                        MostrarDatos(id_vehiculo);
-                        lkBtn_viewPanel_ModalPopupExtender.Show();
-                        break;
-
-                    case "eliminar":
-                        EliminarVehiculo(id_vehiculo);
-                        Llenar_gvVehiculos();
-                        break;
-
-                    default:
-                        break;
-                }
-            }
-        }
-
-        protected void gvVehiculos_PageIndexChanging(object sender, GridViewPageEventArgs e)
-        {
-
         }
 
         protected void btnGuardar_Click(object sender, EventArgs e)
@@ -112,6 +69,47 @@ namespace Repuestos.Catalogos.Vehiculos
                     break;
             }
         }
+
+
+        protected void gvVehiculos_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+            if (e.CommandName != "Page")
+            {//Cuando no haga click en cambiar de pagina
+                //Convierto en  entero  lo que venga  en e.commandargument
+                int index = Convert.ToInt32(e.CommandArgument);
+
+                //Defino una variable de tipo  fila del  grid  
+                //y le  asigno el  numero de   fila que obtengo  de la variable index
+                GridViewRow row = gvVehiculos.Rows[index];
+
+                //Obtengo  en un numero  entero el  id del  registro que deseo modificar
+                int id_vehiculo = Convert.ToInt32(row.Cells[0].Text);
+
+                Session.Add("IDVehiculo", id_vehiculo);
+
+                switch (e.CommandName)
+                {
+                    case "modificar":
+                        MostrarDatos(id_vehiculo);
+                        lkBtn_viewPanel_ModalPopupExtender.Show();
+                        break;
+
+                    case "eliminar":
+                        EliminarVehiculo(id_vehiculo);
+                        Llenar_gvVehiculos();
+                        break;
+
+                    default:
+                        break;
+                }
+            }
+        }
+
+        protected void gvVehiculos_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+
+        }
+
 
         protected void ddl_marca_SelectedIndexChanged(object sender, EventArgs e)
         {            
@@ -305,7 +303,6 @@ namespace Repuestos.Catalogos.Vehiculos
         }
 
         #endregion
-
 
     }
 }

@@ -67,6 +67,10 @@
                                 <li><a runat="server" class="dropdown-item" href="~/Catalogos/Vehiculos/Modelos.aspx">Modelos</a></li>
                                 <li><a runat="server" class="dropdown-item" href="~/Catalogos/Vehiculos/TipoVehiculos.aspx">Tipos Vehiculos</a></li>
                                 <li><a runat="server" class="dropdown-item" href="~/Catalogos/Vehiculos/Vehiculos.aspx">Vehiculos</a></li>
+                                <li><a runat="server" class="dropdown-item" href="~/Catalogos/Repuestos/CategoriaProductos.aspx">Categoria Repuestos</a></li>
+                                <li><a runat="server" class="dropdown-item" href="~/Catalogos/Repuestos/Productos.aspx">Repuestos</a></li>
+                                <li><a runat="server" class="dropdown-item" href="~/Catalogos/Inventario/Compras.aspx">Compras</a></li>
+                                <li><a runat="server" class="dropdown-item" href="~/Catalogos/Inventario/Inventarios.aspx">Inventarios</a></li>
 
                                 <%--<li><a runat="server" class="dropdown-item dropdown-toggle" href="#">Vehiculos</a>
                                     <ul class="dropdown-menu ">

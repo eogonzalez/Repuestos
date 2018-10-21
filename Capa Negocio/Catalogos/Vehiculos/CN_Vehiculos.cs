@@ -7,9 +7,9 @@ namespace Capa_Negocio.Catalogos.Vehiculos
     {
         Capa_Datos.Catalogos.Vehiculos.Vehiculos obj_Datos_Vehiculos = new Capa_Datos.Catalogos.Vehiculos.Vehiculos();
         
-        public DataTable SelectVehiculos()
+        public DataTable SelectVehiculos(bool combo = false)
         {
-            return obj_Datos_Vehiculos.SelectVehiculos();
+            return obj_Datos_Vehiculos.SelectVehiculos(combo);
         }
 
         public DataTable SelectVehiculos(int id_vehiculo)
