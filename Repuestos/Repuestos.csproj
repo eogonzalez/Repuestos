@@ -202,6 +202,9 @@
     <Content Include="Account\ResetPasswordConfirmation.aspx" />
     <Content Include="Account\TwoFactorAuthenticationSignIn.aspx" />
     <Content Include="Account\VerifyPhoneNumber.aspx" />
+    <Content Include="Administracion\Inventario\frmCompras.aspx" />
+    <Content Include="Administracion\Servicios\frmServicio.aspx" />
+    <Content Include="Administracion\Servicios\Servicios.aspx" />
     <Content Include="Administracion\Usuarios\TipoUsuarios.aspx" />
     <Content Include="Administracion\Usuarios\Usuarios.aspx" />
     <Content Include="Catalogos\Clientes.aspx" />
@@ -225,9 +228,9 @@
     </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Catalogos\Repuestos\CategoriaProductos.aspx" />
-    <Content Include="Inventario\Compras.aspx" />
+    <Content Include="Administracion\Inventario\Compras.aspx" />
     <Content Include="Catalogos\Repuestos\Productos.aspx" />
-    <Content Include="Inventario\Inventarios.aspx" />
+    <Content Include="Administracion\Inventario\Inventarios.aspx" />
     <Content Include="Scripts\ai.0.22.9-build00167.js" />
     <Content Include="Scripts\ai.0.22.9-build00167.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -385,6 +388,27 @@
     <Compile Include="Account\VerifyPhoneNumber.aspx.designer.cs">
       <DependentUpon>VerifyPhoneNumber.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Administracion\Inventario\frmCompras.aspx.cs">
+      <DependentUpon>frmCompras.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Administracion\Inventario\frmCompras.aspx.designer.cs">
+      <DependentUpon>frmCompras.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Administracion\Servicios\frmServicio.aspx.cs">
+      <DependentUpon>frmServicio.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Administracion\Servicios\frmServicio.aspx.designer.cs">
+      <DependentUpon>frmServicio.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Administracion\Servicios\Servicios.aspx.cs">
+      <DependentUpon>Servicios.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Administracion\Servicios\Servicios.aspx.designer.cs">
+      <DependentUpon>Servicios.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Administracion\Usuarios\TipoUsuarios.aspx.cs">
       <DependentUpon>TipoUsuarios.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -483,11 +507,11 @@
     <Compile Include="Catalogos\Repuestos\CategoriaProductos.aspx.designer.cs">
       <DependentUpon>CategoriaProductos.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Inventario\Compras.aspx.cs">
+    <Compile Include="Administracion\Inventario\Compras.aspx.cs">
       <DependentUpon>Compras.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Inventario\Compras.aspx.designer.cs">
+    <Compile Include="Administracion\Inventario\Compras.aspx.designer.cs">
       <DependentUpon>Compras.aspx</DependentUpon>
     </Compile>
     <Compile Include="Catalogos\Repuestos\Productos.aspx.cs">
@@ -497,11 +521,11 @@
     <Compile Include="Catalogos\Repuestos\Productos.aspx.designer.cs">
       <DependentUpon>Productos.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Inventario\Inventarios.aspx.cs">
+    <Compile Include="Administracion\Inventario\Inventarios.aspx.cs">
       <DependentUpon>Inventarios.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Inventario\Inventarios.aspx.designer.cs">
+    <Compile Include="Administracion\Inventario\Inventarios.aspx.designer.cs">
       <DependentUpon>Inventarios.aspx</DependentUpon>
     </Compile>
     <Compile Include="Models\IdentityModels.cs" />

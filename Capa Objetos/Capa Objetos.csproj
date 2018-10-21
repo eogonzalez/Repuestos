@@ -40,6 +40,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Administracion\Inventario\CO_Compras.cs" />
+    <Compile Include="Administracion\Inventario\CO_Inventarios.cs" />
+    <Compile Include="Administracion\Servicios\CO_Servicios.cs" />
     <Compile Include="Administracion\Usuarios\CO_TipoUsuarios.cs" />
     <Compile Include="Administracion\Usuarios\CO_Usuarios.cs" />
     <Compile Include="Catalogos\CO_Clientes.cs" />
