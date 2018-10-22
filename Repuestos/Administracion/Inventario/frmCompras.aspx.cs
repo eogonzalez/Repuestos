@@ -38,18 +38,16 @@ namespace Repuestos.Administracion.Inventario
                     LlenoEncabezado(id_compra);
                     LlenargvProductos(id_compra);
 
+                    if (Request.QueryString["st"] == "C")
+                    {
+                        BloquearControles();
+                    }
+
                 }
                 else
                 {
-                    if (Session["IDCompra"] != null)
-                    {
-                        id_compra = (Int32)Session["IDCompra"];
-                        LlenargvProductos(id_compra);
-                    }
-                    else
-                    {
-                        LlenargvProductos();
-                    }
+                    Session.Remove("IDCompra");
+                    LlenargvProductos();                    
                 }
             }
         }
@@ -86,6 +84,25 @@ namespace Repuestos.Administracion.Inventario
         protected void btnRegresar_Click(object sender, EventArgs e)
         {
             Response.Redirect("~/Administracion/Inventario/Compras.aspx");
+        }
+
+        protected void lkbtnCerrarCompra_Click(object sender, EventArgs e)
+        {
+            if (Session["IDCompra"] != null)
+            {
+                int id_compra = Convert.ToInt32(Session["IDCompra"].ToString());
+                CerrarCompra(id_compra);
+                BloquearControles();
+                divAlertCorrecto.Visible = true;
+                MensajeCorrectoPrincipal.Text = "Compra cerrada correctamente, se agregaron los productos al inventario.";
+            }
+            else
+            {
+                divAlertError.Visible = true;
+                ErrorMessagePrincipal.Text = "No es posible cerrar compra.";
+            }
+
+
         }
 
         #endregion
@@ -204,6 +221,25 @@ namespace Repuestos.Administracion.Inventario
 
         }
 
+        protected void BloquearControles()
+        {
+            txtFechaCompra.Enabled = false;
+            ddlProveedor.Enabled = false;
+            txtNumeroCompra.Enabled = false;
+            txtSerieCompra.Enabled = false;
+            lkBtn_AgregarProducto.Attributes.Add("disabled","true");
+
+            lkBtn_AgregarProducto_ModalPopupExtender.Enabled = false;
+            lkbtnCerrarCompra.Attributes.Add("disabled","true");
+        }
+
+        protected bool CerrarCompra(int id_compra)
+        {
+            return obj_Negocio_Compras.CerrarCompra(id_compra);
+        }
+
         #endregion
+
+
     }
 }

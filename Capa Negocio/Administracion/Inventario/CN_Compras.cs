@@ -37,5 +37,10 @@ namespace Capa_Negocio.Administracion.Inventario
         {
             return obj_Datos_Compras.UpdateEncabezadoCompra(objCompras);
         }
+
+        public bool CerrarCompra(int id_compra)
+        {
+            return obj_Datos_Compras.CerrarCompra(id_compra);
+        }
     }
 }

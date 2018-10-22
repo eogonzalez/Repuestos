@@ -32,11 +32,12 @@ namespace Repuestos.Inventario
                 GridViewRow row = gvCompras.Rows[index];
 
                 int id_compra = Convert.ToInt32(row.Cells[0].Text);
+                var estado =  row.Cells[5].Text.Substring(0,1);
                 
                 switch (e.CommandName)
                 {
                     case "modificar":
-                        Response.Redirect("~/Administracion/Inventario/frmCompras.aspx?idc=" + id_compra);
+                        Response.Redirect("~/Administracion/Inventario/frmCompras.aspx?idc=" + id_compra+"&st="+estado);
                         break;
                     case "eliminar":
                         //if (descripcion_estado == "Borrador")

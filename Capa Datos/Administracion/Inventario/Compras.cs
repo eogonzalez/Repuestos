@@ -230,26 +230,52 @@ namespace Capa_Datos.Administracion.Inventario
             var respuesta = false;
             var sql_query = string.Empty;
 
-            sql_query = " UPDATE [dbo].[compras_encabezado] "+
-                " SET[numero_compra] = @numero_compra "+
-                " ,[serie] = @serie "+
-                " ,[id_proveedor] = @id_proveedor "+
-                " ,[fecha_compra] = @fecha_compra "+
-                " WHERE id_compra = @id_compra;";
+            sql_query = " UPDATE[dbo].[compras_detalle] " +
+                " SET[numero_compra] = @numero_compra " +
+                " ,[serie] = @serie " +
+                " WHERE id_compra = @id_compra; ";
+
+
 
             using (var conecta = objConexion.Conectar())
             {
+                var comando1 = new SqlCommand(sql_query, conecta);
+                comando1.Parameters.AddWithValue("numero_compra", objCompras.NumeroCompra);
+                comando1.Parameters.AddWithValue("serie", objCompras.Serie);
+                comando1.Parameters.AddWithValue("id_compra", objCompras.Id_Compra);
+
+                try
+                {
+                    conecta.Open();
+                    comando1.ExecuteScalar();
+                    respuesta = true;
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
+
+
+                sql_query = " UPDATE [dbo].[compras_encabezado] " +
+                " SET[numero_compra] = @numero_compra " +
+                " ,[serie] = @serie " +
+                " ,[id_proveedor] = @id_proveedor " +
+                " ,[fecha_compra] = @fecha_compra " +
+                " WHERE id_compra = @id_compra;";
+
+
                 var comando = new SqlCommand(sql_query, conecta);
                 comando.Parameters.AddWithValue("numero_compra", objCompras.NumeroCompra);
                 comando.Parameters.AddWithValue("serie", objCompras.Serie);
                 comando.Parameters.AddWithValue("id_proveedor", objCompras.Id_Proveedor);
                 comando.Parameters.AddWithValue("fecha_compra", objCompras.Fecha_Compra);
-                comando.Parameters.AddWithValue("id_compra", objCompras.Id_Compra);                
+                comando.Parameters.AddWithValue("id_compra", objCompras.Id_Compra);
 
                 try
                 {
                     //Se abre la sesion para transaccion
-                    conecta.Open();
+                    //conecta.Open();
                     //Ejecuta la consulta
                     comando.ExecuteScalar();
                     respuesta = true;
@@ -260,9 +286,100 @@ namespace Capa_Datos.Administracion.Inventario
                     throw;
                 }
 
+                
+            }
+
+
+
+            return respuesta;
+        }
+
+        public bool CerrarCompra(int id_compra)
+        {
+            var respuesta = false;
+            var sql_query = string.Empty;
+
+            /*Selecciono productos de compra*/
+            sql_query = " select id_producto, cantidad, precio "+
+                " from compras_detalle "+
+                " where id_compra = @id_compra; ";
+
+            using (var conecta = objConexion.Conectar())
+            {
+                var comando = new SqlCommand(sql_query, conecta);
+                comando.Parameters.AddWithValue("id_compra", id_compra);
+
+                var TablaProductos = new DataTable();
+                var dataAdapter = new SqlDataAdapter(comando);
+                dataAdapter.Fill(TablaProductos);
+
+
+                conecta.Open();
+
+                foreach (DataRow row in TablaProductos.Rows)
+                {
+                    sql_query = " INSERT INTO [dbo].[Inventarios] "+
+                        " ([tipo_movimiento],[id_compra_servicio],[id_producto] "+
+                        " ,[cantidad],[precio_costo],[porcentaje_ganancia],[precio_venta]) "+
+                        " VALUES "+
+                        " (@tipo_movimiento, @id_compra_servicio, @id_producto "+
+                        " , @cantidad, @precio_costo, @porcentaje_ganancia, @precio_venta) ";
+
+                    var comando_insert = new SqlCommand(sql_query, conecta);
+                    comando_insert.Parameters.AddWithValue("tipo_movimiento", 1);
+                    comando_insert.Parameters.AddWithValue("id_compra_servicio", id_compra);
+
+                    int id_producto = Convert.ToInt32(row["id_producto"].ToString());
+                    int cantidad = Convert.ToInt32(row["cantidad"].ToString());
+                    double precio_costo = Convert.ToDouble(row["precio"].ToString());
+                    double porcentaje_ganacia = 0.10;
+                    double precio_venta = (precio_costo * porcentaje_ganacia) + precio_costo;
+
+                    comando_insert.Parameters.AddWithValue("id_producto", id_producto);
+                    comando_insert.Parameters.AddWithValue("cantidad", cantidad);
+                    comando_insert.Parameters.AddWithValue("precio_costo", precio_costo);
+                    comando_insert.Parameters.AddWithValue("porcentaje_ganancia", porcentaje_ganacia);
+                    comando_insert.Parameters.AddWithValue("precio_venta", precio_venta);
+
+                    try
+                    {
+
+                        comando_insert.ExecuteScalar();
+                        respuesta = true;
+                    }
+                    catch (Exception)
+                    {
+                        respuesta = false;
+                        throw;
+                    }
+
+                }
+
+                /*Actualizo Encabezado*/
+                sql_query = "UPDATE [dbo].[compras_encabezado]" +
+                    " SET [estado] = @estado " +
+                    " WHERE id_compra = @id_compra; ";
+                var comando_up = new SqlCommand(sql_query, conecta);
+                comando_up.Parameters.AddWithValue("estado", "CERRADO");
+                comando_up.Parameters.AddWithValue("id_compra", id_compra);
+
+                try
+                {
+                    /*Ejecuto Query*/
+                    /*conecta.Open();*/
+                    comando_up.ExecuteNonQuery();
+                    respuesta = true;
+                }
+                catch (Exception)
+                {
+                    respuesta = false;
+                    throw;
+                }
+
             }
 
             return respuesta;
+
         }
     }
 }

@@ -84,7 +84,7 @@
                             <asp:BoundField DataField="precio" HeaderText="Precio" />
                             <asp:BoundField DataField="subtotal" HeaderText="Subtotal" />
                             <asp:ButtonField ButtonType="Button" Text="Modificar" HeaderText="Modificar" CommandName="modificarProducto" ControlStyle-CssClass="btn btn-success" />
-                            <asp:ButtonField ButtonType="Button" Text="Eliminar" HeaderText="Eliminar" CommandName="eliminarProducto" ControlStyle-CssClass="btn btn-primary" />
+                            <asp:ButtonField ButtonType="Button" Text="Eliminar" HeaderText="Eliminar" CommandName="eliminarProducto" ControlStyle-CssClass="btn btn-danger" />
                         </Columns>
                     </asp:GridView>
                 </div>
@@ -98,12 +98,13 @@
             <span aria-hidden="true" class="glyphicon glyphicon-arrow-left"></span> Regresar
             </asp:LinkButton>
 
-            <asp:LinkButton ID="lkbCerrarCompra" runat="server" CssClass="btn btn-danger">
+            <asp:LinkButton ID="lkbtnCerrarCompra" runat="server" CssClass="btn btn-danger" OnClick="lkbtnCerrarCompra_Click" OnClientClick="return confirm(&quot;¿Esta seguro de cerrar compra?. Esta opcion alimenta el inventario. &quot;)">
             <span aria-hidden="true" class="glyphicon glyphicon-floppy-save"></span> Cerrar Compra
             </asp:LinkButton>
 
-
         </div>
+
+    </div>
 
     </div>
 

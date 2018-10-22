@@ -202,13 +202,13 @@ namespace Repuestos.Administracion.Inventario {
         protected global::System.Web.UI.WebControls.LinkButton lkbRegresar;
         
         /// <summary>
-        /// Control lkbCerrarCompra.
+        /// Control lkbtnCerrarCompra.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton lkbCerrarCompra;
+        protected global::System.Web.UI.WebControls.LinkButton lkbtnCerrarCompra;
         
         /// <summary>
         /// Control pnl_Producto.
