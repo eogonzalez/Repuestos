@@ -8,5 +8,16 @@ namespace Capa_Objetos.Administracion.Inventario
 {
     public class CO_Compras
     {
+        public int Id_Compra { get; set; }
+        public int NumeroCompra { get; set; }
+        public string Serie { get; set; }
+        public int Id_Proveedor { get; set; }
+        public DateTime Fecha_Compra { get; set; }
+        public float Total { get; set; }
+        public int Id_Producto { get; set; }
+        public int Cantidad { get; set; }
+        public double Precio { get; set; }
+        public double SubTotal { get; set; }
+
     }
 }

@@ -19,7 +19,8 @@ namespace Capa_Datos.Catalogos.Repuestos
 
             var sql_query = string.Empty;
 
-            sql_query = " select AA.id_producto, Bb.nombre as categoria, CONCAT(b.Marca,' ',d.Linea,' ',e.Tipo,' ',c.modelo) as vehiculo, aa.nombre as repuesto, aa.marca, aa.descripcion "+
+            sql_query = " select AA.id_producto, Bb.nombre as categoria, CONCAT(b.Marca,' ',d.Linea,' ',e.Tipo,' ',c.modelo) as vehiculo, aa.nombre as repuesto, aa.marca, aa.descripcion, "+
+                " concat(aa.nombre,' ',aa.marca,' -',b.Marca,' ',d.Linea,' ',e.Tipo,' ',c.modelo) as valor_combo" +
                 " from Produtos AA " +
                 " join Categoria_Productos BB on "+
                 " aa.id_categoria = bb.id_categoria "+
