@@ -22,7 +22,8 @@
                     AutoGenerateColumns="false"
                     AllowPaging="true"
                     OnRowCommand="gvCompras_RowCommand"
-                    OnPageIndexChanging="gvCompras_PageIndexChanging">
+                    OnPageIndexChanging="gvCompras_PageIndexChanging"
+                    OnRowDataBound="gvCompras_RowDataBound">
 
                     <%--Propiedades para establecer el paginador--%>
                     <PagerSettings Mode="Numeric"

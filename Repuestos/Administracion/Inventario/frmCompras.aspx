@@ -75,7 +75,7 @@
                         CssClass="table table-hover table-striped"
                         GridLines="None"
                         EmptyDataText="No se han agregado productos"
-                        AutoGenerateColumns="false" OnRowCommand="gvProductos_RowCommand">
+                        AutoGenerateColumns="false" OnRowCommand="gvProductos_RowCommand" OnRowDataBound="gvProductos_RowDataBound">
 
                         <Columns>
                             <asp:BoundField DataField="correlativo" SortExpression="correlativo" ItemStyle-CssClass="hiddencol" HeaderStyle-CssClass="hiddencol" />
@@ -134,12 +134,12 @@
                 <div class="form-group">
                     <asp:Label runat="server" AssociatedControlID="txtCantidad" CssClass="control-label col-xs-2" Text="Cantidad:"></asp:Label>
                     <div class="col-xs-4">
-                        <asp:TextBox ID="txtCantidad" runat="server" TextMode="Number" CssClass="form-control input-sm"></asp:TextBox>
+                        <asp:TextBox ID="txtCantidad" runat="server"  CssClass="form-control input-sm"></asp:TextBox>
                     </div>
 
                     <asp:Label runat="server" AssociatedControlID="txtPrecio" CssClass="control-label col-xs-2" Text="Precio Q."></asp:Label>
                     <div class="col-xs-4">
-                        <asp:TextBox ID="txtPrecio" runat="server" TextMode="Number" CssClass="form-control input-sm"></asp:TextBox>
+                        <asp:TextBox ID="txtPrecio" runat="server"  CssClass="form-control input-sm"></asp:TextBox>
                     </div>
                 </div>
 

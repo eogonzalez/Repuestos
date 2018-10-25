@@ -8,6 +8,7 @@ namespace Capa_Objetos.Administracion.Inventario
 {
     public class CO_Compras
     {
+        public int Id_Correlativo { get; set; }
         public int Id_Compra { get; set; }
         public int NumeroCompra { get; set; }
         public string Serie { get; set; }

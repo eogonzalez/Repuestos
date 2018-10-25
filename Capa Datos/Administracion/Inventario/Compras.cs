@@ -381,5 +381,244 @@ namespace Capa_Datos.Administracion.Inventario
             return respuesta;
 
         }
+
+        public bool DeleteCompra(int id_compra)
+        {
+            var respuesta = false;
+            var sql_query = string.Empty;
+
+            sql_query = " DELETE FROM compras_detalle "+
+                " where id_compra = @id_compra ";
+
+            using (var conecta = objConexion.Conectar())
+            {
+                var comando = new SqlCommand(sql_query, conecta);
+                comando.Parameters.AddWithValue("id_compra", id_compra);
+
+                try
+                {
+                    conecta.Open();
+                    comando.ExecuteScalar();
+                    respuesta = true;
+                }
+                catch (Exception)
+                {
+                    respuesta = false;
+                    throw;
+                }
+
+                sql_query = " DELETE FROM compras_encabezado " +
+                    " where id_compra = @id_compra ";
+                var comando_enc = new SqlCommand(sql_query, conecta);
+                comando_enc.Parameters.AddWithValue("id_compra", id_compra);
+
+                try
+                {
+                    comando_enc.ExecuteScalar();
+                    respuesta = true;    
+                }
+                catch (Exception)
+                {
+                    respuesta = false;
+                    throw;
+                }
+            }
+
+            return respuesta;
+
+        }
+
+        public bool UpdateDetalleCompra(CO_Compras objCompras)
+        {
+            var respuesta = false;
+            var sql_query = string.Empty;
+
+            sql_query = " UPDATE [dbo].[compras_detalle] "+
+                " SET [numero_compra] = @numero_compra "+
+                " ,[serie] = @serie "+
+                " ,[id_producto] = @id_producto "+
+                " ,[cantidad] = @cantidad "+
+                " ,[precio] = @precio "+
+                " ,[subtotal] = @subtotal "+
+                " WHERE correlativo = @correlativo; ";
+
+            using (var conecta = objConexion.Conectar())
+            {
+                var comando = new SqlCommand(sql_query, conecta);
+                comando.Parameters.AddWithValue("correlativo", objCompras.Id_Correlativo);
+                comando.Parameters.AddWithValue("numero_compra", objCompras.NumeroCompra);
+                comando.Parameters.AddWithValue("serie", objCompras.Serie);
+                comando.Parameters.AddWithValue("id_producto", objCompras.Id_Producto);
+                comando.Parameters.AddWithValue("cantidad", objCompras.Cantidad);
+                comando.Parameters.AddWithValue("precio", objCompras.Precio);
+                comando.Parameters.AddWithValue("subtotal", objCompras.SubTotal);
+
+                try
+                {
+                    conecta.Open();
+                    comando.ExecuteScalar();
+                    respuesta = true;
+                }
+                catch (Exception)
+                {
+                    respuesta = false;
+                    throw;
+                }
+
+                /*Sumo Subtotal*/
+                sql_query = "select sum(subtotal) as total " +
+                    " from compras_detalle " +
+                    " where id_compra = @id_compra ";
+
+                var total = 0.00;
+                var comando_total = new SqlCommand(sql_query, conecta);
+                comando_total.Parameters.AddWithValue("id_compra", objCompras.Id_Compra);
+                try
+                {
+                    /*conecta.Open();*/
+                    /*Ejecuto Query*/
+                    total = Convert.ToDouble(comando_total.ExecuteScalar());
+                    respuesta = true;
+                }
+                catch (Exception)
+                {
+                    respuesta = false;
+                    throw;
+                }
+
+
+                /*Actualizo Total*/
+                sql_query = "UPDATE [dbo].[compras_encabezado]" +
+                    " SET [total] = @total " +
+                    " WHERE id_compra = @id_compra; ";
+                var comando_up = new SqlCommand(sql_query, conecta);
+                comando_up.Parameters.AddWithValue("total", total);
+                comando_up.Parameters.AddWithValue("id_compra", objCompras.Id_Compra);
+
+                try
+                {
+                    /*Ejecuto Query*/
+                    /*conecta.Open();*/
+                    comando_up.ExecuteNonQuery();
+                    respuesta = true;
+                }
+                catch (Exception)
+                {
+                    respuesta = false;
+                    throw;
+                }
+
+
+            }
+
+
+            return respuesta;
+        }
+
+        public DataTable SelectDetalleCompraProducto(int id_correlativo)
+        {
+            var respuesta = new DataTable();
+            var sql_query = string.Empty;
+
+            sql_query = " SELECT [id_producto],[cantidad],[precio] " +
+                " FROM[dbo].[compras_detalle] " +
+                " where correlativo = @correlativo ";
+
+            using (var conecta = objConexion.Conectar())
+            {
+                var comando = new SqlCommand(sql_query, conecta);
+                comando.Parameters.AddWithValue("correlativo", id_correlativo);
+
+                try
+                {
+                    
+                    var dataAdapter = new SqlDataAdapter(comando);
+                    dataAdapter.Fill(respuesta);
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
+
+            }
+
+            return respuesta;
+        }
+
+        public bool DeleteDetalleCompra(int id_correlativo, int id_compra)
+        {
+            var respuesta = false;
+            var sql_query = string.Empty;
+
+            sql_query = " DELETE [dbo].[compras_detalle] " +                
+                " WHERE correlativo = @correlativo; ";
+
+            using (var conecta = objConexion.Conectar())
+            {
+                var comando = new SqlCommand(sql_query, conecta);
+                comando.Parameters.AddWithValue("correlativo", id_correlativo);
+                
+                try
+                {
+                    conecta.Open();
+                    comando.ExecuteScalar();
+                    respuesta = true;
+                }
+                catch (Exception)
+                {
+                    respuesta = false;
+                    throw;
+                }
+
+                /*Sumo Subtotal*/
+                sql_query = "select sum(subtotal) as total " +
+                    " from compras_detalle " +
+                    " where id_compra = @id_compra ";
+
+                var total = 0.00;
+                var comando_total = new SqlCommand(sql_query, conecta);
+                comando_total.Parameters.AddWithValue("id_compra", id_correlativo);
+                try
+                {
+                    /*conecta.Open();*/
+                    /*Ejecuto Query*/
+                    total = Convert.ToDouble(comando_total.ExecuteScalar());
+                    respuesta = true;
+                }
+                catch (Exception)
+                {
+                    respuesta = false;
+                    throw;
+                }
+
+
+                /*Actualizo Total*/
+                sql_query = "UPDATE [dbo].[compras_encabezado]" +
+                    " SET [total] = @total " +
+                    " WHERE id_compra = @id_compra; ";
+                var comando_up = new SqlCommand(sql_query, conecta);
+                comando_up.Parameters.AddWithValue("total", total);
+                comando_up.Parameters.AddWithValue("id_compra", id_compra);
+
+                try
+                {
+                    /*Ejecuto Query*/
+                    /*conecta.Open();*/
+                    comando_up.ExecuteNonQuery();
+                    respuesta = true;
+                }
+                catch (Exception)
+                {
+                    respuesta = false;
+                    throw;
+                }
+
+
+            }
+
+
+            return respuesta;
+        }
     }
 }

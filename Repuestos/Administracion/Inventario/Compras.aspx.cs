@@ -40,18 +40,8 @@ namespace Repuestos.Inventario
                         Response.Redirect("~/Administracion/Inventario/frmCompras.aspx?idc=" + id_compra+"&st="+estado);
                         break;
                     case "eliminar":
-                        //if (descripcion_estado == "Borrador")
-                        //{
-                        //    EliminarBorrador(id_solicitud);
-                        //    Llenar_gvBorradores(Convert.ToInt32(Session["UsuarioID"].ToString()));
-                        //    Llenar_CantidadBorradores(Convert.ToInt32(Session["UsuarioID"].ToString()));
-                        //}
-                        //else
-                        //{
-                        //    ErrorMessagePrincipal.Text = "No es posible eliminar un expediente en estado de Aclaracion.";
-                        //    divAlertError.Visible = true;
-                        //}
-
+                        EliminarCompra(id_compra);
+                        Llenar_gvCompras();
                         break;
                     default:
                         break;
@@ -69,6 +59,17 @@ namespace Repuestos.Inventario
             Response.Redirect("~/Administracion/Inventario/frmCompras.aspx");
         }
 
+        protected void gvCompras_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType != DataControlRowType.DataRow)
+                return;
+
+            if (e.Row.Cells[5].Text == "CERRADO")
+            {                
+                e.Row.Cells[7].Controls.Clear();
+            }
+        }
+
         #endregion
 
         #region Funciones
@@ -82,6 +83,13 @@ namespace Repuestos.Inventario
 
         }
 
+        protected bool EliminarCompra(int id_compra)
+        {
+            return obj_Negocio_Compras.DeleteCompra(id_compra);
+        }
+
         #endregion
+
+
     }
 }

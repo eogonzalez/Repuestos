@@ -54,7 +54,37 @@ namespace Repuestos.Administracion.Inventario
 
         protected void gvProductos_RowCommand(object sender, GridViewCommandEventArgs e)
         {
+            if (e.CommandName != "Page")
+            {//Cuando no haga click en cambiar de pagina
+                //Convierto en  entero  lo que venga  en e.commandargument
+                int index = Convert.ToInt32(e.CommandArgument);
 
+                //Defino una variable de tipo  fila del  grid  
+                //y le  asigno el  numero de   fila que obtengo  de la variable index
+                GridViewRow row = gvProductos.Rows[index];
+
+                //Obtengo  en un numero  entero el  id del  registro que deseo modificar
+                int id_correlativo = Convert.ToInt32(row.Cells[0].Text);
+                int id_compra = Convert.ToInt32(Request.QueryString["idc"]);
+
+                Session.Add("IDCorrelativo", id_correlativo);
+
+                switch (e.CommandName)
+                {
+                    case "modificarProducto":
+                        MostrarDatos(id_correlativo);
+                        lkBtn_viewPanel_ModalPopupExtender.Show();
+                        break;
+
+                    case "eliminarProducto":
+                        EliminarDetalleCompra(id_correlativo,id_compra);
+                        LlenargvProductos();
+                        break;
+
+                    default:
+                        break;
+                }
+            }
         }
 
         protected void btnGuardarProducto_Click(object sender, EventArgs e)
@@ -63,15 +93,54 @@ namespace Repuestos.Administracion.Inventario
             if (Session["IDCompra"] != null)
             {//Si compra esta creada
                 var id_compra = (Int32)Session["IDCompra"];
-                ActualizoEncabezadoCompra(id_compra);                
-                AgregoDetalleCompra(id_compra);
-                LlenoEncabezado(id_compra);
+                
+                ActualizoEncabezadoCompra(id_compra);
+
+                switch (btnGuardarProducto.CommandName)
+                {
+                    case "Editar":
+                        var id_correlativo = (Int32)Session["IDCorrelativo"];
+
+                        if (ActualizarDetalleCompra(id_correlativo,id_compra))
+                        {
+                            LlenoEncabezado(id_compra);
+                            LlenargvProductos(id_compra);
+                            btnGuardarProducto.Text = "Agregar";
+                            btnGuardarProducto.CommandName = "GuardarProducto";
+                        }
+                        else
+                        {
+                            lkBtn_AgregarProducto_ModalPopupExtender.Show();
+                            ErrorMessage.Text = "Ha ocurrido un error al actualizar producto.";
+                        }
+                        break;
+                    case "GuardarProducto":
+                        if (AgregoDetalleCompra(id_compra))
+                        {
+                            LlenoEncabezado(id_compra);
+                            LlenargvProductos(id_compra);
+
+                        }
+                        else
+                        {
+                            lkBtn_AgregarProducto_ModalPopupExtender.Show();
+                            ErrorMessage.Text = "Ha ocurrido un error al almacenar datos.";
+                        }
+                        break;
+                    default:
+                        break;
+                }                                            
             }
             else
             {//Si compra no esta creada
                 var id_compra = CreoEncabezadoCompra();
                 Session.Add("IDCompra", id_compra);
-                AgregoDetalleCompra(id_compra);
+                if (AgregoDetalleCompra(id_compra))
+                {
+                    LlenoEncabezado(id_compra);
+                    LlenargvProductos(id_compra);
+                }
+                
             }
             
         }
@@ -103,6 +172,21 @@ namespace Repuestos.Administracion.Inventario
             }
 
 
+        }
+
+        protected void gvProductos_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType != DataControlRowType.DataRow)
+                return;
+
+            if (Request.QueryString["st"] != null)
+            {
+                if (Request.QueryString["st"] == "C")
+                {
+                    e.Row.Cells[5].Controls.Clear();
+                    e.Row.Cells[6].Controls.Clear();
+                }
+            }
         }
 
         #endregion
@@ -168,7 +252,7 @@ namespace Repuestos.Administracion.Inventario
             return respuesta;
         }
 
-        protected void AgregoDetalleCompra(int id_compra)
+        protected bool AgregoDetalleCompra(int id_compra)
         {
             //Obtengo valores de detalle
             objCompras.Id_Compra = id_compra;
@@ -180,11 +264,7 @@ namespace Repuestos.Administracion.Inventario
             objCompras.SubTotal = objCompras.Cantidad * objCompras.Precio;
 
             var respuesta = obj_Negocio_Compras.InsertDetalleCompra(objCompras);
-            if (respuesta)
-            {
-                LlenargvProductos(objCompras.Id_Compra);
-            }
-
+            return respuesta;
         }
 
         protected void LlenoEncabezado(int id_compra)
@@ -236,6 +316,43 @@ namespace Repuestos.Administracion.Inventario
         protected bool CerrarCompra(int id_compra)
         {
             return obj_Negocio_Compras.CerrarCompra(id_compra);
+        }
+
+        protected void MostrarDatos(int id_correlativo)
+        {
+            btnGuardarProducto.Text = "Editar";
+            btnGuardarProducto.CommandName = "Editar";
+
+            var tabla_datos = new DataTable();
+            tabla_datos = obj_Negocio_Compras.SelectDetalleCompraProducto(id_correlativo);
+            var row = tabla_datos.Rows[0];
+
+            ddlProducto.SelectedValue = row["id_producto"].ToString();
+            txtCantidad.Text = row["cantidad"].ToString();
+            txtPrecio.Text = row["precio"].ToString();
+        }
+
+        protected bool ActualizarDetalleCompra(int id_correlativo, int id_compra)
+        {
+            var respuesta = false;
+            objCompras.Id_Correlativo = id_correlativo;
+            objCompras.Id_Compra = id_compra;
+            objCompras.NumeroCompra = Convert.ToInt32(txtNumeroCompra.Text);
+            objCompras.Serie = txtSerieCompra.Text;
+            objCompras.Id_Producto = Convert.ToInt32(ddlProducto.SelectedValue.ToString());
+
+            objCompras.Cantidad = Convert.ToInt32(txtCantidad.Text.Replace(",",""));            
+
+            objCompras.Precio = Convert.ToDouble(txtPrecio.Text);
+            objCompras.SubTotal = objCompras.Cantidad * objCompras.Precio;
+
+            respuesta = obj_Negocio_Compras.UpdateDetalleCompra(objCompras);
+            return respuesta;
+        }
+
+        protected bool EliminarDetalleCompra(int id_correlativo, int id_compra)
+        {
+            return obj_Negocio_Compras.DeleteDetalleCompra(id_correlativo,id_compra);
         }
 
         #endregion

@@ -42,5 +42,25 @@ namespace Capa_Negocio.Administracion.Inventario
         {
             return obj_Datos_Compras.CerrarCompra(id_compra);
         }
+
+        public bool DeleteCompra(int id_compra)
+        {
+            return obj_Datos_Compras.DeleteCompra(id_compra);
+        }
+
+        public bool UpdateDetalleCompra(CO_Compras objCompras)
+        {
+            return obj_Datos_Compras.UpdateDetalleCompra(objCompras);
+        }
+
+        public DataTable SelectDetalleCompraProducto(int id_correlativo)
+        {
+            return obj_Datos_Compras.SelectDetalleCompraProducto(id_correlativo);
+        }
+
+        public bool DeleteDetalleCompra(int id_correlativo, int id_compra)
+        {
+            return obj_Datos_Compras.DeleteDetalleCompra(id_correlativo, id_compra);
+        }
     }
 }
