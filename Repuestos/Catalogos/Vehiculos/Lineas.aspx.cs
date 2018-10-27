@@ -126,9 +126,9 @@ namespace Repuestos.Catalogos.Vehiculos
             btnGuardar.CommandName = "Editar";
 
             var tabla_datos = new DataTable();
-            tabla_datos = obj_Negocio_Lineas.SelectLineas(id_linea);
+            tabla_datos = obj_Negocio_Lineas.SelectLineas(id_linea, true);
             var row = tabla_datos.Rows[0];
-
+            
             ddl_marca.SelectedValue = row["id_marca"].ToString();
             ddl_modelo.SelectedValue = row["id_modelo"].ToString();
             txtLinea.Text = row["linea"].ToString();

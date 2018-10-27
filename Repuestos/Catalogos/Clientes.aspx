@@ -30,7 +30,9 @@
                     GridLines="None"
                     EmptyDataText="No Existen registros."
                     AutoGenerateColumns="false"
-                    AllowPaging="true">
+                    AllowPaging="true"
+                    OnRowCommand="gvClientes_RowCommand"
+                    OnPageIndexChanging="gvClientes_PageIndexChanging">
 
                     <%--Propiedades para establecer el paginador--%>
                     <PagerSettings Mode="Numeric"
@@ -59,6 +61,11 @@
                             </ItemTemplate>
                         </asp:TemplateField>
 
+                        <asp:TemplateField HeaderText="Vehiculos">
+                            <ItemTemplate>
+                                <asp:Button runat="server" Text="Vehiculos" ID="btnVehiculos" CausesValidation="false" CommandName="vehiculos" CommandArgument="<%# Container.DataItemIndex %>" CssClass="btn btn-warning"/>
+                            </ItemTemplate>
+                        </asp:TemplateField>
                     </Columns>
                 </asp:GridView>
             </div>

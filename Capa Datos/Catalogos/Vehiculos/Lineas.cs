@@ -48,7 +48,7 @@ namespace Capa_Datos.Catalogos.Vehiculos
 
             var sql_query = string.Empty;
 
-            if (!combo)
+            if (combo)
             {
                 sql_query = "select id_marca, id_modelo, Linea " +
                 " from lineas " +
@@ -72,7 +72,7 @@ namespace Capa_Datos.Catalogos.Vehiculos
                 {
                     var comando = new SqlCommand(sql_query, conecta);
 
-                    if (!combo)
+                    if (combo)
                     {
                         comando.Parameters.AddWithValue("id_linea", id_linea);
                     }

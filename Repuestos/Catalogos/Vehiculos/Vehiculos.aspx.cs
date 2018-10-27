@@ -261,7 +261,7 @@ namespace Repuestos.Catalogos.Vehiculos
         {
             var dt = new DataTable();
             CN_Lineas objLinea = new CN_Lineas();
-            dt = objLinea.SelectLineas(0,true);
+            dt = objLinea.SelectLineas(0);
             if (dt.Rows.Count > 0)
             {
                 ddl_linea.DataTextField = dt.Columns["linea"].ToString();
