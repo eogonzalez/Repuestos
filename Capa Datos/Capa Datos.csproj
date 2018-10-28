@@ -55,6 +55,7 @@
     <Compile Include="Catalogos\Proveedores.cs" />
     <Compile Include="Catalogos\Repuestos\CategoriaProductos.cs" />
     <Compile Include="Catalogos\Repuestos\Productos.cs" />
+    <Compile Include="Catalogos\VehiculosClientes.cs" />
     <Compile Include="Catalogos\Vehiculos\Lineas.cs" />
     <Compile Include="Catalogos\Vehiculos\Marcas.cs" />
     <Compile Include="Catalogos\Vehiculos\Modelos.cs" />

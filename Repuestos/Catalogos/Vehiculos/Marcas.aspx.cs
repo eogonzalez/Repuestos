@@ -3,6 +3,7 @@ using System.Web.UI.WebControls;
 using Capa_Negocio.Catalogos.Vehiculos;
 using Capa_Objetos.Catalogos.Vehiculos;
 using System.Data;
+using Capa_Objetos.General;
 
 namespace Repuestos.Catalogos
 {
@@ -10,6 +11,7 @@ namespace Repuestos.Catalogos
     {
         CN_Marcas obj_Negocio_Marcas = new CN_Marcas();
         CO_Marcas obj_Marcas = new CO_Marcas();
+        CO_Respuesta objRespueta = new CO_Respuesta();
 
         #region Funciones del formulario
         
@@ -57,7 +59,7 @@ namespace Repuestos.Catalogos
                     else
                     {
                         lkBtn_viewPanel_ModalPopupExtender.Show();
-                        ErrorMessage.Text = "Ha ocurrido un error al almacenar los datos";
+                        ErrorMessage.Text = "Ha ocurrido un error al almacenar los datos - "+objRespueta.MensajeRespuesta;
                     }
                     break;
 
@@ -103,7 +105,8 @@ namespace Repuestos.Catalogos
 
         protected void gvMarcas_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
-
+            gvMarcas.PageIndex = e.NewPageIndex;
+            Llenar_gvMarcas();
         }
 
         #endregion
@@ -138,7 +141,8 @@ namespace Repuestos.Catalogos
             obj_Marcas.Marca = txtMarca.Text;
             obj_Marcas.Descripcion = txtDescripcion.Text;
 
-            respuesta = obj_Negocio_Marcas.InsertMarca(obj_Marcas);
+            objRespueta = obj_Negocio_Marcas.InsertMarca(obj_Marcas);
+            respuesta = objRespueta.BoolRespuesta;
 
             return respuesta;
         }
@@ -162,6 +166,7 @@ namespace Repuestos.Catalogos
 
         protected void LimpiarPanel()
         {
+            ErrorMessage.Text = string.Empty;
             txtMarca.Text = string.Empty;
             txtDescripcion.Text = string.Empty;
         }

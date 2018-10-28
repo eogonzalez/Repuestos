@@ -3,6 +3,7 @@ using System.Data;
 using System.Web.UI.WebControls;
 using Capa_Negocio.Catalogos;
 using Capa_Objetos.Catalogos;
+using Capa_Objetos.General;
 
 namespace Repuestos.Catalogos
 {
@@ -11,6 +12,7 @@ namespace Repuestos.Catalogos
 
         CN_Proveedores objProveedores = new CN_Proveedores();
         CO_Proveedores objCO_Proveedores = new CO_Proveedores();
+        CO_Respuesta objRespuesta = new CO_Respuesta();
 
         #region Funciones del formulario
 
@@ -48,7 +50,7 @@ namespace Repuestos.Catalogos
                     else
                     {//Es Falso
                         lkBtn_viewPanel_ModalPopupExtender.Show();
-                        ErrorMessage.Text = "Ha ocurrido un error al actualizar proveedor.";
+                        ErrorMessage.Text = "Ha ocurrido un error al actualizar proveedor."+objRespuesta.MensajeRespuesta;
                     }
 
                     break;
@@ -63,7 +65,7 @@ namespace Repuestos.Catalogos
                     else
                     {
                         lkBtn_viewPanel_ModalPopupExtender.Show();
-                        ErrorMessage.Text = "Ha Ocurrido un Error al almacenar los datos";
+                        ErrorMessage.Text = "Ha Ocurrido un Error al almacenar los datos - ";
                     }
 
                     break;
@@ -111,7 +113,8 @@ namespace Repuestos.Catalogos
 
         protected void gvProveedores_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
-
+            gvProveedores.PageIndex = e.NewPageIndex;
+            Llenar_gvProveedores();
         }
 
         #endregion
@@ -161,7 +164,8 @@ namespace Repuestos.Catalogos
             objCO_Proveedores.Correo = txtCorreo.Text;
 
             //Enviarlos a guardar
-            respuesta =  objProveedores.GuardarFormulario(objCO_Proveedores);
+            objRespuesta =  objProveedores.GuardarFormulario(objCO_Proveedores);
+            respuesta = objRespuesta.BoolRespuesta;
 
             return respuesta;
         }

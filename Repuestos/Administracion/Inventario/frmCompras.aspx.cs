@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
 using System.Web.UI.WebControls;
 using Capa_Negocio.Administracion.Inventario;
 using Capa_Objetos.Administracion.Inventario;
@@ -189,6 +185,12 @@ namespace Repuestos.Administracion.Inventario
             }
         }
 
+        protected void gvProductos_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            gvProductos.PageIndex = e.NewPageIndex;
+            LlenargvProductos();
+        }
+
         #endregion
 
         #region Funciones
@@ -356,7 +358,6 @@ namespace Repuestos.Administracion.Inventario
         }
 
         #endregion
-
 
     }
 }

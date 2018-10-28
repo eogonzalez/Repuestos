@@ -1,6 +1,7 @@
 ﻿using Capa_Datos.Catalogos.Vehiculos;
 using System.Data;
 using Capa_Objetos.Catalogos.Vehiculos;
+using Capa_Objetos.General;
 
 namespace Capa_Negocio.Catalogos.Vehiculos
 {
@@ -8,7 +9,7 @@ namespace Capa_Negocio.Catalogos.Vehiculos
     {
         Lineas obj_Datos_Lineas = new Lineas();
 
-        public DataTable SelectLineas()
+        public CO_Respuesta SelectLineas()
         {
             return obj_Datos_Lineas.SelectLineas();            
         }

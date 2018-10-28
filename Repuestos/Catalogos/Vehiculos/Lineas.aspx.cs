@@ -3,6 +3,7 @@ using System.Web.UI.WebControls;
 using Capa_Negocio.Catalogos.Vehiculos;
 using Capa_Objetos.Catalogos.Vehiculos;
 using System.Data;
+using Capa_Objetos.General;
 
 namespace Repuestos.Catalogos.Vehiculos
 {
@@ -10,6 +11,7 @@ namespace Repuestos.Catalogos.Vehiculos
     {
         CN_Lineas obj_Negocio_Lineas = new CN_Lineas();
         CO_Lineas obj_Objeto_Lineas = new CO_Lineas();
+        CO_Respuesta objRespuesta = new CO_Respuesta();
 
         #region Funciones del formulario
 
@@ -105,7 +107,8 @@ namespace Repuestos.Catalogos.Vehiculos
 
         protected void gvLineas_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
-
+            gvLineas.PageIndex = e.NewPageIndex;
+            Llenar_gvLineas();
         }
 
         #endregion
@@ -115,7 +118,8 @@ namespace Repuestos.Catalogos.Vehiculos
         protected void Llenar_gvLineas()
         {
             var miTabla = new DataTable();
-            miTabla = obj_Negocio_Lineas.SelectLineas();
+            objRespuesta = obj_Negocio_Lineas.SelectLineas();
+            miTabla = objRespuesta.DataTableRespuesta;
             gvLineas.DataSource = miTabla;
             gvLineas.DataBind();
         }

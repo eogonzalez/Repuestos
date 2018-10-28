@@ -47,6 +47,7 @@
     <Compile Include="Administracion\Usuarios\CN_Usuarios.cs" />
     <Compile Include="Catalogos\CN_Clientes.cs" />
     <Compile Include="Catalogos\CN_Proveedores.cs" />
+    <Compile Include="Catalogos\CN_VehiculosClientes.cs" />
     <Compile Include="Catalogos\Repuestos\CN_CategoriaProductos.cs" />
     <Compile Include="Catalogos\Repuestos\CN_Productos.cs" />
     <Compile Include="Catalogos\Vehiculos\CN_Lineas.cs" />

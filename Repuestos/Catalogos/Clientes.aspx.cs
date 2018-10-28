@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
 using System.Web.UI.WebControls;
 using Capa_Negocio.Catalogos;
 using Capa_Objetos.Catalogos;
@@ -112,7 +108,8 @@ namespace Repuestos.Catalogos
 
         protected void gvClientes_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
-
+            gvClientes.PageIndex = e.NewPageIndex;
+            Llenar_gvClientes();
         }
 
         #endregion

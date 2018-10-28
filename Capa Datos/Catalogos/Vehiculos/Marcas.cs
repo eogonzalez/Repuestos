@@ -2,6 +2,7 @@
 using System.Data;
 using System.Data.SqlClient;
 using Capa_Objetos.Catalogos.Vehiculos;
+using Capa_Objetos.General;
 
 namespace Capa_Datos.Catalogos.Vehiculos
 {
@@ -67,8 +68,9 @@ namespace Capa_Datos.Catalogos.Vehiculos
             return respuesta;
         }
 
-        public bool InsertMarca(CO_Marcas objMarcas)
+        public CO_Respuesta InsertMarca(CO_Marcas objMarcas)
         {
+            var objRespuesta = new CO_Respuesta();
             var respuesta = false;
             var sql_query = string.Empty;
 
@@ -91,16 +93,18 @@ namespace Capa_Datos.Catalogos.Vehiculos
                     comando.ExecuteScalar();
 
                     respuesta = true;
+
+                    objRespuesta.BoolRespuesta = respuesta;
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
 
-                    throw;
+                    objRespuesta.MensajeRespuesta = e.Message;
                 }
 
             }
 
-            return respuesta;
+            return objRespuesta;
         }
 
         public bool UpdateMarca(CO_Marcas objMarcas)

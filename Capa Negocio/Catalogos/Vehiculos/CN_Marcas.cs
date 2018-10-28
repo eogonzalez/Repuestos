@@ -1,5 +1,6 @@
 ﻿using Capa_Datos.Catalogos.Vehiculos;
 using Capa_Objetos.Catalogos.Vehiculos;
+using Capa_Objetos.General;
 using System.Data;
 
 namespace Capa_Negocio.Catalogos.Vehiculos
@@ -18,7 +19,7 @@ namespace Capa_Negocio.Catalogos.Vehiculos
             return obj_Datos_Marcas.SelectMarcas(id_marca);
         }
 
-        public bool InsertMarca(CO_Marcas objMarcas)
+        public CO_Respuesta InsertMarca(CO_Marcas objMarcas)
         {
             return obj_Datos_Marcas.InsertMarca(objMarcas);
         }

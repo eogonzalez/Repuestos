@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Capa_Datos.Catalogos;
 using System.Data;
 using Capa_Objetos.Catalogos;
+using Capa_Objetos.General;
 
 namespace Capa_Negocio.Catalogos
 {
@@ -24,7 +25,7 @@ namespace Capa_Negocio.Catalogos
             return obj_Datos_Proveedores.SelectProveedores(id_proveedor);
         }
 
-        public Boolean GuardarFormulario(CO_Proveedores objProveedores)
+        public CO_Respuesta GuardarFormulario(CO_Proveedores objProveedores)
         {
             return obj_Datos_Proveedores.GuardarFormulario(objProveedores);
         }

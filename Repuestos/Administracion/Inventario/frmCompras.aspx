@@ -75,7 +75,10 @@
                         CssClass="table table-hover table-striped"
                         GridLines="None"
                         EmptyDataText="No se han agregado productos"
-                        AutoGenerateColumns="false" OnRowCommand="gvProductos_RowCommand" OnRowDataBound="gvProductos_RowDataBound">
+                        AutoGenerateColumns="false" 
+                        OnRowCommand="gvProductos_RowCommand" 
+                        OnPageIndexChanging="gvProductos_PageIndexChanging"
+                        OnRowDataBound="gvProductos_RowDataBound">
 
                         <Columns>
                             <asp:BoundField DataField="correlativo" SortExpression="correlativo" ItemStyle-CssClass="hiddencol" HeaderStyle-CssClass="hiddencol" />

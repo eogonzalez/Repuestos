@@ -2,6 +2,8 @@
 using System.Data;
 using System.Data.SqlClient;
 using Capa_Objetos.Catalogos;
+using Capa_Objetos.General;
+
 namespace Capa_Datos.Catalogos
 {
     public class Proveedores
@@ -65,9 +67,10 @@ namespace Capa_Datos.Catalogos
             return respuesta;
         }
 
-        public bool GuardarFormulario(CO_Proveedores objProveedores)
+        public CO_Respuesta GuardarFormulario(CO_Proveedores objProveedores)
         {
             var respuesta = false;
+            var objRespuesta = new CO_Respuesta();
             var sql_query = string.Empty;
 
             sql_query = " INSERT INTO [dbo].[proveedores] " +
@@ -93,16 +96,16 @@ namespace Capa_Datos.Catalogos
                     //Ejecuta la consulta
                     comando.ExecuteScalar();
                     respuesta = true;
+                    objRespuesta.BoolRespuesta = respuesta;
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
-
-                    throw;
+                    objRespuesta.MensajeRespuesta = e.Message;                    
                 }
                 
             }
 
-            return respuesta;
+            return objRespuesta;
         }
 
         public bool ActualizarProveedor(CO_Proveedores objProveedores)

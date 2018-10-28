@@ -2,6 +2,7 @@
 using System.Data;
 using System.Data.SqlClient;
 using Capa_Objetos.Catalogos.Vehiculos;
+using Capa_Objetos.General;
 
 namespace Capa_Datos.Catalogos.Vehiculos
 {
@@ -10,9 +11,9 @@ namespace Capa_Datos.Catalogos.Vehiculos
     {
         General.Conexion objConexion = new General.Conexion();
 
-        public DataTable SelectLineas()
+        public CO_Respuesta SelectLineas()
         {
-            var respuesta = new DataTable();
+            var respuesta = new CO_Respuesta();
 
             var sql_query = string.Empty;
 
@@ -30,12 +31,13 @@ namespace Capa_Datos.Catalogos.Vehiculos
                     var comando = new SqlCommand(sql_query, conecta);
 
                     var dataAdapter = new SqlDataAdapter(comando);
-                    dataAdapter.Fill(respuesta);
+                    var TablaDatos = new DataTable();
+                    dataAdapter.Fill(TablaDatos);
+                    respuesta.DataTableRespuesta = TablaDatos;
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
-
-                    throw;
+                    respuesta.MensajeRespuesta = e.Message;                    
                 }
             }
 

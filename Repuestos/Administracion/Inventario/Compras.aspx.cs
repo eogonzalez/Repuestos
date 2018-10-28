@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
 using System.Web.UI.WebControls;
 using Capa_Negocio.Administracion.Inventario;
 
@@ -51,7 +47,8 @@ namespace Repuestos.Inventario
 
         protected void gvCompras_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
-
+            gvCompras.PageIndex = e.NewPageIndex;
+            Llenar_gvCompras();
         }
 
         protected void lkBtn_nuevo_Click(object sender, EventArgs e)

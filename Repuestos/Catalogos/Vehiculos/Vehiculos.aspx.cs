@@ -107,9 +107,9 @@ namespace Repuestos.Catalogos.Vehiculos
 
         protected void gvVehiculos_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
-
+            gvVehiculos.PageIndex = e.NewPageIndex;
+            Llenar_gvVehiculos();
         }
-
 
         protected void ddl_marca_SelectedIndexChanged(object sender, EventArgs e)
         {            
