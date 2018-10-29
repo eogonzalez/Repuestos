@@ -1,21 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Capa_Objetos.Catalogos;
+using Capa_Objetos.General;
+using System.Data;
 
 namespace Capa_Datos.Catalogos
-{    
+{
     public class VehiculosClientes
     {
         General.Conexion objConexion = new General.Conexion();
 
-        public DataTable SelectVehiculosClientes(int id_cliente)
+        public CO_Respuesta SelectVehiculosClientes(int id_cliente)
         {
-            var respuesta = new DataTable();
+            var objRespuesta = new CO_Respuesta();
             var sql_query = string.Empty;
 
             sql_query = " select A.id_vehiculo_cliente, CONCAT(C.Marca,' ',E.Linea,' ',D.modelo,' ', F.Tipo ) as vehiculo,  "+
@@ -41,22 +38,21 @@ namespace Capa_Datos.Catalogos
                     comando.Parameters.AddWithValue("id_cliente", id_cliente);
 
                     var dataAdapter = new SqlDataAdapter(comando);
-                    dataAdapter.Fill(respuesta);
+                    var tabla = new DataTable();
+                    dataAdapter.Fill(tabla);
+                    objRespuesta.DataTableRespuesta = tabla;
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
-
-                    throw;
+                    objRespuesta.MensajeRespuesta = e.Message;
                 }
             }
-
-            return respuesta;
-
+            return objRespuesta;
         }
 
-        public DataTable SelectVehiculoClienteDetalle(int id_vehiculoCliente)
+        public CO_Respuesta SelectVehiculoClienteDetalle(int id_vehiculoCliente)
         {
-            var respuesta = new DataTable();
+            var objRespuesta = new CO_Respuesta();
             var sql_query = string.Empty;
 
             sql_query = " SELECT [id_vehiculo_cliente] "+
@@ -73,21 +69,23 @@ namespace Capa_Datos.Catalogos
                     comando.Parameters.AddWithValue("id_vehiculo_cliente", id_vehiculoCliente);
 
                     var dataAdapter = new SqlDataAdapter(comando);
-                    dataAdapter.Fill(respuesta);
+                    var tabla = new DataTable();
+                    dataAdapter.Fill(tabla);
+                    objRespuesta.DataTableRespuesta = tabla;
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
-
-                    throw;
+                    objRespuesta.MensajeRespuesta = e.Message;
                 }
             }
 
-            return respuesta;
+            return objRespuesta;
         }
 
-        public bool InsertVehiculoCliente(CO_VehiculosClientes objVehiculoCliente)
+        public CO_Respuesta InsertVehiculoCliente(CO_VehiculosClientes objVehiculoCliente)
         {
-            var respuesta = false;
+            var objRespuesta = new CO_Respuesta();
+            objRespuesta.BoolRespuesta = false;
             var sql_query = string.Empty;
 
             sql_query = " INSERT INTO [dbo].[Vehiculos_Clientes] " +
@@ -112,22 +110,22 @@ namespace Capa_Datos.Catalogos
                     conecta.Open();
                     //Ejecuta la consulta
                     comando.ExecuteScalar();
-                    respuesta = true;
+                    objRespuesta.BoolRespuesta = true;
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
-
-                    throw;
+                    objRespuesta.MensajeRespuesta = e.Message;
                 }
 
             }
 
-            return respuesta;
+            return objRespuesta;
         }
 
-        public bool UpdateVehiculoCliente(CO_VehiculosClientes objVehiculoCliente)
+        public CO_Respuesta UpdateVehiculoCliente(CO_VehiculosClientes objVehiculoCliente)
         {
-            Boolean respuesta = false;
+            var objRespuesta = new CO_Respuesta();
+            objRespuesta.BoolRespuesta = false;
             var sql_query = string.Empty;
 
             sql_query = " UPDATE [dbo].[Vehiculos_Clientes] "+
@@ -152,22 +150,21 @@ namespace Capa_Datos.Catalogos
                     conecta.Open();
                     //Ejecuta la consulta
                     comando.ExecuteScalar();
-                    respuesta = true;
+                    objRespuesta.BoolRespuesta = true;
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
-
-                    throw;
+                    objRespuesta.MensajeRespuesta = e.Message;
                 }
-
             }
 
-            return respuesta;
+            return objRespuesta;
         }
 
-        public bool DeleteVehiculoCliente(int id_vehiculoCliente)
+        public CO_Respuesta DeleteVehiculoCliente(int id_vehiculoCliente)
         {
-            Boolean respuesta = false;
+            var objRespuesta = new CO_Respuesta();
+            objRespuesta.BoolRespuesta = false;
             var sql_query = string.Empty;
 
             sql_query = " DELETE FROM [dbo].[vehiculos_clientes] " +
@@ -184,17 +181,16 @@ namespace Capa_Datos.Catalogos
                     conecta.Open();
                     //Ejecuta la consulta
                     comando.ExecuteScalar();
-                    respuesta = true;
+                    objRespuesta.BoolRespuesta = true;
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
-
-                    throw;
+                    objRespuesta.MensajeRespuesta = e.Message;
                 }
 
             }
 
-            return respuesta;
+            return objRespuesta;
         }
     }
 }

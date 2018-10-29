@@ -24,6 +24,9 @@
 
             </div>
             <br />
+            <p class="text-danger">
+                <asp:Literal runat="server" ID="ErrorPrincipal" />
+            </p>
             <%--Area para desplegar informacion mediante una tabla -  gridview--%>
             <div>
                 <asp:GridView runat="server" ID="gvLineas"
@@ -113,7 +116,7 @@
                             CssClass="text-danger" ErrorMessage="El campo no puede quedar vacio." />
                     </div>
                 </div>
-                
+
             </div>
 
             <%--Pie del formulario, donde estan los botones de guardar y salir--%>

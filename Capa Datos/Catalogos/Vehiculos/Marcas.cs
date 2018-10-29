@@ -1,8 +1,8 @@
 ﻿using System;
-using System.Data;
 using System.Data.SqlClient;
 using Capa_Objetos.Catalogos.Vehiculos;
 using Capa_Objetos.General;
+using System.Data;
 
 namespace Capa_Datos.Catalogos.Vehiculos
 {
@@ -10,10 +10,9 @@ namespace Capa_Datos.Catalogos.Vehiculos
     {
         General.Conexion objConexion = new General.Conexion();
 
-        public DataTable SelectMarcas()
+        public CO_Respuesta SelectMarcas()
         {
-            var respuesta = new DataTable();
-
+            CO_Respuesta objRespuesta = new CO_Respuesta();
             var sql_query = string.Empty;
 
             sql_query = " select id_marca, Marca, Descripcion " +
@@ -24,24 +23,23 @@ namespace Capa_Datos.Catalogos.Vehiculos
                 try
                 {
                     var comando = new SqlCommand(sql_query, conecta);
-
                     var dataAdapter = new SqlDataAdapter(comando);
-                    dataAdapter.Fill(respuesta);
+                    var tabla = new DataTable();
+                    dataAdapter.Fill(tabla);
+                    objRespuesta.DataTableRespuesta = tabla;
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
-
-                    throw;
+                    objRespuesta.MensajeRespuesta = e.Message;
                 }
             }
 
-            return respuesta;
+            return objRespuesta;
         }
 
-        public DataTable SelectMarcas(int id_marca)
+        public CO_Respuesta SelectMarcas(int id_marca)
         {
-            var respuesta = new DataTable();
-
+            var objRespuesta = new CO_Respuesta();
             var sql_query = string.Empty;
 
             sql_query = "select marca, Descripcion " +
@@ -56,16 +54,17 @@ namespace Capa_Datos.Catalogos.Vehiculos
                     comando.Parameters.AddWithValue("id_marca", id_marca);
 
                     var dataAdapter = new SqlDataAdapter(comando);
-                    dataAdapter.Fill(respuesta);
+                    var tabla = new DataTable();
+                    dataAdapter.Fill(tabla);
+                    objRespuesta.DataTableRespuesta = tabla;
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
-
-                    throw;
+                    objRespuesta.MensajeRespuesta = e.Message;
                 }
             }
 
-            return respuesta;
+            return objRespuesta;
         }
 
         public CO_Respuesta InsertMarca(CO_Marcas objMarcas)
@@ -107,9 +106,10 @@ namespace Capa_Datos.Catalogos.Vehiculos
             return objRespuesta;
         }
 
-        public bool UpdateMarca(CO_Marcas objMarcas)
+        public CO_Respuesta UpdateMarca(CO_Marcas objMarcas)
         {
-            Boolean respuesta = false;
+            var objRespuesta = new CO_Respuesta();
+            objRespuesta.BoolRespuesta = false;
             var sql_query = string.Empty;
 
             sql_query = " UPDATE [dbo].[marcas] " +
@@ -130,21 +130,21 @@ namespace Capa_Datos.Catalogos.Vehiculos
                     conecta.Open();
                     //Ejecuta la consulta
                     comando.ExecuteScalar();
-                    respuesta = true;
+                    objRespuesta.BoolRespuesta = true;
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
-
-                    throw;
+                    objRespuesta.MensajeRespuesta = e.Message;
                 }
             }
 
-            return respuesta;
+            return objRespuesta;
         }
 
-        public bool DeleteMarca(int id_marca)
+        public CO_Respuesta DeleteMarca(int id_marca)
         {
-            Boolean respuesta = false;
+            var objRespuesta = new CO_Respuesta();
+            objRespuesta.BoolRespuesta = false;
             var sql_query = string.Empty;
 
             sql_query = " DELETE FROM [dbo].[marcas] " +
@@ -161,16 +161,15 @@ namespace Capa_Datos.Catalogos.Vehiculos
                     conecta.Open();
                     //Ejecuta la consulta
                     comando.ExecuteScalar();
-                    respuesta = true;
+                    objRespuesta.BoolRespuesta = true;
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
-
-                    throw;
+                    objRespuesta.MensajeRespuesta = e.Message;
                 }
             }
 
-            return respuesta;
+            return objRespuesta;
         }
     }
 }

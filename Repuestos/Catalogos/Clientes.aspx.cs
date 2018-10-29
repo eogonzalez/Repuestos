@@ -3,6 +3,7 @@ using System.Web.UI.WebControls;
 using Capa_Negocio.Catalogos;
 using Capa_Objetos.Catalogos;
 using System.Data;
+using Capa_Objetos.General;
 
 namespace Repuestos.Catalogos
 {
@@ -10,6 +11,7 @@ namespace Repuestos.Catalogos
     {
         CN_Clientes objClientes = new CN_Clientes();
         CO_Clientes objCO_Clientes = new CO_Clientes();
+        CO_Respuesta objRespuesta = new CO_Respuesta();
 
         #region Funciones del formulario
 
@@ -48,7 +50,7 @@ namespace Repuestos.Catalogos
                     else
                     {
                         lkBtn_viewPanel_ModalPopupExtender.Show();
-                        ErrorMessage.Text = "Ha ocurrido un error al actualizar cliente";
+                        ErrorMessage.Text = "Ha ocurrido un error al actualizar cliente - "+objRespuesta.MensajeRespuesta;
                     }
 
                     break;
@@ -61,7 +63,7 @@ namespace Repuestos.Catalogos
                     else
                     {
                         lkBtn_viewPanel_ModalPopupExtender.Show();
-                        ErrorMessage.Text = "Ha ocurrido un error al almacenar los datos";
+                        ErrorMessage.Text = "Ha ocurrido un error al almacenar los datos - "+objRespuesta.MensajeRespuesta;
                     }
                     break;
 
@@ -94,8 +96,16 @@ namespace Repuestos.Catalogos
                         break;
 
                     case "eliminar":
-                        EliminarCliente(id_cliente);
-                        Llenar_gvClientes();
+                        if (EliminarCliente(id_cliente))
+                        {
+                            Llenar_gvClientes();
+                        }
+                        else
+                        {
+                            ErrorPrincipal.Text = objRespuesta.MensajeRespuesta;
+                        }
+                        
+                        
                         break;
                     case "vehiculos":
                         Response.Redirect("~/Catalogos/VehiculosClientes.aspx?idc=" + id_cliente);
@@ -114,15 +124,14 @@ namespace Repuestos.Catalogos
 
         #endregion
 
-
         #region Funciones 
 
         //Funcion para llenar GridView
         protected void Llenar_gvClientes()
         {
             var miTabla = new DataTable();
-
-            miTabla = objClientes.SelectClientes();
+            objRespuesta = objClientes.SelectClientes();
+            miTabla = objRespuesta.DataTableRespuesta;
 
             //Establecer valores al grid view
             gvClientes.DataSource = miTabla;
@@ -135,7 +144,9 @@ namespace Repuestos.Catalogos
             btnGuardar.CommandName = "Editar";
 
             var tabla_datos = new DataTable();
-            tabla_datos = objClientes.SelectClientes(id_cliente);
+            objRespuesta = objClientes.SelectClientes(id_cliente);
+            tabla_datos = objRespuesta.DataTableRespuesta;
+
             var row = tabla_datos.Rows[0];
 
             txtNit.Text = row["nit"].ToString();
@@ -155,7 +166,8 @@ namespace Repuestos.Catalogos
             objCO_Clientes.Telefono = txtTelefono.Text;
             objCO_Clientes.Correo = txtCorreo.Text;
 
-            respuesta = objClientes.GuardarFormulario(objCO_Clientes);
+            objRespuesta = objClientes.GuardarFormulario(objCO_Clientes);
+            respuesta = objRespuesta.BoolRespuesta;
 
             return respuesta;
         }
@@ -170,18 +182,22 @@ namespace Repuestos.Catalogos
             objCO_Clientes.Telefono = txtTelefono.Text;
             objCO_Clientes.Correo = txtCorreo.Text;
 
-            respuesta = objClientes.UpdateCliente(objCO_Clientes);
+            objRespuesta = objClientes.UpdateCliente(objCO_Clientes);
+            respuesta = objRespuesta.BoolRespuesta;
 
             return respuesta;
         }
 
         protected bool EliminarCliente(int id_cliente)
         {
-            return objClientes.DeleteCliente(id_cliente);
+            objRespuesta = objClientes.DeleteCliente(id_cliente);
+            return objRespuesta.BoolRespuesta;
         }
 
         protected void LimpiarPanel()
         {
+            ErrorMessage.Text = string.Empty;
+            ErrorPrincipal.Text = string.Empty;
             txtNit.Text = string.Empty;
             txtNombres.Text = string.Empty;
             txtDireccion.Text = string.Empty;

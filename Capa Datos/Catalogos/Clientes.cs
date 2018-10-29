@@ -1,17 +1,18 @@
 ﻿using System;
-using System.Data;
 using System.Data.SqlClient;
 using Capa_Objetos.Catalogos;
+using Capa_Objetos.General;
+using System.Data;
+
 namespace Capa_Datos.Catalogos
 {
     public class Clientes
     {
         General.Conexion objConexion = new General.Conexion();
-        
-        //Funcion publica que selecciona los datos de tabla de clientes
-        public DataTable SelectClientes()
+                
+        public CO_Respuesta SelectClientes()
         {
-            var respuesta = new DataTable();
+            var objRespuesta = new CO_Respuesta();
             var sql_query = string.Empty;
 
             sql_query = "select id_cliente, nombres, correo from clientes; ";
@@ -23,21 +24,22 @@ namespace Capa_Datos.Catalogos
                     var comando = new SqlCommand(sql_query, conecta);
 
                     var dataAdapter = new SqlDataAdapter(comando);
-                    dataAdapter.Fill(respuesta);
+                    var tabla = new DataTable();
+                    dataAdapter.Fill(tabla);
+                    objRespuesta.DataTableRespuesta = tabla;
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
-
-                    throw;
+                    objRespuesta.MensajeRespuesta = e.Message;
                 }
             }
 
-            return respuesta;
+            return objRespuesta;
         }
 
-        public DataTable SelectClientes(int id_cliente)
+        public CO_Respuesta SelectClientes(int id_cliente)
         {
-            var respuesta = new DataTable();
+            var objRespuesta = new CO_Respuesta();
             var sql_query = string.Empty;
 
             sql_query = "select nit, cui, pasaporte, nombres, apellidos, "+
@@ -53,22 +55,24 @@ namespace Capa_Datos.Catalogos
                     comando.Parameters.AddWithValue("id_cliente", id_cliente);
 
                     var dataAdapter = new SqlDataAdapter(comando);
-                    dataAdapter.Fill(respuesta);
+                    var tabla = new DataTable();
+                    dataAdapter.Fill(tabla);
+                    objRespuesta.DataTableRespuesta = tabla;
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
-
-                    throw;
+                    objRespuesta.MensajeRespuesta = e.Message;
                 }
             }
 
 
-            return respuesta;
+            return objRespuesta;
         }
 
-        public Boolean GuardarFormulario(CO_Clientes objClientes)
+        public CO_Respuesta GuardarFormulario(CO_Clientes objClientes)
         {
-            var respuesta = false;
+            var objRespuesta = new CO_Respuesta();
+            objRespuesta.BoolRespuesta = false;
             var sql_query = string.Empty;
 
             sql_query = " INSERT INTO [dbo].[clientes] " +
@@ -87,21 +91,27 @@ namespace Capa_Datos.Catalogos
                 comando.Parameters.AddWithValue("telefono", objClientes.Telefono);
                 comando.Parameters.AddWithValue("correo", objClientes.Correo);
 
-                //Se abre la sesion para transaccion
-                conecta.Open();
-                //Ejecuta la consulta
-                comando.ExecuteScalar();
-
-                respuesta = true;
+                try
+                {
+                    //Se abre la sesion para transaccion
+                    conecta.Open();
+                    //Ejecuta la consulta
+                    comando.ExecuteScalar();
+                    objRespuesta.BoolRespuesta = true;
+                }
+                catch (Exception e)
+                {
+                    objRespuesta.MensajeRespuesta = e.Message;
+                }                
             }
 
-
-            return respuesta;
+            return objRespuesta;
         }
 
-        public bool UpdateCliente(CO_Clientes objClientes)
+        public CO_Respuesta UpdateCliente(CO_Clientes objClientes)
         {
-            Boolean respuesta = false;
+            var objRespuesta = new CO_Respuesta();
+            objRespuesta.BoolRespuesta = false;
             var sql_query = string.Empty;
 
             sql_query = " UPDATE [dbo].[clientes] "+
@@ -128,22 +138,22 @@ namespace Capa_Datos.Catalogos
                     conecta.Open();
                     //Ejecuta la consulta
                     comando.ExecuteScalar();
-                    respuesta = true;
+                    objRespuesta.BoolRespuesta = true;
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
-
-                    throw;
+                    objRespuesta.MensajeRespuesta = e.Message;
                 }
 
             }
 
-            return respuesta;
+            return objRespuesta;
         }
 
-        public bool DeleteCliente(int id_cliente)
+        public CO_Respuesta DeleteCliente(int id_cliente)
         {
-            Boolean respuesta = false;
+            var objRespuesta = new CO_Respuesta();
+            objRespuesta.BoolRespuesta = false;
             var sql_query = string.Empty;
 
             sql_query = " DELETE FROM [dbo].[clientes] " +
@@ -160,17 +170,15 @@ namespace Capa_Datos.Catalogos
                     conecta.Open();
                     //Ejecuta la consulta
                     comando.ExecuteScalar();
-                    respuesta = true;
+                    objRespuesta.BoolRespuesta = true;
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
-
-                    throw;
+                    objRespuesta.MensajeRespuesta = e.Message;
                 }
-
             }
 
-            return respuesta;
+            return objRespuesta;
         }
     }
 }

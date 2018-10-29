@@ -2,12 +2,14 @@
 using System.Data;
 using System.Web.UI.WebControls;
 using Capa_Negocio.Administracion.Inventario;
+using Capa_Objetos.General;
 
 namespace Repuestos.Inventario
 {
     public partial class Compras : System.Web.UI.Page
     {
         CN_Compras obj_Negocio_Compras = new CN_Compras();
+        CO_Respuesta objRespuesta = new CO_Respuesta();
 
         #region Funciones del formulario
         
@@ -36,8 +38,16 @@ namespace Repuestos.Inventario
                         Response.Redirect("~/Administracion/Inventario/frmCompras.aspx?idc=" + id_compra+"&st="+estado);
                         break;
                     case "eliminar":
-                        EliminarCompra(id_compra);
-                        Llenar_gvCompras();
+                        if (EliminarCompra(id_compra))
+                        {
+                            Llenar_gvCompras();
+                        }
+                        else
+                        {
+                            ErrorPrincipal.Text = objRespuesta.MensajeRespuesta;
+                        }
+                        
+                        
                         break;
                     default:
                         break;
@@ -74,7 +84,8 @@ namespace Repuestos.Inventario
         protected void Llenar_gvCompras()
         {
             var miTabla = new DataTable();
-            miTabla = obj_Negocio_Compras.SelectCompra();
+            objRespuesta = obj_Negocio_Compras.SelectCompra();
+            miTabla = objRespuesta.DataTableRespuesta;
             gvCompras.DataSource = miTabla;
             gvCompras.DataBind();
 
@@ -82,11 +93,11 @@ namespace Repuestos.Inventario
 
         protected bool EliminarCompra(int id_compra)
         {
-            return obj_Negocio_Compras.DeleteCompra(id_compra);
+            objRespuesta =  obj_Negocio_Compras.DeleteCompra(id_compra);
+            return objRespuesta.BoolRespuesta;
         }
 
         #endregion
-
 
     }
 }

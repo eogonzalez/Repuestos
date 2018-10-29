@@ -3,6 +3,7 @@ using System.Web.UI.WebControls;
 using Capa_Negocio.Catalogos.Vehiculos;
 using Capa_Objetos.Catalogos.Vehiculos;
 using System.Data;
+using Capa_Objetos.General;
 
 namespace Repuestos.Catalogos.Vehiculos
 {
@@ -10,6 +11,7 @@ namespace Repuestos.Catalogos.Vehiculos
     {
         CN_Vehiculos obj_Negocio_Vehiculos = new CN_Vehiculos();
         CO_Vehiculos obj_Vehiculos = new CO_Vehiculos();
+        CO_Respuesta objRespuesta = new CO_Respuesta();
 
         #region Funciones del formulario
        
@@ -48,7 +50,7 @@ namespace Repuestos.Catalogos.Vehiculos
                     else
                     {
                         lkBtn_viewPanel_ModalPopupExtender.Show();
-                        ErrorMessage.Text = "Ha ocurrido un error al actualizar vehiculo";
+                        ErrorMessage.Text = "Ha ocurrido un error al actualizar vehiculo - "+objRespuesta.MensajeRespuesta;
                     }
 
                     break;
@@ -61,7 +63,7 @@ namespace Repuestos.Catalogos.Vehiculos
                     else
                     {
                         lkBtn_viewPanel_ModalPopupExtender.Show();
-                        ErrorMessage.Text = "Ha ocurrido un error al almacenar los datos";
+                        ErrorMessage.Text = "Ha ocurrido un error al almacenar los datos - "+objRespuesta.MensajeRespuesta;
                     }
                     break;
 
@@ -69,7 +71,6 @@ namespace Repuestos.Catalogos.Vehiculos
                     break;
             }
         }
-
 
         protected void gvVehiculos_RowCommand(object sender, GridViewCommandEventArgs e)
         {
@@ -95,8 +96,15 @@ namespace Repuestos.Catalogos.Vehiculos
                         break;
 
                     case "eliminar":
-                        EliminarVehiculo(id_vehiculo);
-                        Llenar_gvVehiculos();
+                                                
+                        if (EliminarVehiculo(id_vehiculo))
+                        {
+                            Llenar_gvVehiculos();
+                        }else
+                        {
+                            ErrorPrincipal.Text = objRespuesta.MensajeRespuesta;
+                        }
+
                         break;
 
                     default:
@@ -140,10 +148,12 @@ namespace Repuestos.Catalogos.Vehiculos
         #endregion
 
         #region Funciones
+
         protected void Llenar_gvVehiculos()
         {
             var miTabla = new DataTable();
-            miTabla = obj_Negocio_Vehiculos.SelectVehiculos();
+            objRespuesta = obj_Negocio_Vehiculos.SelectVehiculos();
+            miTabla = objRespuesta.DataTableRespuesta;
             gvVehiculos.DataSource = miTabla;
             gvVehiculos.DataBind();
         }
@@ -154,7 +164,8 @@ namespace Repuestos.Catalogos.Vehiculos
             btnGuardar.CommandName = "Editar";
 
             var tabla_datos = new DataTable();
-            tabla_datos = obj_Negocio_Vehiculos.SelectVehiculos(id_vehiculo);
+            objRespuesta = obj_Negocio_Vehiculos.SelectVehiculos(id_vehiculo);
+            tabla_datos = objRespuesta.DataTableRespuesta;
             var row = tabla_datos.Rows[0];
 
             ddl_marca.SelectedValue = row["id_marca"].ToString();
@@ -181,7 +192,8 @@ namespace Repuestos.Catalogos.Vehiculos
             obj_Vehiculos.Id_Tipo_Vehiculo = Convert.ToInt32(ddl_tipo_vehiculo.SelectedValue.ToString());
             obj_Vehiculos.Descripcion = txtDescripcion.Text;
 
-            respuesta = obj_Negocio_Vehiculos.InsertVehiculo(obj_Vehiculos);
+            objRespuesta = obj_Negocio_Vehiculos.InsertVehiculo(obj_Vehiculos);
+            respuesta = objRespuesta.BoolRespuesta;
 
             return respuesta;
         }
@@ -196,18 +208,22 @@ namespace Repuestos.Catalogos.Vehiculos
             obj_Vehiculos.Id_Tipo_Vehiculo = Convert.ToInt32(ddl_tipo_vehiculo.SelectedValue.ToString());
             obj_Vehiculos.Descripcion = txtDescripcion.Text;
 
-            respuesta = obj_Negocio_Vehiculos.UpdateVehiculo(obj_Vehiculos);
+            objRespuesta = obj_Negocio_Vehiculos.UpdateVehiculo(obj_Vehiculos);
+            respuesta = objRespuesta.BoolRespuesta;
 
             return respuesta;
         }
 
-        protected void EliminarVehiculo(int id_vehiculo)
+        protected bool EliminarVehiculo(int id_vehiculo)
         {
-            obj_Negocio_Vehiculos.DeleteVehiculo(id_vehiculo);
+            objRespuesta = obj_Negocio_Vehiculos.DeleteVehiculo(id_vehiculo);
+            return objRespuesta.BoolRespuesta;
         }
 
         protected void LimpiarPanel()
         {
+            ErrorPrincipal.Text = string.Empty;
+            ErrorMessage.Text = string.Empty;
             txtDescripcion.Text = string.Empty;
         }
 
@@ -215,8 +231,9 @@ namespace Repuestos.Catalogos.Vehiculos
         {
             var dt = new DataTable();
             CN_Marcas objMarca = new CN_Marcas();
-            dt = objMarca.SelectMarcas();
-           
+            objRespuesta = objMarca.SelectMarcas();
+            dt = objRespuesta.DataTableRespuesta;
+                       
             if (dt.Rows.Count > 0)
             {
                 ddl_marca.DataTextField = dt.Columns["marca"].ToString();
@@ -231,7 +248,9 @@ namespace Repuestos.Catalogos.Vehiculos
         {
             var dt = new DataTable();
             CN_Modelos objModelo = new CN_Modelos();
-            dt = objModelo.SelectModelos();
+            objRespuesta = objModelo.SelectModelos();
+            dt = objRespuesta.DataTableRespuesta;
+
             if (dt.Rows.Count > 0)
             {
                 ddl_modelo.DataTextField = dt.Columns["modelo"].ToString();
@@ -246,7 +265,9 @@ namespace Repuestos.Catalogos.Vehiculos
         {
             var dt = new DataTable();
             CN_Modelos objModelo = new CN_Modelos();
-            dt = objModelo.SelectModelos(id_linea);
+            objRespuesta = objModelo.SelectModelos(id_linea);
+            dt = objRespuesta.DataTableRespuesta;
+
             if (dt.Rows.Count > 0)
             {
                 ddl_modelo.DataTextField = dt.Columns["modelo"].ToString();
@@ -261,7 +282,9 @@ namespace Repuestos.Catalogos.Vehiculos
         {
             var dt = new DataTable();
             CN_Lineas objLinea = new CN_Lineas();
-            dt = objLinea.SelectLineas(0);
+            objRespuesta = objLinea.SelectLineas(0);
+            dt = objRespuesta.DataTableRespuesta;
+
             if (dt.Rows.Count > 0)
             {
                 ddl_linea.DataTextField = dt.Columns["linea"].ToString();
@@ -276,7 +299,9 @@ namespace Repuestos.Catalogos.Vehiculos
         {
             var dt = new DataTable();
             CN_Lineas objLinea = new CN_Lineas();
-            dt = objLinea.SelectLineas(id_marca);
+            objRespuesta = objLinea.SelectLineas(id_marca);
+            dt = objRespuesta.DataTableRespuesta;
+
             if (dt.Rows.Count > 0)
             {
                 ddl_linea.DataTextField = dt.Columns["linea"].ToString();
@@ -291,7 +316,9 @@ namespace Repuestos.Catalogos.Vehiculos
         {
             var dt = new DataTable();
             CN_TipoVehiculos objTipoVehiculos = new CN_TipoVehiculos();
-            dt = objTipoVehiculos.SelectTipoVehiculos();
+            objRespuesta = objTipoVehiculos.SelectTipoVehiculos();
+            dt = objRespuesta.DataTableRespuesta;
+
             if (dt.Rows.Count > 0)
             {
                 ddl_tipo_vehiculo.DataTextField = dt.Columns["tipo"].ToString();

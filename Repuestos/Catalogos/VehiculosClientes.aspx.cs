@@ -4,6 +4,7 @@ using System.Web.UI.WebControls;
 using Capa_Negocio.Catalogos;
 using Capa_Objetos.Catalogos;
 using Capa_Negocio.Catalogos.Vehiculos;
+using Capa_Objetos.General;
 
 namespace Repuestos.Catalogos
 {
@@ -11,9 +12,9 @@ namespace Repuestos.Catalogos
     {
         CN_VehiculosClientes obj_Negocio_VehiculoClientes = new CN_VehiculosClientes();
         CO_VehiculosClientes objVehiculosClientes = new CO_VehiculosClientes();
+        CO_Respuesta objRespuesta = new CO_Respuesta();
 
         #region Funciones del formulario
-
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -59,8 +60,16 @@ namespace Repuestos.Catalogos
                         break;
 
                     case "eliminar":
-                        EliminarVehiculoCliente(id_vehiculo_cliente);
-                        Llenar_gvVehiculoCliente(id_cliente);
+                        if (EliminarVehiculoCliente(id_vehiculo_cliente))
+                        {
+                            Llenar_gvVehiculoCliente(id_cliente);
+                        }
+                        else
+                        {
+                            ErrorPrincipal.Text = objRespuesta.MensajeRespuesta;
+                        }
+                        
+                        
                         break;
 
                     default:
@@ -111,7 +120,7 @@ namespace Repuestos.Catalogos
                     else
                     {
                         lkBtn_viewPanel_ModalPopupExtender.Show();
-                        ErrorMessage.Text = "Ha ocurrido un error al actualizar vehiculo del cliente";
+                        ErrorMessage.Text = "Ha ocurrido un error al actualizar vehiculo del cliente - "+objRespuesta.MensajeRespuesta;
                     }
 
                     break;
@@ -124,7 +133,7 @@ namespace Repuestos.Catalogos
                     else
                     {
                         lkBtn_viewPanel_ModalPopupExtender.Show();
-                        ErrorMessage.Text = "Ha ocurrido un error al almacenar los datos";
+                        ErrorMessage.Text = "Ha ocurrido un error al almacenar los datos - "+objRespuesta.MensajeRespuesta;
                     }
                     break;
 
@@ -145,7 +154,8 @@ namespace Repuestos.Catalogos
         protected void Llenar_gvVehiculoCliente(int id_cliente)
         {
             var miTabla = new DataTable();
-            miTabla = obj_Negocio_VehiculoClientes.SelectVehiculosClientes(id_cliente);
+            objRespuesta = obj_Negocio_VehiculoClientes.SelectVehiculosClientes(id_cliente);
+            miTabla = objRespuesta.DataTableRespuesta;
             gvVehiculosClientes.DataSource = miTabla;
             gvVehiculosClientes.DataBind();
         }
@@ -156,7 +166,8 @@ namespace Repuestos.Catalogos
             btnGuardar.CommandName = "Editar";
 
             var tabla_datos = new DataTable();
-            tabla_datos = obj_Negocio_VehiculoClientes.SelectVehiculoClienteDetalle(id_vehiculoCliente);
+            objRespuesta = obj_Negocio_VehiculoClientes.SelectVehiculoClienteDetalle(id_vehiculoCliente);
+            tabla_datos = objRespuesta.DataTableRespuesta;
             var row = tabla_datos.Rows[0];
 
             ddl_cliente.SelectedValue = row["id_cliente"].ToString();           
@@ -176,7 +187,8 @@ namespace Repuestos.Catalogos
             objVehiculosClientes.Color= txtColor.Text;
             objVehiculosClientes.Kilometraje= Convert.ToInt32(txtKilometraje.Text);
 
-            respuesta = obj_Negocio_VehiculoClientes.InsertVehiculoCliente(objVehiculosClientes);
+            objRespuesta = obj_Negocio_VehiculoClientes.InsertVehiculoCliente(objVehiculosClientes);
+            respuesta = objRespuesta.BoolRespuesta;
 
             return respuesta;
         }
@@ -190,18 +202,22 @@ namespace Repuestos.Catalogos
             objVehiculosClientes.Color = txtColor.Text;
             objVehiculosClientes.Kilometraje = Convert.ToInt32(txtKilometraje.Text);            
 
-            respuesta = obj_Negocio_VehiculoClientes.UpdateVehiculoCliente(objVehiculosClientes);
+            objRespuesta = obj_Negocio_VehiculoClientes.UpdateVehiculoCliente(objVehiculosClientes);
+            respuesta = objRespuesta.BoolRespuesta;
 
             return respuesta;
         }
 
-        protected void EliminarVehiculoCliente(int id_vehiculo_cliente)
+        protected bool EliminarVehiculoCliente(int id_vehiculo_cliente)
         {
-            obj_Negocio_VehiculoClientes.DeleteVehiculoCliente(id_vehiculo_cliente);
+            objRespuesta = obj_Negocio_VehiculoClientes.DeleteVehiculoCliente(id_vehiculo_cliente);
+            return objRespuesta.BoolRespuesta;
         }
 
         protected void LimpiarPanel()
         {
+            ErrorPrincipal.Text = string.Empty;
+            ErrorMessage.Text = string.Empty;
             txtPlaca.Text = string.Empty;
             txtColor.Text = string.Empty;
             txtKilometraje.Text = string.Empty;
@@ -211,7 +227,8 @@ namespace Repuestos.Catalogos
         {
             var dt = new DataTable();
             CN_Clientes objCliente = new CN_Clientes();
-            dt = objCliente.SelectClientes();
+            objRespuesta = objCliente.SelectClientes();
+            dt = objRespuesta.DataTableRespuesta;
 
             if (dt.Rows.Count > 0)
             {
@@ -227,7 +244,9 @@ namespace Repuestos.Catalogos
         {
             var dt = new DataTable();
             CN_Vehiculos objVehiculo = new CN_Vehiculos();
-            dt = objVehiculo.SelectVehiculos(true);
+            objRespuesta = objVehiculo.SelectVehiculos(true);
+            dt = objRespuesta.DataTableRespuesta;
+
             if (dt.Rows.Count > 0)
             {
                 ddl_vehiculo.DataTextField = dt.Columns["vehiculo"].ToString();

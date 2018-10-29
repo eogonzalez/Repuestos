@@ -3,6 +3,7 @@ using System.Web.UI.WebControls;
 using Capa_Negocio.Catalogos.Vehiculos;
 using Capa_Objetos.Catalogos.Vehiculos;
 using System.Data;
+using Capa_Objetos.General;
 
 namespace Repuestos.Catalogos.Vehiculos
 {
@@ -11,6 +12,7 @@ namespace Repuestos.Catalogos.Vehiculos
 
         CN_TipoVehiculos obj_Negocio_TipoVehiculos = new CN_TipoVehiculos();
         CO_TipoVehiculos obj_TipoVehiculos = new CO_TipoVehiculos();
+        CO_Respuesta objRespuesta = new CO_Respuesta();
 
         #region Funciones del formulario
         
@@ -45,7 +47,7 @@ namespace Repuestos.Catalogos.Vehiculos
                     else
                     {
                         lkBtn_viewPanel_ModalPopupExtender.Show();
-                        ErrorMessage.Text = "Ha ocurrido un error al actualizar tipo vehiculo";
+                        ErrorMessage.Text = "Ha ocurrido un error al actualizar tipo vehiculo - "+objRespuesta.MensajeRespuesta;
                     }
 
                     break;
@@ -58,7 +60,7 @@ namespace Repuestos.Catalogos.Vehiculos
                     else
                     {
                         lkBtn_viewPanel_ModalPopupExtender.Show();
-                        ErrorMessage.Text = "Ha ocurrido un error al almacenar los datos";
+                        ErrorMessage.Text = "Ha ocurrido un error al almacenar los datos - "+objRespuesta.MensajeRespuesta;
                     }
                     break;
 
@@ -91,8 +93,16 @@ namespace Repuestos.Catalogos.Vehiculos
                         break;
 
                     case "eliminar":
-                        EliminarTipoVehiculo(id_tipo_vehiculo);
-                        Llenar_gvTipoVehiculos();
+                                                
+                        if (EliminarTipoVehiculo(id_tipo_vehiculo))
+                        {
+                            Llenar_gvTipoVehiculos();
+                        }
+                        else
+                        {
+                            ErrorPrincipal.Text = objRespuesta.MensajeRespuesta;
+                        }
+
                         break;
 
                     default:
@@ -114,7 +124,8 @@ namespace Repuestos.Catalogos.Vehiculos
         protected void Llenar_gvTipoVehiculos()
         {
             var miTabla = new DataTable();
-            miTabla = obj_Negocio_TipoVehiculos.SelectTipoVehiculos();
+            objRespuesta = obj_Negocio_TipoVehiculos.SelectTipoVehiculos();
+            miTabla = objRespuesta.DataTableRespuesta;
             gvTipoVehiculos.DataSource = miTabla;
             gvTipoVehiculos.DataBind();
         }
@@ -125,7 +136,8 @@ namespace Repuestos.Catalogos.Vehiculos
             btnGuardar.CommandName = "Editar";
 
             var tabla_datos = new DataTable();
-            tabla_datos = obj_Negocio_TipoVehiculos.SelectTipoVehiculos(id_tipo_vehiculo);
+            objRespuesta = obj_Negocio_TipoVehiculos.SelectTipoVehiculos(id_tipo_vehiculo);
+            tabla_datos = objRespuesta.DataTableRespuesta;
             var row = tabla_datos.Rows[0];
 
             txtTipo.Text = row["tipo"].ToString();
@@ -137,7 +149,8 @@ namespace Repuestos.Catalogos.Vehiculos
             bool respuesta = false;
             obj_TipoVehiculos.Tipo = txtTipo.Text;
 
-            respuesta = obj_Negocio_TipoVehiculos.InsertIpoVehiculo(obj_TipoVehiculos);
+            objRespuesta = obj_Negocio_TipoVehiculos.InsertIpoVehiculo(obj_TipoVehiculos);
+            respuesta = objRespuesta.BoolRespuesta;
 
             return respuesta;
         }
@@ -148,18 +161,22 @@ namespace Repuestos.Catalogos.Vehiculos
             obj_TipoVehiculos.Id_Tipo_Vehiculo = id_tipo_vehiculo;
             obj_TipoVehiculos.Tipo = txtTipo.Text;
 
-            respuesta = obj_Negocio_TipoVehiculos.UpdateTipoVehiculo(obj_TipoVehiculos);
+            objRespuesta = obj_Negocio_TipoVehiculos.UpdateTipoVehiculo(obj_TipoVehiculos);
+            respuesta = objRespuesta.BoolRespuesta;
 
             return respuesta;
         }
 
-        protected void EliminarTipoVehiculo(int id_tipo_vehiculo)
+        protected bool EliminarTipoVehiculo(int id_tipo_vehiculo)
         {
-            obj_Negocio_TipoVehiculos.DeleteTipoVehiculo(id_tipo_vehiculo);
+            objRespuesta = obj_Negocio_TipoVehiculos.DeleteTipoVehiculo(id_tipo_vehiculo);
+            return objRespuesta.BoolRespuesta;
         }
 
         protected void LimpiarPanel()
         {
+            ErrorPrincipal.Text = string.Empty;
+            ErrorMessage.Text = string.Empty;
             txtTipo.Text = string.Empty;
         }
 

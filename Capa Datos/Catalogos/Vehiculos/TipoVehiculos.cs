@@ -1,7 +1,8 @@
 ﻿using System;
-using System.Data;
 using System.Data.SqlClient;
 using Capa_Objetos.Catalogos.Vehiculos;
+using Capa_Objetos.General;
+using System.Data;
 
 namespace Capa_Datos.Catalogos.Vehiculos
 {
@@ -9,10 +10,9 @@ namespace Capa_Datos.Catalogos.Vehiculos
     {
         General.Conexion objConexion = new General.Conexion();
 
-        public DataTable SelectTipoVehiculos()
+        public CO_Respuesta SelectTipoVehiculos()
         {
-            var respuesta = new DataTable();
-
+            var objRespuesta = new CO_Respuesta();
             var sql_query = string.Empty;
 
             sql_query = " select id_tipo_vehiculo, tipo " +
@@ -25,22 +25,22 @@ namespace Capa_Datos.Catalogos.Vehiculos
                     var comando = new SqlCommand(sql_query, conecta);
 
                     var dataAdapter = new SqlDataAdapter(comando);
-                    dataAdapter.Fill(respuesta);
+                    var tabla = new DataTable();
+                    dataAdapter.Fill(tabla);
+                    objRespuesta.DataTableRespuesta = tabla;
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
-
-                    throw;
+                    objRespuesta.MensajeRespuesta = e.Message;
                 }
             }
 
-            return respuesta;
+            return objRespuesta;
         }
 
-        public DataTable SelectTipoVehiculos(int id_tipo_vehiculo)
+        public CO_Respuesta SelectTipoVehiculos(int id_tipo_vehiculo)
         {
-            var respuesta = new DataTable();
-
+            var objRespuesta = new CO_Respuesta();
             var sql_query = string.Empty;
 
             sql_query = "select tipo " +
@@ -55,21 +55,23 @@ namespace Capa_Datos.Catalogos.Vehiculos
                     comando.Parameters.AddWithValue("id_tipo_vehiculo", id_tipo_vehiculo);
 
                     var dataAdapter = new SqlDataAdapter(comando);
-                    dataAdapter.Fill(respuesta);
+                    var tabla = new DataTable();
+                    dataAdapter.Fill(tabla);
+                    objRespuesta.DataTableRespuesta = tabla;
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
-
-                    throw;
+                    objRespuesta.MensajeRespuesta = e.Message;
                 }
             }
 
-            return respuesta;
+            return objRespuesta;
         }
 
-        public bool InsertTipoVehiculo(CO_TipoVehiculos objTipoVehiculo)
+        public CO_Respuesta InsertTipoVehiculo(CO_TipoVehiculos objTipoVehiculo)
         {
-            var respuesta = false;
+            var objRespuesta = new CO_Respuesta();
+            objRespuesta.BoolRespuesta = false;
             var sql_query = string.Empty;
 
             sql_query = " INSERT INTO [dbo].[Tipo_Vehiculo] " +
@@ -88,22 +90,21 @@ namespace Capa_Datos.Catalogos.Vehiculos
                     conecta.Open();
                     //Ejecuta la consulta
                     comando.ExecuteScalar();
-                    respuesta = true;
+                    objRespuesta.BoolRespuesta = true;
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
-
-                    throw;
+                    objRespuesta.MensajeRespuesta = e.Message;
                 }
-
             }
 
-            return respuesta;
+            return objRespuesta;
         }
 
-        public bool UpdateTipoVehiculo(CO_TipoVehiculos objTipoVehiculo)
+        public CO_Respuesta UpdateTipoVehiculo(CO_TipoVehiculos objTipoVehiculo)
         {
-            Boolean respuesta = false;
+            var objRespuesta = new CO_Respuesta();
+            objRespuesta.BoolRespuesta = false;
             var sql_query = string.Empty;
 
             sql_query = " UPDATE [dbo].[tipo_vehiculo] " +
@@ -122,22 +123,21 @@ namespace Capa_Datos.Catalogos.Vehiculos
                     conecta.Open();
                     //Ejecuta la consulta
                     comando.ExecuteScalar();
-                    respuesta = true;
+                    objRespuesta.BoolRespuesta = true;
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
-
-                    throw;
+                    objRespuesta.MensajeRespuesta = e.Message;
                 }
-
             }
 
-            return respuesta;
+            return objRespuesta;
         }
 
-        public bool DeleteTipoVehiculo(int id_tipo_vehiculo)
+        public CO_Respuesta DeleteTipoVehiculo(int id_tipo_vehiculo)
         {
-            Boolean respuesta = false;
+            var objRespuesta = new CO_Respuesta();
+            objRespuesta.BoolRespuesta = false;
             var sql_query = string.Empty;
 
             sql_query = " DELETE FROM [dbo].[tipo_vehiculo] " +
@@ -154,17 +154,16 @@ namespace Capa_Datos.Catalogos.Vehiculos
                     conecta.Open();
                     //Ejecuta la consulta
                     comando.ExecuteScalar();
-                    respuesta = true;
+                    objRespuesta.BoolRespuesta = true;
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
-
-                    throw;
+                    objRespuesta.MensajeRespuesta = e.Message;
                 }
 
             }
 
-            return respuesta;
+            return objRespuesta;
         }
     }
 }

@@ -46,7 +46,7 @@ namespace Repuestos.Catalogos
                     else
                     {
                         lkBtn_viewPanel_ModalPopupExtender.Show();
-                        ErrorMessage.Text = "Ha ocurrido un error al actualizar marca";
+                        ErrorMessage.Text = "Ha ocurrido un error al actualizar marca - "+objRespueta.MensajeRespuesta;
                     }
 
                     break;
@@ -93,8 +93,16 @@ namespace Repuestos.Catalogos
                         break;
 
                     case "eliminar":
-                        EliminarMarca(id_marca);
-                        Llenar_gvMarcas();
+                        
+                        if (EliminarMarca(id_marca))
+                        {
+                            Llenar_gvMarcas();
+                        }
+                        else
+                        {
+                            ErrorPrincipal.Text = objRespueta.MensajeRespuesta;
+                        }
+                        
                         break;
 
                     default:
@@ -116,7 +124,8 @@ namespace Repuestos.Catalogos
         protected void Llenar_gvMarcas()
         {
             var miTabla = new DataTable();
-            miTabla = obj_Negocio_Marcas.SelectMarcas();
+            objRespueta = obj_Negocio_Marcas.SelectMarcas();
+            miTabla = objRespueta.DataTableRespuesta;
             gvMarcas.DataSource = miTabla;
             gvMarcas.DataBind();
         }
@@ -127,7 +136,8 @@ namespace Repuestos.Catalogos
             btnGuardar.CommandName = "Editar";
 
             var tabla_datos = new DataTable();
-            tabla_datos = obj_Negocio_Marcas.SelectMarcas(id_marca);
+            objRespueta = obj_Negocio_Marcas.SelectMarcas(id_marca);
+            tabla_datos = objRespueta.DataTableRespuesta;
             var row = tabla_datos.Rows[0];
 
             txtMarca.Text = row["marca"].ToString();
@@ -154,18 +164,21 @@ namespace Repuestos.Catalogos
             obj_Marcas.Marca = txtMarca.Text;
             obj_Marcas.Descripcion = txtDescripcion.Text;
 
-            respuesta = obj_Negocio_Marcas.UpdateMarca(obj_Marcas);
+            objRespueta = obj_Negocio_Marcas.UpdateMarca(obj_Marcas);
+            respuesta = objRespueta.BoolRespuesta;
 
             return respuesta;
         }
 
-        protected void EliminarMarca(int id_marca)
+        protected bool EliminarMarca(int id_marca)
         {
-            obj_Negocio_Marcas.DeleteMarca(id_marca);
+            objRespueta =  obj_Negocio_Marcas.DeleteMarca(id_marca);
+            return objRespueta.BoolRespuesta;
         }
 
         protected void LimpiarPanel()
         {
+            ErrorPrincipal.Text = string.Empty;
             ErrorMessage.Text = string.Empty;
             txtMarca.Text = string.Empty;
             txtDescripcion.Text = string.Empty;

@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Capa_Objetos.Administracion.Inventario;
 using System.Data.SqlClient;
+using Capa_Objetos.General;
 
 namespace Capa_Datos.Administracion.Inventario
 {
@@ -13,9 +14,9 @@ namespace Capa_Datos.Administracion.Inventario
     {
         General.Conexion objConexion = new General.Conexion();
 
-        public DataTable SelectDetalleCompras(int id_compra = 0)
+        public CO_Respuesta SelectDetalleCompras(int id_compra = 0)
         {
-            var respuesta = new DataTable();
+            var objRespuesta = new CO_Respuesta();
             var sql_query = string.Empty;
 
             sql_query = " SELECT a.[correlativo],a.[id_compra],a.[numero_compra],a.[serie],"+
@@ -33,21 +34,23 @@ namespace Capa_Datos.Administracion.Inventario
                     comando.Parameters.AddWithValue("id_compra", id_compra);
 
                     var dataAdapter = new SqlDataAdapter(comando);
-                    dataAdapter.Fill(respuesta);
+                    var tabla = new DataTable();
+                    dataAdapter.Fill(tabla);
+                    objRespuesta.DataTableRespuesta = tabla;
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
-
-                    throw;
+                    objRespuesta.MensajeRespuesta = e.Message;
                 }
             }
 
-            return respuesta;
+            return objRespuesta;
         }
 
-        public int InsertEncabezadoCompra(CO_Compras objCompras)
+        public CO_Respuesta InsertEncabezadoCompra(CO_Compras objCompras)
         {
-            var respuesta = 0;
+            var objRespuesta = new CO_Respuesta();
+            objRespuesta.IntRespuesta = 0;
             var sql_query = string.Empty;
 
             sql_query = " INSERT INTO [dbo].[compras_encabezado] "+
@@ -70,22 +73,21 @@ namespace Capa_Datos.Administracion.Inventario
                     conecta.Open();
                     int id_compra = 0;
                     id_compra = Convert.ToInt32(comando.ExecuteScalar());
-                    respuesta = id_compra;
+                    objRespuesta.IntRespuesta = id_compra;
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
-
-                    throw;
+                    objRespuesta.MensajeRespuesta = e.Message;
                 }
             }
 
-
-            return respuesta;
+            return objRespuesta;
         }
 
-        public bool InsertDetalleCompra(CO_Compras objCompras)
+        public CO_Respuesta InsertDetalleCompra(CO_Compras objCompras)
         {
-            var respuesta = false;
+            var objRespuesta = new CO_Respuesta();
+            objRespuesta.BoolRespuesta = false;
             var sql_query = string.Empty;
 
             sql_query = " INSERT INTO [dbo].[compras_detalle] "+
@@ -110,12 +112,12 @@ namespace Capa_Datos.Administracion.Inventario
                 {
                     conecta.Open();
                     comando.ExecuteScalar();
-                    respuesta = true;                    
+                    objRespuesta.BoolRespuesta = true;
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
-                    respuesta = false;
-                    throw;
+                    objRespuesta.BoolRespuesta = false;
+                    objRespuesta.MensajeRespuesta = e.Message;
                 }
 
                 /*Sumo Subtotal*/
@@ -131,12 +133,12 @@ namespace Capa_Datos.Administracion.Inventario
                     /*conecta.Open();*/
                     /*Ejecuto Query*/
                     total = Convert.ToDouble(comando_total.ExecuteScalar());
-                    respuesta = true;
+                    objRespuesta.BoolRespuesta = true;
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
-                    respuesta = false;
-                    throw;
+                    objRespuesta.BoolRespuesta = false;
+                    objRespuesta.MensajeRespuesta = e.Message;
                 }
                 
 
@@ -153,25 +155,23 @@ namespace Capa_Datos.Administracion.Inventario
                     /*Ejecuto Query*/
                     /*conecta.Open();*/
                     comando_up.ExecuteNonQuery();
-                    respuesta = true;
+                    objRespuesta.BoolRespuesta = true;
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
-                    respuesta = false;
-                    throw;
-                }
-                
-
+                    objRespuesta.BoolRespuesta = false;
+                    objRespuesta.MensajeRespuesta = e.Message;
+                }                
             }
 
-
-            return respuesta;
+            return objRespuesta;
         }
 
-        public DataTable SelectCompra()
+        public CO_Respuesta SelectCompra()
         {
-            var respuesta = new DataTable();
+            var objRespuesta = new CO_Respuesta();
             var sql_query = string.Empty;
+
             sql_query = "select A.id_compra,  CONCAT(a.numero_compra,' - ',A.serie) as compra, b.nombre_proveedor, A.fecha_compra, cast(A.total as decimal(10,2)) as total, A.estado " +
                 " from compras_encabezado A " +
                 " join proveedores B " +
@@ -183,23 +183,25 @@ namespace Capa_Datos.Administracion.Inventario
                 {
                     var comando = new SqlCommand(sql_query, conexion);                   
                     var dataAdapter = new SqlDataAdapter(comando);
-                    dataAdapter.Fill(respuesta);
+                    var tabla = new DataTable();
+                    dataAdapter.Fill(tabla);
+                    objRespuesta.DataTableRespuesta = tabla;
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
-
-                    throw;
+                    objRespuesta.MensajeRespuesta = e.Message;
                 }
 
             }
 
-            return respuesta;
+            return objRespuesta;
         }
 
-        public DataTable SelectCompra(int id_compra)
+        public CO_Respuesta SelectCompra(int id_compra)
         {
-            var respuesta = new DataTable();
+            var objRespuesta = new CO_Respuesta();
             var sql_query = string.Empty;
+
             sql_query = "select numero_compra, serie, id_proveedor, fecha_compra,cast(total as decimal(10,2)) as total " +
                 " from compras_encabezado  " +                
                 " where id_compra = @id_compra; ";
@@ -212,30 +214,29 @@ namespace Capa_Datos.Administracion.Inventario
                     comando.Parameters.AddWithValue("id_compra",id_compra);
 
                     var dataAdapter = new SqlDataAdapter(comando);
-                    dataAdapter.Fill(respuesta);
+                    var tabla = new DataTable();
+                    dataAdapter.Fill(tabla);
+                    objRespuesta.DataTableRespuesta = tabla;
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
-
-                    throw;
+                    objRespuesta.MensajeRespuesta = e.Message;
                 }
-
             }
 
-            return respuesta;
+            return objRespuesta;
         }
 
-        public bool UpdateEncabezadoCompra(CO_Compras objCompras)
+        public CO_Respuesta UpdateEncabezadoCompra(CO_Compras objCompras)
         {
-            var respuesta = false;
+            var objRespuesta = new CO_Respuesta();
+            objRespuesta.BoolRespuesta = false;
             var sql_query = string.Empty;
 
             sql_query = " UPDATE[dbo].[compras_detalle] " +
                 " SET[numero_compra] = @numero_compra " +
                 " ,[serie] = @serie " +
                 " WHERE id_compra = @id_compra; ";
-
-
 
             using (var conecta = objConexion.Conectar())
             {
@@ -248,12 +249,12 @@ namespace Capa_Datos.Administracion.Inventario
                 {
                     conecta.Open();
                     comando1.ExecuteScalar();
-                    respuesta = true;
+                    objRespuesta.BoolRespuesta = true;
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
-
-                    throw;
+                    objRespuesta.BoolRespuesta = false;
+                    objRespuesta.MensajeRespuesta = e.Message;
                 }
 
 
@@ -263,7 +264,6 @@ namespace Capa_Datos.Administracion.Inventario
                 " ,[id_proveedor] = @id_proveedor " +
                 " ,[fecha_compra] = @fecha_compra " +
                 " WHERE id_compra = @id_compra;";
-
 
                 var comando = new SqlCommand(sql_query, conecta);
                 comando.Parameters.AddWithValue("numero_compra", objCompras.NumeroCompra);
@@ -278,25 +278,22 @@ namespace Capa_Datos.Administracion.Inventario
                     //conecta.Open();
                     //Ejecuta la consulta
                     comando.ExecuteScalar();
-                    respuesta = true;
+                    objRespuesta.BoolRespuesta = true;
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
-
-                    throw;
+                    objRespuesta.BoolRespuesta = false;
+                    objRespuesta.MensajeRespuesta = e.Message;
                 }
-
-                
             }
 
-
-
-            return respuesta;
+            return objRespuesta;
         }
 
-        public bool CerrarCompra(int id_compra)
+        public CO_Respuesta CerrarCompra(int id_compra)
         {
-            var respuesta = false;
+            var objRespuesta = new CO_Respuesta();
+            objRespuesta.BoolRespuesta = false;
             var sql_query = string.Empty;
 
             /*Selecciono productos de compra*/
@@ -345,12 +342,12 @@ namespace Capa_Datos.Administracion.Inventario
                     {
 
                         comando_insert.ExecuteScalar();
-                        respuesta = true;
+                        objRespuesta.BoolRespuesta = true;
                     }
-                    catch (Exception)
+                    catch (Exception e)
                     {
-                        respuesta = false;
-                        throw;
+                        objRespuesta.BoolRespuesta = false;
+                        objRespuesta.MensajeRespuesta = e.Message;
                     }
 
                 }
@@ -368,23 +365,22 @@ namespace Capa_Datos.Administracion.Inventario
                     /*Ejecuto Query*/
                     /*conecta.Open();*/
                     comando_up.ExecuteNonQuery();
-                    respuesta = true;
+                    objRespuesta.BoolRespuesta = true;
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
-                    respuesta = false;
-                    throw;
+                    objRespuesta.BoolRespuesta = false;
+                    objRespuesta.MensajeRespuesta = e.Message;
                 }
-
             }
 
-            return respuesta;
-
+            return objRespuesta;
         }
 
-        public bool DeleteCompra(int id_compra)
+        public CO_Respuesta DeleteCompra(int id_compra)
         {
-            var respuesta = false;
+            var objRespuesta = new CO_Respuesta();
+            objRespuesta.BoolRespuesta = false;
             var sql_query = string.Empty;
 
             sql_query = " DELETE FROM compras_detalle "+
@@ -399,12 +395,12 @@ namespace Capa_Datos.Administracion.Inventario
                 {
                     conecta.Open();
                     comando.ExecuteScalar();
-                    respuesta = true;
+                    objRespuesta.BoolRespuesta = true;
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
-                    respuesta = false;
-                    throw;
+                    objRespuesta.BoolRespuesta = false;
+                    objRespuesta.MensajeRespuesta = e.Message;
                 }
 
                 sql_query = " DELETE FROM compras_encabezado " +
@@ -415,22 +411,22 @@ namespace Capa_Datos.Administracion.Inventario
                 try
                 {
                     comando_enc.ExecuteScalar();
-                    respuesta = true;    
+                    objRespuesta.BoolRespuesta = true;    
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
-                    respuesta = false;
-                    throw;
+                    objRespuesta.BoolRespuesta = false;
+                    objRespuesta.MensajeRespuesta = e.Message;
                 }
             }
 
-            return respuesta;
-
+            return objRespuesta;
         }
 
-        public bool UpdateDetalleCompra(CO_Compras objCompras)
+        public CO_Respuesta UpdateDetalleCompra(CO_Compras objCompras)
         {
-            var respuesta = false;
+            var objRespuesta = new CO_Respuesta();
+            objRespuesta.BoolRespuesta = false;
             var sql_query = string.Empty;
 
             sql_query = " UPDATE [dbo].[compras_detalle] "+
@@ -457,12 +453,12 @@ namespace Capa_Datos.Administracion.Inventario
                 {
                     conecta.Open();
                     comando.ExecuteScalar();
-                    respuesta = true;
+                    objRespuesta.BoolRespuesta = true;
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
-                    respuesta = false;
-                    throw;
+                    objRespuesta.BoolRespuesta = false;
+                    objRespuesta.MensajeRespuesta = e.Message;
                 }
 
                 /*Sumo Subtotal*/
@@ -478,12 +474,12 @@ namespace Capa_Datos.Administracion.Inventario
                     /*conecta.Open();*/
                     /*Ejecuto Query*/
                     total = Convert.ToDouble(comando_total.ExecuteScalar());
-                    respuesta = true;
+                    objRespuesta.BoolRespuesta = true;
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
-                    respuesta = false;
-                    throw;
+                    objRespuesta.BoolRespuesta = false;
+                    objRespuesta.MensajeRespuesta = e.Message;
                 }
 
 
@@ -500,24 +496,21 @@ namespace Capa_Datos.Administracion.Inventario
                     /*Ejecuto Query*/
                     /*conecta.Open();*/
                     comando_up.ExecuteNonQuery();
-                    respuesta = true;
+                    objRespuesta.BoolRespuesta = true;
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
-                    respuesta = false;
-                    throw;
+                    objRespuesta.BoolRespuesta = false;
+                    objRespuesta.MensajeRespuesta = e.Message;
                 }
-
-
             }
 
-
-            return respuesta;
+            return objRespuesta;
         }
 
-        public DataTable SelectDetalleCompraProducto(int id_correlativo)
+        public CO_Respuesta SelectDetalleCompraProducto(int id_correlativo)
         {
-            var respuesta = new DataTable();
+            var objRespuesta = new CO_Respuesta();
             var sql_query = string.Empty;
 
             sql_query = " SELECT [id_producto],[cantidad],[precio] " +
@@ -533,22 +526,23 @@ namespace Capa_Datos.Administracion.Inventario
                 {
                     
                     var dataAdapter = new SqlDataAdapter(comando);
-                    dataAdapter.Fill(respuesta);
+                    var tabla = new DataTable();
+                    dataAdapter.Fill(tabla);
+                    objRespuesta.DataTableRespuesta = tabla;
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
-
-                    throw;
+                    objRespuesta.MensajeRespuesta = e.Message;
                 }
-
             }
 
-            return respuesta;
+            return objRespuesta;
         }
 
-        public bool DeleteDetalleCompra(int id_correlativo, int id_compra)
+        public CO_Respuesta DeleteDetalleCompra(int id_correlativo, int id_compra)
         {
-            var respuesta = false;
+            var objRespuesta = new CO_Respuesta();
+            objRespuesta.BoolRespuesta = false;
             var sql_query = string.Empty;
 
             sql_query = " DELETE [dbo].[compras_detalle] " +                
@@ -563,12 +557,12 @@ namespace Capa_Datos.Administracion.Inventario
                 {
                     conecta.Open();
                     comando.ExecuteScalar();
-                    respuesta = true;
+                    objRespuesta.BoolRespuesta = true;
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
-                    respuesta = false;
-                    throw;
+                    objRespuesta.BoolRespuesta = false;
+                    objRespuesta.MensajeRespuesta = e.Message;
                 }
 
                 /*Sumo Subtotal*/
@@ -584,12 +578,12 @@ namespace Capa_Datos.Administracion.Inventario
                     /*conecta.Open();*/
                     /*Ejecuto Query*/
                     total = Convert.ToDouble(comando_total.ExecuteScalar());
-                    respuesta = true;
+                    objRespuesta.BoolRespuesta = true;
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
-                    respuesta = false;
-                    throw;
+                    objRespuesta.BoolRespuesta = false;
+                    objRespuesta.MensajeRespuesta = e.Message;
                 }
 
 
@@ -606,19 +600,15 @@ namespace Capa_Datos.Administracion.Inventario
                     /*Ejecuto Query*/
                     /*conecta.Open();*/
                     comando_up.ExecuteNonQuery();
-                    respuesta = true;
+                    objRespuesta.BoolRespuesta = true;
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
-                    respuesta = false;
-                    throw;
+                    objRespuesta.BoolRespuesta = false;
+                    objRespuesta.MensajeRespuesta = e.Message;
                 }
-
-
             }
-
-
-            return respuesta;
+            return objRespuesta;
         }
     }
 }

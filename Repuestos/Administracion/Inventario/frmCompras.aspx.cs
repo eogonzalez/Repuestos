@@ -3,6 +3,7 @@ using System.Data;
 using System.Web.UI.WebControls;
 using Capa_Negocio.Administracion.Inventario;
 using Capa_Objetos.Administracion.Inventario;
+using Capa_Objetos.General;
 
 namespace Repuestos.Administracion.Inventario
 {
@@ -10,6 +11,7 @@ namespace Repuestos.Administracion.Inventario
     {
         CN_Compras obj_Negocio_Compras = new CN_Compras();
         CO_Compras objCompras = new CO_Compras();
+        CO_Respuesta objRespuesta = new CO_Respuesta();
 
         #region Funciones del formulario
 
@@ -73,8 +75,16 @@ namespace Repuestos.Administracion.Inventario
                         break;
 
                     case "eliminarProducto":
-                        EliminarDetalleCompra(id_correlativo,id_compra);
-                        LlenargvProductos();
+                        if (EliminarDetalleCompra(id_correlativo, id_compra))
+                        {
+                            LlenargvProductos();
+                        }else
+                        {
+                            divAlertError.Visible = true;
+                            ErrorMessagePrincipal.Text = objRespuesta.MensajeRespuesta;
+                        }
+                        
+                        
                         break;
 
                     default:
@@ -107,7 +117,7 @@ namespace Repuestos.Administracion.Inventario
                         else
                         {
                             lkBtn_AgregarProducto_ModalPopupExtender.Show();
-                            ErrorMessage.Text = "Ha ocurrido un error al actualizar producto.";
+                            ErrorMessage.Text = "Ha ocurrido un error al actualizar producto. - "+objRespuesta.MensajeRespuesta;
                         }
                         break;
                     case "GuardarProducto":
@@ -120,7 +130,7 @@ namespace Repuestos.Administracion.Inventario
                         else
                         {
                             lkBtn_AgregarProducto_ModalPopupExtender.Show();
-                            ErrorMessage.Text = "Ha ocurrido un error al almacenar datos.";
+                            ErrorMessage.Text = "Ha ocurrido un error al almacenar datos. - "+objRespuesta.MensajeRespuesta;
                         }
                         break;
                     default:
@@ -135,6 +145,11 @@ namespace Repuestos.Administracion.Inventario
                 {
                     LlenoEncabezado(id_compra);
                     LlenargvProductos(id_compra);
+                }
+                else
+                {
+                    divAlertError.Visible = true;
+                    ErrorMessagePrincipal.Text = objRespuesta.MensajeRespuesta;
                 }
                 
             }
@@ -164,7 +179,7 @@ namespace Repuestos.Administracion.Inventario
             else
             {
                 divAlertError.Visible = true;
-                ErrorMessagePrincipal.Text = "No es posible cerrar compra.";
+                ErrorMessagePrincipal.Text = "No es posible cerrar compra. - "+objRespuesta.MensajeRespuesta;
             }
 
 
@@ -198,7 +213,8 @@ namespace Repuestos.Administracion.Inventario
         protected void LlenargvProductos(int id_compra = 0)
         {
             var miTabla = new DataTable();
-            miTabla = obj_Negocio_Compras.SelectDetalleCompras(id_compra);
+            objRespuesta = obj_Negocio_Compras.SelectDetalleCompras(id_compra);
+            miTabla = objRespuesta.DataTableRespuesta;
             gvProductos.DataSource = miTabla;
             gvProductos.DataBind();
         }
@@ -207,7 +223,8 @@ namespace Repuestos.Administracion.Inventario
         {
             var dt = new DataTable();
             Capa_Negocio.Catalogos.CN_Proveedores objProvedor = new Capa_Negocio.Catalogos.CN_Proveedores();
-            dt = objProvedor.SelectProveedores();
+            objRespuesta = objProvedor.SelectProveedores();
+            dt = objRespuesta.DataTableRespuesta;
 
             if (dt.Rows.Count > 0)
             {
@@ -223,7 +240,8 @@ namespace Repuestos.Administracion.Inventario
         {
             var dt = new DataTable();
             Capa_Negocio.Catalogos.Repuestos.CN_Productos objProductos = new Capa_Negocio.Catalogos.Repuestos.CN_Productos();
-            dt = objProductos.SelectProductos();
+            objRespuesta = objProductos.SelectProductos();
+            dt = objRespuesta.DataTableRespuesta;
 
             if (dt.Rows.Count > 0)
             {
@@ -249,7 +267,9 @@ namespace Repuestos.Administracion.Inventario
             objCompras.NumeroCompra = Convert.ToInt32(txtNumeroCompra.Text);
             objCompras.Serie = txtSerieCompra.Text;
 
-            var respuesta = obj_Negocio_Compras.InsertEncabezadoCompra(objCompras);
+            var respuesta = 0;
+            objRespuesta = obj_Negocio_Compras.InsertEncabezadoCompra(objCompras);
+            respuesta = objRespuesta.IntRespuesta;
 
             return respuesta;
         }
@@ -264,14 +284,18 @@ namespace Repuestos.Administracion.Inventario
             objCompras.Cantidad = Convert.ToInt32(txtCantidad.Text);
             objCompras.Precio = Convert.ToDouble(txtPrecio.Text);
             objCompras.SubTotal = objCompras.Cantidad * objCompras.Precio;
+            
+            objRespuesta = obj_Negocio_Compras.InsertDetalleCompra(objCompras);            
 
-            var respuesta = obj_Negocio_Compras.InsertDetalleCompra(objCompras);
-            return respuesta;
+            return objRespuesta.BoolRespuesta;
         }
 
         protected void LlenoEncabezado(int id_compra)
         {
-            var dt = obj_Negocio_Compras.SelectCompra(id_compra);
+            var dt = new DataTable();
+            objRespuesta = obj_Negocio_Compras.SelectCompra(id_compra);
+            dt = objRespuesta.DataTableRespuesta;
+
             var row = dt.Rows[0];
             txtFechaCompra.Text = row["fecha_compra"].ToString();
             ddlProveedor.SelectedValue = row["id_proveedor"].ToString();
@@ -285,12 +309,10 @@ namespace Repuestos.Administracion.Inventario
             else
             {
                 txtTotal.Text = "0.00";
-            }
-
-            
+            }            
         }
 
-        protected void ActualizoEncabezadoCompra(int id_compra)
+        protected bool ActualizoEncabezadoCompra(int id_compra)
         {
             //Obtengo valores de encabezado
             objCompras.Id_Compra = id_compra;
@@ -299,8 +321,8 @@ namespace Repuestos.Administracion.Inventario
             objCompras.NumeroCompra = Convert.ToInt32(txtNumeroCompra.Text);
             objCompras.Serie = txtSerieCompra.Text;
 
-            obj_Negocio_Compras.UpdateEncabezadoCompra(objCompras);
-
+            objRespuesta = obj_Negocio_Compras.UpdateEncabezadoCompra(objCompras);
+            return objRespuesta.BoolRespuesta;
         }
 
         protected void BloquearControles()
@@ -317,7 +339,8 @@ namespace Repuestos.Administracion.Inventario
 
         protected bool CerrarCompra(int id_compra)
         {
-            return obj_Negocio_Compras.CerrarCompra(id_compra);
+            objRespuesta = obj_Negocio_Compras.CerrarCompra(id_compra);
+            return objRespuesta.BoolRespuesta;
         }
 
         protected void MostrarDatos(int id_correlativo)
@@ -326,7 +349,8 @@ namespace Repuestos.Administracion.Inventario
             btnGuardarProducto.CommandName = "Editar";
 
             var tabla_datos = new DataTable();
-            tabla_datos = obj_Negocio_Compras.SelectDetalleCompraProducto(id_correlativo);
+            objRespuesta = obj_Negocio_Compras.SelectDetalleCompraProducto(id_correlativo);
+            tabla_datos = objRespuesta.DataTableRespuesta;
             var row = tabla_datos.Rows[0];
 
             ddlProducto.SelectedValue = row["id_producto"].ToString();
@@ -348,13 +372,15 @@ namespace Repuestos.Administracion.Inventario
             objCompras.Precio = Convert.ToDouble(txtPrecio.Text);
             objCompras.SubTotal = objCompras.Cantidad * objCompras.Precio;
 
-            respuesta = obj_Negocio_Compras.UpdateDetalleCompra(objCompras);
+            objRespuesta = obj_Negocio_Compras.UpdateDetalleCompra(objCompras);
+            respuesta = objRespuesta.BoolRespuesta;
             return respuesta;
         }
 
         protected bool EliminarDetalleCompra(int id_correlativo, int id_compra)
         {
-            return obj_Negocio_Compras.DeleteDetalleCompra(id_correlativo,id_compra);
+            objRespuesta = obj_Negocio_Compras.DeleteDetalleCompra(id_correlativo,id_compra);
+            return objRespuesta.BoolRespuesta;
         }
 
         #endregion

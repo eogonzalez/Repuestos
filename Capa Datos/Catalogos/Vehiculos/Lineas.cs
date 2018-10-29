@@ -1,8 +1,8 @@
 ﻿using System;
-using System.Data;
 using System.Data.SqlClient;
 using Capa_Objetos.Catalogos.Vehiculos;
 using Capa_Objetos.General;
+using System.Data;
 
 namespace Capa_Datos.Catalogos.Vehiculos
 {
@@ -13,7 +13,7 @@ namespace Capa_Datos.Catalogos.Vehiculos
 
         public CO_Respuesta SelectLineas()
         {
-            var respuesta = new CO_Respuesta();
+            var objRespuesta = new CO_Respuesta();
 
             var sql_query = string.Empty;
 
@@ -31,22 +31,23 @@ namespace Capa_Datos.Catalogos.Vehiculos
                     var comando = new SqlCommand(sql_query, conecta);
 
                     var dataAdapter = new SqlDataAdapter(comando);
-                    var TablaDatos = new DataTable();
-                    dataAdapter.Fill(TablaDatos);
-                    respuesta.DataTableRespuesta = TablaDatos;
+                    var tabla = new DataTable();                
+                    dataAdapter.Fill(tabla);
+                    objRespuesta.DataTableRespuesta = tabla;
+
                 }
                 catch (Exception e)
                 {
-                    respuesta.MensajeRespuesta = e.Message;                    
+                    objRespuesta.MensajeRespuesta = e.Message;                    
                 }
             }
 
-            return respuesta;
+            return objRespuesta;
         }
 
-        public DataTable SelectLineas(int id_linea, bool combo = false)
+        public CO_Respuesta SelectLineas(int id_linea, bool combo = false)
         {
-            var respuesta = new DataTable();
+            var objRespuesta = new CO_Respuesta();
 
             var sql_query = string.Empty;
 
@@ -81,21 +82,24 @@ namespace Capa_Datos.Catalogos.Vehiculos
                     
 
                     var dataAdapter = new SqlDataAdapter(comando);
-                    dataAdapter.Fill(respuesta);
+                    var tabla = new DataTable();                    
+                    dataAdapter.Fill(tabla);
+                    objRespuesta.DataTableRespuesta = tabla;
+
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
 
-                    throw;
+                    objRespuesta.MensajeRespuesta = e.Message;
                 }
             }
 
-            return respuesta;
+            return objRespuesta;
         }
         
-        public DataTable SelectLineas(int id_marca)
+        public CO_Respuesta SelectLineas(int id_marca)
         {
-            var respuesta = new DataTable();
+            var objRespuesta = new CO_Respuesta();
 
             var sql_query = string.Empty;
 
@@ -113,21 +117,24 @@ namespace Capa_Datos.Catalogos.Vehiculos
                     
 
                     var dataAdapter = new SqlDataAdapter(comando);
-                    dataAdapter.Fill(respuesta);
+                    var tabla = new DataTable();                 
+                    dataAdapter.Fill(tabla);
+                    objRespuesta.DataTableRespuesta = tabla;
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
 
-                    throw;
+                    objRespuesta.MensajeRespuesta = e.Message;
                 }
             }
 
-            return respuesta;
+            return objRespuesta;
         }
 
-        public bool InsertLinea(CO_Lineas objLineas)
+        public CO_Respuesta InsertLinea(CO_Lineas objLineas)
         {
-            var respuesta = false;
+            var objRespuesta = new CO_Respuesta();
+            objRespuesta.BoolRespuesta = false;
             var sql_query = string.Empty;
 
             sql_query = " INSERT INTO [dbo].[Lineas] "+
@@ -148,23 +155,22 @@ namespace Capa_Datos.Catalogos.Vehiculos
                     conecta.Open();
                     //Ejecuta la consulta
                     comando.ExecuteScalar();
-
-                    respuesta = true;
+                    objRespuesta.BoolRespuesta = true;
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
-
-                    throw;
+                    objRespuesta.MensajeRespuesta = e.Message;                    
                 }
                 
             }
 
-            return respuesta;
+            return objRespuesta;
         }
 
-        public bool UpdateLinea(CO_Lineas objLineas)
+        public CO_Respuesta UpdateLinea(CO_Lineas objLineas)
         {
-            Boolean respuesta = false;
+            CO_Respuesta objRespuesta = new CO_Respuesta();
+            objRespuesta.BoolRespuesta = false;
             var sql_query = string.Empty;
 
             sql_query = " UPDATE [dbo].[lineas] " +
@@ -185,26 +191,24 @@ namespace Capa_Datos.Catalogos.Vehiculos
                 {
                     //Se abre la sesion para transaccion
                     conecta.Open();
-
                     //Ejecuta la consulta
                     comando.ExecuteScalar();
-
-                    respuesta = true;
+                    objRespuesta.BoolRespuesta = true;
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
-
-                    throw;
+                    objRespuesta.MensajeRespuesta = e.Message;                    
                 }
                 
             }
 
-            return respuesta;
+            return objRespuesta;
         }
 
-        public bool DeleteLinea(int id_linea)
+        public CO_Respuesta DeleteLinea(int id_linea)
         {
-            Boolean respuesta = false;
+            CO_Respuesta objRespuesta = new CO_Respuesta();
+            objRespuesta.BoolRespuesta = false;
             var sql_query = string.Empty;
 
             sql_query = " DELETE FROM [dbo].[lineas] " +
@@ -222,18 +226,16 @@ namespace Capa_Datos.Catalogos.Vehiculos
 
                     //Ejecuta la consulta
                     comando.ExecuteScalar();
-
-                    respuesta = true;
+                    objRespuesta.BoolRespuesta = true;
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
-
-                    throw;
+                    objRespuesta.MensajeRespuesta = e.Message;
                 }
                 
             }
 
-            return respuesta;
+            return objRespuesta;
         }
     }
 }

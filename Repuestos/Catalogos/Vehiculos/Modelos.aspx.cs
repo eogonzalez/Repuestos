@@ -3,6 +3,7 @@ using System.Web.UI.WebControls;
 using Capa_Negocio.Catalogos.Vehiculos;
 using Capa_Objetos.Catalogos.Vehiculos;
 using System.Data;
+using Capa_Objetos.General;
 
 namespace Repuestos.Catalogos
 {
@@ -10,6 +11,7 @@ namespace Repuestos.Catalogos
     {
         CN_Modelos obj_Negocio_Modelos = new CN_Modelos();
         CO_Modelos obj_Modelos = new CO_Modelos();
+        CO_Respuesta objRespuesta = new CO_Respuesta();
 
         #region Funciones del formulario
         
@@ -44,7 +46,7 @@ namespace Repuestos.Catalogos
                     else
                     {
                         lkBtn_viewPanel_ModalPopupExtender.Show();
-                        ErrorMessage.Text = "Ha ocurrido un error al actualizar modelo";
+                        ErrorMessage.Text = "Ha ocurrido un error al actualizar modelo - "+objRespuesta.MensajeRespuesta;
                     }
 
                     break;
@@ -57,7 +59,7 @@ namespace Repuestos.Catalogos
                     else
                     {
                         lkBtn_viewPanel_ModalPopupExtender.Show();
-                        ErrorMessage.Text = "Ha ocurrido un error al almacenar los datos";
+                        ErrorMessage.Text = "Ha ocurrido un error al almacenar los datos - "+objRespuesta.MensajeRespuesta;
                     }
                     break;
 
@@ -89,9 +91,15 @@ namespace Repuestos.Catalogos
                         lkBtn_viewPanel_ModalPopupExtender.Show();
                         break;
 
-                    case "eliminar":
-                        EliminarModelo(id_modelo);
-                        Llenar_gvModelos();
+                    case "eliminar":                                                
+                        if (EliminarModelo(id_modelo))
+                        {
+                            Llenar_gvModelos();
+                        }
+                        else
+                        {
+                            ErrorPrincipal.Text = objRespuesta.MensajeRespuesta;
+                        }
                         break;
 
                     default:
@@ -113,7 +121,8 @@ namespace Repuestos.Catalogos
         protected void Llenar_gvModelos()
         {
             var miTabla = new DataTable();
-            miTabla = obj_Negocio_Modelos.SelectModelos();
+            objRespuesta = obj_Negocio_Modelos.SelectModelos();
+            miTabla = objRespuesta.DataTableRespuesta;
             gvModelos.DataSource = miTabla;
             gvModelos.DataBind();
         }
@@ -124,7 +133,8 @@ namespace Repuestos.Catalogos
             btnGuardar.CommandName = "Editar";
 
             var tabla_datos = new DataTable();
-            tabla_datos = obj_Negocio_Modelos.SelectModelos(id_modelo);
+            objRespuesta = obj_Negocio_Modelos.SelectModelos(id_modelo);
+            tabla_datos = objRespuesta.DataTableRespuesta;
             var row = tabla_datos.Rows[0];
 
             txtModelo.Text = row["modelo"].ToString();
@@ -136,7 +146,8 @@ namespace Repuestos.Catalogos
             bool respuesta = false;
             obj_Modelos.Modelo = txtModelo.Text;
             
-            respuesta = obj_Negocio_Modelos.InsertModelo(obj_Modelos);
+            objRespuesta = obj_Negocio_Modelos.InsertModelo(obj_Modelos);
+            respuesta = objRespuesta.BoolRespuesta;
 
             return respuesta;
         }
@@ -147,18 +158,22 @@ namespace Repuestos.Catalogos
             obj_Modelos.Id_Modelo = id_modelo;
             obj_Modelos.Modelo = txtModelo.Text;
             
-            respuesta = obj_Negocio_Modelos.UpdateModelo(obj_Modelos);
+            objRespuesta = obj_Negocio_Modelos.UpdateModelo(obj_Modelos);
+            respuesta = objRespuesta.BoolRespuesta;
 
             return respuesta;
         }
 
-        protected void EliminarModelo(int id_modelo)
+        protected bool EliminarModelo(int id_modelo)
         {
-            obj_Negocio_Modelos.DeleteModelo(id_modelo);
+            objRespuesta =  obj_Negocio_Modelos.DeleteModelo(id_modelo);
+            return objRespuesta.BoolRespuesta;
         }
 
         protected void LimpiarPanel()
         {
+            ErrorPrincipal.Text = string.Empty;
+            ErrorMessage.Text = string.Empty;
             txtModelo.Text = string.Empty;            
         }
 

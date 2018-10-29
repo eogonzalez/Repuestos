@@ -4,6 +4,7 @@ using Capa_Negocio.Catalogos.Repuestos;
 using Capa_Objetos.Catalogos.Repuestos;
 using System.Data;
 using Capa_Negocio.Catalogos.Vehiculos;
+using Capa_Objetos.General;
 
 namespace Repuestos.Inventario
 {
@@ -11,6 +12,8 @@ namespace Repuestos.Inventario
     {
         CN_Productos obj_Neg_Producto = new CN_Productos();
         CO_Productos obj_Producto = new CO_Productos();
+        CO_Respuesta objRespuesta = new CO_Respuesta();
+
 
         #region Funciones del formulario
 
@@ -47,7 +50,7 @@ namespace Repuestos.Inventario
                     else
                     {
                         lkBtn_viewPanel_ModalPopupExtender.Show();
-                        ErrorMessage.Text = "Ha ocurrido un error al actualizar producto.";
+                        ErrorMessage.Text = "Ha ocurrido un error al actualizar producto. - "+objRespuesta.MensajeRespuesta;
                     }
 
                     break;
@@ -60,7 +63,7 @@ namespace Repuestos.Inventario
                     else
                     {
                         lkBtn_viewPanel_ModalPopupExtender.Show();
-                        ErrorMessage.Text = "Ha ocurrido un error al almacenar los datos";
+                        ErrorMessage.Text = "Ha ocurrido un error al almacenar los datos - "+objRespuesta.MensajeRespuesta;
                     }
                     break;
 
@@ -93,8 +96,15 @@ namespace Repuestos.Inventario
                         break;
 
                     case "eliminar":
-                        EliminarProducto(id_producto);
-                        Llenar_gvProductos();
+                        if (EliminarProducto(id_producto))
+                        {
+                            Llenar_gvProductos();
+                        }
+                        else
+                        {
+                            ErrorPrincipal.Text = objRespuesta.MensajeRespuesta;
+                        }
+                        
                         break;
 
                     default:
@@ -116,7 +126,8 @@ namespace Repuestos.Inventario
         protected void Llenar_gvProductos()
         {
             var miTabla = new DataTable();
-            miTabla = obj_Neg_Producto.SelectProductos();
+            objRespuesta = obj_Neg_Producto.SelectProductos();
+            miTabla = objRespuesta.DataTableRespuesta;
             gvRepuestos.DataSource = miTabla;
             gvRepuestos.DataBind();
         }
@@ -127,7 +138,8 @@ namespace Repuestos.Inventario
             btnGuardar.CommandName = "Editar";
 
             var tabla_datos = new DataTable();
-            tabla_datos = obj_Neg_Producto.SelectProductos(id_producto);
+            objRespuesta = obj_Neg_Producto.SelectProductos(id_producto);
+            tabla_datos = objRespuesta.DataTableRespuesta;
             var row = tabla_datos.Rows[0];
 
             ddl_categoria.SelectedValue = row["id_categoria"].ToString();
@@ -150,7 +162,8 @@ namespace Repuestos.Inventario
             obj_Producto.Marca = txtMarca.Text;
             obj_Producto.Descripcion = txtDescripcion.Text;
 
-            respuesta = obj_Neg_Producto.InsertProducto(obj_Producto);
+            objRespuesta = obj_Neg_Producto.InsertProducto(obj_Producto);
+            respuesta = objRespuesta.BoolRespuesta;
 
             return respuesta;
         }
@@ -165,18 +178,22 @@ namespace Repuestos.Inventario
             obj_Producto.Marca = txtMarca.Text;            
             obj_Producto.Descripcion = txtDescripcion.Text;
 
-            respuesta = obj_Neg_Producto.UpdateProducto(obj_Producto);
+            objRespuesta = obj_Neg_Producto.UpdateProducto(obj_Producto);
+            respuesta = objRespuesta.BoolRespuesta;
 
             return respuesta;
         }
 
-        protected void EliminarProducto(int id_producto)
+        protected bool EliminarProducto(int id_producto)
         {
-            obj_Neg_Producto.DeleteProducto(id_producto);
+            objRespuesta = obj_Neg_Producto.DeleteProducto(id_producto);
+            return objRespuesta.BoolRespuesta;
         }
 
         protected void LimpiarPanel()
         {
+            ErrorMessage.Text = string.Empty;
+            ErrorPrincipal.Text = string.Empty;
             txtNombre.Text = string.Empty;
             txtMarca.Text = string.Empty;
             txtDescripcion.Text = string.Empty;
@@ -186,7 +203,8 @@ namespace Repuestos.Inventario
         {
             var dt = new DataTable();
             CN_CategoriaProductos objCategoria = new CN_CategoriaProductos();
-            dt = objCategoria.SelectCategorias();
+            objRespuesta = objCategoria.SelectCategorias();
+            dt = objRespuesta.DataTableRespuesta;
 
             if (dt.Rows.Count > 0)
             {
@@ -202,7 +220,9 @@ namespace Repuestos.Inventario
         {
             var dt = new DataTable();
             CN_Vehiculos objVehiculo = new CN_Vehiculos();
-            dt = objVehiculo.SelectVehiculos(true);
+            objRespuesta = objVehiculo.SelectVehiculos(true);
+            dt = objRespuesta.DataTableRespuesta;
+
             if (dt.Rows.Count > 0)
             {
                 ddl_vehiculo.DataTextField = dt.Columns["vehiculo"].ToString();

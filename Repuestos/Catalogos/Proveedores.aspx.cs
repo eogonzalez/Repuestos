@@ -65,7 +65,7 @@ namespace Repuestos.Catalogos
                     else
                     {
                         lkBtn_viewPanel_ModalPopupExtender.Show();
-                        ErrorMessage.Text = "Ha Ocurrido un Error al almacenar los datos - ";
+                        ErrorMessage.Text = "Ha Ocurrido un Error al almacenar los datos - "+objRespuesta.MensajeRespuesta;
                     }
 
                     break;
@@ -99,8 +99,14 @@ namespace Repuestos.Catalogos
                         break;
 
                     case "eliminar":
-                        EliminarProveedor(id_proveedor);
-                        Llenar_gvProveedores();
+                        if (EliminarProveedor(id_proveedor))
+                        {
+                            Llenar_gvProveedores();
+                        }
+                        else
+                        {
+                            ErrorPrincipal.Text = objRespuesta.MensajeRespuesta;
+                        }                                                
                         break;
 
                     default:
@@ -121,12 +127,11 @@ namespace Repuestos.Catalogos
 
         #region Funciones 
 
-        //Funcion para llenar GridView
         protected void Llenar_gvProveedores()
         {
             var miTabla = new DataTable();
-
-            miTabla = objProveedores.SelectProveedores();
+            objRespuesta = objProveedores.SelectProveedores();
+            miTabla = objRespuesta.DataTableRespuesta;
 
             //Establecer valores al grid view
             gvProveedores.DataSource = miTabla;
@@ -139,7 +144,8 @@ namespace Repuestos.Catalogos
             btnGuardar.CommandName = "Editar";
 
             var tabla_datos = new DataTable();
-            tabla_datos = objProveedores.SelectProveedores(id_provedor);
+            objRespuesta = objProveedores.SelectProveedores(id_provedor);
+            tabla_datos = objRespuesta.DataTableRespuesta;
             var row = tabla_datos.Rows[0];
 
             //Asigno valores de tabla de datos a mis elementos del formulario
@@ -182,18 +188,22 @@ namespace Repuestos.Catalogos
             objCO_Proveedores.Telefono = txtTelefono.Text;
             objCO_Proveedores.Correo = txtCorreo.Text;
 
-            respuesta = objProveedores.ActualizarProveedor(objCO_Proveedores);
+            objRespuesta = objProveedores.ActualizarProveedor(objCO_Proveedores);
+            respuesta = objRespuesta.BoolRespuesta;
 
             return respuesta;
         }
 
-        protected void EliminarProveedor(int id_proveedor)
+        protected bool EliminarProveedor(int id_proveedor)
         {
-            objProveedores.DeleteProveedor(id_proveedor);
+            objRespuesta = objProveedores.DeleteProveedor(id_proveedor);
+            return objRespuesta.BoolRespuesta;
         }
 
         protected void LimpiarPanel()
         {
+            ErrorPrincipal.Text = string.Empty;
+            ErrorMessage.Text = string.Empty;
             txtCorreo.Text = string.Empty;
             txtDireccion.Text = string.Empty;
             txtNit.Text = string.Empty;

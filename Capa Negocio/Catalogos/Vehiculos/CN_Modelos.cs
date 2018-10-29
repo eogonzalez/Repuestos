@@ -1,6 +1,6 @@
 ﻿using Capa_Datos.Catalogos.Vehiculos;
 using Capa_Objetos.Catalogos.Vehiculos;
-using System.Data;
+using Capa_Objetos.General;
 
 namespace Capa_Negocio.Catalogos.Vehiculos
 {
@@ -8,27 +8,27 @@ namespace Capa_Negocio.Catalogos.Vehiculos
     {
         Modelos obj_Datos_Modelos = new Modelos();
 
-        public DataTable SelectModelos()
+        public CO_Respuesta SelectModelos()
         {
             return obj_Datos_Modelos.SelectModelos();
         }
 
-        public DataTable SelectModelos(int id_linea)
+        public CO_Respuesta SelectModelos(int id_linea)
         {
             return obj_Datos_Modelos.SelectModelos(id_linea);
         }
 
-        public bool InsertModelo(CO_Modelos objModelos)
+        public CO_Respuesta InsertModelo(CO_Modelos objModelos)
         {
             return obj_Datos_Modelos.InsertModelo(objModelos);
         }
 
-        public bool UpdateModelo(CO_Modelos objModelos)
+        public CO_Respuesta UpdateModelo(CO_Modelos objModelos)
         {
             return obj_Datos_Modelos.UpdateModelo(objModelos);
         }
 
-        public bool DeleteModelo(int id_modelo)
+        public CO_Respuesta DeleteModelo(int id_modelo)
         {
             return obj_Datos_Modelos.DeleteModelo(id_modelo);
         }

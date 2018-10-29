@@ -49,6 +49,15 @@ namespace Repuestos.Catalogos {
         protected global::AjaxControlToolkit.ModalPopupExtender lkBtn_viewPanel_ModalPopupExtender;
         
         /// <summary>
+        /// Control ErrorPrincipal.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal ErrorPrincipal;
+        
+        /// <summary>
         /// Control gvClientes.
         /// </summary>
         /// <remarks>

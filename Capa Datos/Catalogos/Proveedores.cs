@@ -1,19 +1,18 @@
 ﻿using System;
-using System.Data;
 using System.Data.SqlClient;
 using Capa_Objetos.Catalogos;
 using Capa_Objetos.General;
+using System.Data;
 
 namespace Capa_Datos.Catalogos
 {
     public class Proveedores
     {
         General.Conexion objConexion = new General.Conexion();
-        
-        //Funcion publica que selecciona los datos de tabla de proveedores
-        public DataTable SelectProveedores()
+                
+        public CO_Respuesta SelectProveedores()
         {
-            var respuesta = new DataTable();
+            var objRespuesta = new CO_Respuesta();
             var sql_query = string.Empty;
 
             sql_query = "select id_proveedor, nombre_proveedor, correo from proveedores; ";
@@ -25,21 +24,22 @@ namespace Capa_Datos.Catalogos
                     var comando = new SqlCommand(sql_query, conecta);
 
                     var dataAdapter = new SqlDataAdapter(comando);
-                    dataAdapter.Fill(respuesta);
+                    var tabla = new DataTable();
+                    dataAdapter.Fill(tabla);
+                    objRespuesta.DataTableRespuesta = tabla;
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
-
-                    throw;
+                    objRespuesta.MensajeRespuesta = e.Message;
                 }
             }
 
-            return respuesta;
+            return objRespuesta;
         }
 
-        public DataTable SelectProveedores(int id_proveedor)
+        public CO_Respuesta SelectProveedores(int id_proveedor)
         {
-            var respuesta = new DataTable();
+            var objRespuesta = new CO_Respuesta();
             var sql_query = string.Empty;
 
             sql_query = "select nit, nombre_proveedor,direccion,telefono,correo " +
@@ -55,21 +55,21 @@ namespace Capa_Datos.Catalogos
                     comando.Parameters.AddWithValue("id_proveedor", id_proveedor);
 
                     var dataAdapter = new SqlDataAdapter(comando);
-                    dataAdapter.Fill(respuesta);
+                    var tabla = new DataTable();
+                    dataAdapter.Fill(tabla);
+                    objRespuesta.DataTableRespuesta = tabla;
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
-
-                    throw;
+                    objRespuesta.MensajeRespuesta = e.Message;
                 }
             }
 
-            return respuesta;
+            return objRespuesta;
         }
 
         public CO_Respuesta GuardarFormulario(CO_Proveedores objProveedores)
-        {
-            var respuesta = false;
+        {            
             var objRespuesta = new CO_Respuesta();
             var sql_query = string.Empty;
 
@@ -94,9 +94,8 @@ namespace Capa_Datos.Catalogos
                     //Se abre la sesion para transaccion
                     conecta.Open();
                     //Ejecuta la consulta
-                    comando.ExecuteScalar();
-                    respuesta = true;
-                    objRespuesta.BoolRespuesta = respuesta;
+                    comando.ExecuteScalar();                    
+                    objRespuesta.BoolRespuesta = true;
                 }
                 catch (Exception e)
                 {
@@ -108,9 +107,10 @@ namespace Capa_Datos.Catalogos
             return objRespuesta;
         }
 
-        public bool ActualizarProveedor(CO_Proveedores objProveedores)
+        public CO_Respuesta ActualizarProveedor(CO_Proveedores objProveedores)
         {
-            var respuesta = false;
+            var objRespuesta = new CO_Respuesta();
+            objRespuesta.BoolRespuesta = false;
             var sql_query = string.Empty;
 
             sql_query = " UPDATE [dbo].[proveedores] " +
@@ -135,27 +135,24 @@ namespace Capa_Datos.Catalogos
                 {
                     //Se abre la sesion para transaccion
                     conecta.Open();
-
                     //Ejecuta la consulta
                     comando.ExecuteScalar();
-
-                    respuesta = true;
+                    objRespuesta.BoolRespuesta = true;
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
-
-                    throw;
+                    objRespuesta.MensajeRespuesta = e.Message;
                 }
             }
 
-            return respuesta;
+            return objRespuesta;
             
         }
 
-        public bool DeleteProveedor(int id_proveedor)
+        public CO_Respuesta DeleteProveedor(int id_proveedor)
         {
-            Boolean respuesta = false;
-
+            var objRespuesta = new CO_Respuesta();
+            objRespuesta.BoolRespuesta = false;
             var sql_query = string.Empty;
 
             sql_query = " DELETE FROM [dbo].[proveedores] "+
@@ -171,22 +168,19 @@ namespace Capa_Datos.Catalogos
 
                     //Se abre la sesion para transaccion
                     conecta.Open();
-
                     //Ejecuta la consulta
                     comando.ExecuteScalar();
-
-                    respuesta = true;
+                    objRespuesta.BoolRespuesta = true;
 
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
-
-                    throw;
+                    objRespuesta.MensajeRespuesta = e.Message;
                 }
 
             }
 
-            return respuesta;
+            return objRespuesta;
         }
     }
 }

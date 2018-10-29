@@ -49,7 +49,7 @@ namespace Repuestos.Catalogos.Vehiculos
                     else
                     {
                         lkBtn_viewPanel_ModalPopupExtender.Show();
-                        ErrorMessage.Text = "Ha ocurrido un error al actualizar linea";
+                        ErrorMessage.Text = "Ha ocurrido un error al actualizar linea - "+objRespuesta.MensajeRespuesta;
                     }
 
                     break;
@@ -62,7 +62,7 @@ namespace Repuestos.Catalogos.Vehiculos
                     else
                     {
                         lkBtn_viewPanel_ModalPopupExtender.Show();
-                        ErrorMessage.Text = "Ha ocurrido un error al almacenar los datos";
+                        ErrorMessage.Text = "Ha ocurrido un error al almacenar los datos - "+objRespuesta.MensajeRespuesta;
                     }
                     break;
 
@@ -95,8 +95,15 @@ namespace Repuestos.Catalogos.Vehiculos
                         break;
 
                     case "eliminar":
-                        EliminarLinea(id_linea);
-                        Llenar_gvLineas();
+                        if (EliminarLinea(id_linea))
+                        {
+                            Llenar_gvLineas();
+                        }
+                        else
+                        {
+                            ErrorPrincipal.Text = objRespuesta.MensajeRespuesta;
+                        }     
+                        
                         break;
 
                     default:
@@ -130,7 +137,8 @@ namespace Repuestos.Catalogos.Vehiculos
             btnGuardar.CommandName = "Editar";
 
             var tabla_datos = new DataTable();
-            tabla_datos = obj_Negocio_Lineas.SelectLineas(id_linea, true);
+            objRespuesta = obj_Negocio_Lineas.SelectLineas(id_linea, true);
+            tabla_datos = objRespuesta.DataTableRespuesta;
             var row = tabla_datos.Rows[0];
             
             ddl_marca.SelectedValue = row["id_marca"].ToString();
@@ -145,7 +153,8 @@ namespace Repuestos.Catalogos.Vehiculos
             obj_Objeto_Lineas.Id_Modelo = Convert.ToInt32(ddl_modelo.SelectedValue.ToString());
             obj_Objeto_Lineas.Linea = txtLinea.Text;
 
-            respuesta = obj_Negocio_Lineas.InsertLinea(obj_Objeto_Lineas);
+            objRespuesta = obj_Negocio_Lineas.InsertLinea(obj_Objeto_Lineas);
+            respuesta = objRespuesta.BoolRespuesta;
 
             return respuesta;
         }
@@ -158,18 +167,22 @@ namespace Repuestos.Catalogos.Vehiculos
             obj_Objeto_Lineas.Id_Modelo = Convert.ToInt32(ddl_modelo.SelectedValue.ToString());
             obj_Objeto_Lineas.Linea = txtLinea.Text;
 
-            respuesta = obj_Negocio_Lineas.UpdateLinea(obj_Objeto_Lineas);
+            objRespuesta = obj_Negocio_Lineas.UpdateLinea(obj_Objeto_Lineas);
+            respuesta = objRespuesta.BoolRespuesta;
 
             return respuesta;
         }
 
-        protected void EliminarLinea(int id_linea)
+        protected bool EliminarLinea(int id_linea)
         {
-            obj_Negocio_Lineas.DeleteLinea(id_linea);
+            objRespuesta = obj_Negocio_Lineas.DeleteLinea(id_linea);
+            return objRespuesta.BoolRespuesta;
         }
 
         protected void LimpiarPanel()
         {
+            ErrorPrincipal.Text = string.Empty;
+            ErrorMessage.Text = string.Empty;
             txtLinea.Text = string.Empty;
         }
 
@@ -177,7 +190,9 @@ namespace Repuestos.Catalogos.Vehiculos
         {
             var dt = new DataTable();
             CN_Marcas objMarca = new CN_Marcas();
-            dt = objMarca.SelectMarcas();
+            objRespuesta = objMarca.SelectMarcas();
+            dt = objRespuesta.DataTableRespuesta;
+
             if (dt.Rows.Count > 0)
             {
                 ddl_marca.DataTextField = dt.Columns["marca"].ToString();
@@ -191,7 +206,9 @@ namespace Repuestos.Catalogos.Vehiculos
         {
             var dt = new DataTable();
             CN_Modelos objModelo = new CN_Modelos();
-            dt = objModelo.SelectModelos();
+            objRespuesta = objModelo.SelectModelos();
+            dt = objRespuesta.DataTableRespuesta;
+
             if (dt.Rows.Count > 0)
             {
                 ddl_modelo.DataTextField = dt.Columns["modelo"].ToString();

@@ -24,6 +24,9 @@
 
             </div>
             <br />
+            <p class="text-danger">
+                <asp:Literal runat="server" ID="ErrorPrincipal" />
+            </p>
             <%--Area para desplegar informacion mediante una tabla -  gridview--%>
             <div>
                 <asp:GridView runat="server" ID="gvModelos"

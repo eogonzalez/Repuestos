@@ -1,7 +1,8 @@
 ﻿using System;
-using System.Data;
 using System.Data.SqlClient;
 using Capa_Objetos.Catalogos.Repuestos;
+using Capa_Objetos.General;
+using System.Data;
 
 namespace Capa_Datos.Catalogos.Repuestos
 {
@@ -9,10 +10,9 @@ namespace Capa_Datos.Catalogos.Repuestos
     {
         General.Conexion objConexion = new General.Conexion();
 
-        public DataTable SelectCategorias()
+        public CO_Respuesta SelectCategorias()
         {
-            var respuesta = new DataTable();
-
+            var objRespuesta = new CO_Respuesta();            
             var sql_query = string.Empty;
 
             sql_query = " select id_categoria, nombre, Descripcion " +
@@ -23,24 +23,23 @@ namespace Capa_Datos.Catalogos.Repuestos
                 try
                 {
                     var comando = new SqlCommand(sql_query, conecta);
-
+                    var dataTable = new DataTable();
                     var dataAdapter = new SqlDataAdapter(comando);
-                    dataAdapter.Fill(respuesta);
+                    dataAdapter.Fill(dataTable);
+                    objRespuesta.DataTableRespuesta = dataTable;
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
-
-                    throw;
+                    objRespuesta.MensajeRespuesta = e.Message;                    
                 }
             }
 
-            return respuesta;
+            return objRespuesta;
         }
 
-        public DataTable SelectCategorias(int id_categoria)
+        public CO_Respuesta SelectCategorias(int id_categoria)
         {
-            var respuesta = new DataTable();
-
+            var objRespuesta = new CO_Respuesta();
             var sql_query = string.Empty;
 
             sql_query = "select nombre, Descripcion " +
@@ -55,21 +54,24 @@ namespace Capa_Datos.Catalogos.Repuestos
                     comando.Parameters.AddWithValue("id_categoria", id_categoria);
 
                     var dataAdapter = new SqlDataAdapter(comando);
-                    dataAdapter.Fill(respuesta);
+                    var tabla = new DataTable();
+                    dataAdapter.Fill(tabla);
+                    objRespuesta.DataTableRespuesta = tabla;
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
 
-                    throw;
+                    objRespuesta.MensajeRespuesta = e.Message;
                 }
             }
 
-            return respuesta;
+            return objRespuesta;
         }
 
-        public bool InsertCategoria(CO_CategoriaProductos objCategoria)
+        public CO_Respuesta InsertCategoria(CO_CategoriaProductos objCategoria)
         {
-            var respuesta = false;
+            var objRespuesta = new CO_Respuesta();
+            objRespuesta.BoolRespuesta = false;
             var sql_query = string.Empty;
 
             sql_query = " INSERT INTO [dbo].[Categoria_Productos] " +
@@ -89,23 +91,22 @@ namespace Capa_Datos.Catalogos.Repuestos
                     conecta.Open();
                     //Ejecuta la consulta
                     comando.ExecuteScalar();
-
-                    respuesta = true;
+                    objRespuesta.BoolRespuesta = true;
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
-
-                    throw;
+                    objRespuesta.MensajeRespuesta = e.Message;
                 }
 
             }
 
-            return respuesta;
+            return objRespuesta;
         }
 
-        public bool UpdateCategoria(CO_CategoriaProductos objCategoria)
+        public CO_Respuesta UpdateCategoria(CO_CategoriaProductos objCategoria)
         {
-            Boolean respuesta = false;
+            var objRespuesta = new CO_Respuesta();
+            objRespuesta.BoolRespuesta = false;
             var sql_query = string.Empty;
 
             sql_query = " UPDATE [dbo].[categoria_productos] " +
@@ -126,24 +127,24 @@ namespace Capa_Datos.Catalogos.Repuestos
                     conecta.Open();
                     //Ejecuta la consulta
                     comando.ExecuteScalar();
-                    respuesta = true;
+                    objRespuesta.BoolRespuesta = true;
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
-
-                    throw;
+                    objRespuesta.MensajeRespuesta = e.Message;
                 }
             }
 
-            return respuesta;
+            return objRespuesta;
         }
 
-        public bool DeleteCategoria(int id_categoria)
+        public CO_Respuesta DeleteCategoria(int id_categoria)
         {
-            Boolean respuesta = false;
+            var objRespuesta = new CO_Respuesta();
+            objRespuesta.BoolRespuesta = false;
             var sql_query = string.Empty;
 
-            sql_query = " DELETE FROM [dbo].[catetoria_productos] " +
+            sql_query = " DELETE FROM [dbo].[categoria_productos] " +
                     " WHERE id_categoria = @id_categoria ";
 
             using (var conecta = objConexion.Conectar())
@@ -157,16 +158,15 @@ namespace Capa_Datos.Catalogos.Repuestos
                     conecta.Open();
                     //Ejecuta la consulta
                     comando.ExecuteScalar();
-                    respuesta = true;
+                    objRespuesta.BoolRespuesta = true;
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
-
-                    throw;
+                    objRespuesta.MensajeRespuesta = e.Message;
                 }
             }
 
-            return respuesta;
+            return objRespuesta;
         }
     }
 }

@@ -10,9 +10,12 @@
         <div class="panel-body form-vertical">
             <%--Area para agregar botones--%>
             <div class="btn">
-                <asp:LinkButton runat="server" ID="lkBtn_nuevo" CssClass="btn btn-primary" OnClick="lkBtn_nuevo_Click"><i aria-hidden="true" class="glyphicon glyphicon-pencil"></i> Ingresar Compra </asp:LinkButton>                
+                <asp:LinkButton runat="server" ID="lkBtn_nuevo" CssClass="btn btn-primary" OnClick="lkBtn_nuevo_Click"><i aria-hidden="true" class="glyphicon glyphicon-pencil"></i> Ingresar Compra </asp:LinkButton>
             </div>
             <br />
+            <p class="text-danger">
+                <asp:Literal runat="server" ID="ErrorPrincipal" />
+            </p>
             <%--Area para desplegar informacion mediante una tabla -  gridview--%>
             <div>
                 <asp:GridView runat="server" ID="gvCompras"
@@ -39,12 +42,12 @@
                     <Columns>
                         <%--Columnas de la tabla que deseamos mostrar, es necesario consultar la llave primaria de la tabla--%>
                         <asp:BoundField DataField="id_compra" SortExpression="id_compra" ItemStyle-CssClass="hiddencol" HeaderStyle-CssClass="hiddencol" />
-                        <asp:BoundField DataField="compra" HeaderText="Compra" />                        
+                        <asp:BoundField DataField="compra" HeaderText="Compra" />
                         <asp:BoundField DataField="nombre_proveedor" HeaderText="Proveedor" />
                         <asp:BoundField DataField="total" HeaderText="Total" />
                         <asp:BoundField DataField="fecha_compra" HeaderText="Fecha Compra" />
                         <asp:BoundField DataField="estado" HeaderText="Estado" />
-                        
+
 
                         <%--Boton de Modificar--%>
                         <asp:ButtonField ButtonType="Button" Text="Modificar" HeaderText="Modificar" CommandName="modificar" ControlStyle-CssClass="btn btn-success" />

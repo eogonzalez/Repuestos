@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Capa_Objetos.Catalogos.Repuestos;
-using System.Data;
 using System.Data.SqlClient;
+using Capa_Objetos.General;
+using System.Data;
 
 namespace Capa_Datos.Catalogos.Repuestos
 {
@@ -13,10 +10,9 @@ namespace Capa_Datos.Catalogos.Repuestos
     {
         General.Conexion objConexion = new General.Conexion();
 
-        public DataTable SelectProductos()
+        public CO_Respuesta SelectProductos()
         {
-            var respuesta = new DataTable();
-
+            var objRespuesta = new CO_Respuesta();
             var sql_query = string.Empty;
 
             sql_query = " select AA.id_producto, Bb.nombre as categoria, CONCAT(b.Marca,' ',d.Linea,' ',e.Tipo,' ',c.modelo) as vehiculo, aa.nombre as repuesto, aa.marca, aa.descripcion, "+
@@ -42,22 +38,22 @@ namespace Capa_Datos.Catalogos.Repuestos
                     var comando = new SqlCommand(sql_query, conecta);
 
                     var dataAdapter = new SqlDataAdapter(comando);
-                    dataAdapter.Fill(respuesta);
+                    var tabla = new DataTable();
+                    dataAdapter.Fill(tabla);
+                    objRespuesta.DataTableRespuesta = tabla;
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
-
-                    throw;
+                    objRespuesta.MensajeRespuesta = e.Message;
                 }
             }
 
-            return respuesta;
+            return objRespuesta;
         }
 
-        public DataTable SelectProductos(int id_producto)
+        public CO_Respuesta SelectProductos(int id_producto)
         {
-            var respuesta = new DataTable();
-
+            var objRespuesta = new CO_Respuesta();
             var sql_query = string.Empty;
 
             sql_query = "select id_categoria, id_vehiculo, nombre, marca, descripcion "+
@@ -72,21 +68,23 @@ namespace Capa_Datos.Catalogos.Repuestos
                     comando.Parameters.AddWithValue("id_producto", id_producto);
 
                     var dataAdapter = new SqlDataAdapter(comando);
-                    dataAdapter.Fill(respuesta);
+                    var tabla = new DataTable();
+                    dataAdapter.Fill(tabla);
+                    objRespuesta.DataTableRespuesta = tabla;
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
-
-                    throw;
+                    objRespuesta.MensajeRespuesta = e.Message;
                 }
             }
 
-            return respuesta;
+            return objRespuesta;
         }
 
-        public bool InsertProducto(CO_Productos objProducto)
+        public CO_Respuesta InsertProducto(CO_Productos objProducto)
         {
-            var respuesta = false;
+            var objRespuesta = new CO_Respuesta();
+            objRespuesta.BoolRespuesta = false;
             var sql_query = string.Empty;
 
             sql_query = " INSERT INTO [dbo].[Produtos] "+
@@ -111,22 +109,22 @@ namespace Capa_Datos.Catalogos.Repuestos
                     conecta.Open();
                     //Ejecuta la consulta
                     comando.ExecuteScalar();
-                    respuesta = true;
+                    objRespuesta.BoolRespuesta = true;
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
-
-                    throw;
+                    objRespuesta.MensajeRespuesta = e.Message;
                 }
 
             }
 
-            return respuesta;
+            return objRespuesta;
         }
 
-        public bool UpdateProducto(CO_Productos objProducto)
+        public CO_Respuesta UpdateProducto(CO_Productos objProducto)
         {
-            Boolean respuesta = false;
+            var objRespuesta = new CO_Respuesta();
+            objRespuesta.BoolRespuesta = false;
             var sql_query = string.Empty;
 
             sql_query = " UPDATE [dbo].[Produtos] "+
@@ -153,22 +151,22 @@ namespace Capa_Datos.Catalogos.Repuestos
                     conecta.Open();
                     //Ejecuta la consulta
                     comando.ExecuteScalar();
-                    respuesta = true;
+                    objRespuesta.BoolRespuesta = true;
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
-
-                    throw;
+                    objRespuesta.MensajeRespuesta = e.Message;
                 }
 
             }
 
-            return respuesta;
+            return objRespuesta;
         }
 
-        public bool DeleteProducto(int id_producto)
+        public CO_Respuesta DeleteProducto(int id_producto)
         {
-            Boolean respuesta = false;
+            var objRespuesta = new CO_Respuesta();
+            objRespuesta.BoolRespuesta = false;
             var sql_query = string.Empty;
 
             sql_query = " DELETE FROM [dbo].[productos] " +
@@ -185,17 +183,16 @@ namespace Capa_Datos.Catalogos.Repuestos
                     conecta.Open();
                     //Ejecuta la consulta
                     comando.ExecuteScalar();
-                    respuesta = true;
+                    objRespuesta.BoolRespuesta = true;
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
-
-                    throw;
+                    objRespuesta.MensajeRespuesta = e.Message;
                 }
 
             }
 
-            return respuesta;
+            return objRespuesta;
         }
     }
 }

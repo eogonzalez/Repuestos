@@ -1,6 +1,6 @@
 ﻿using Capa_Datos.Catalogos;
-using System.Data;
 using Capa_Objetos.Catalogos;
+using Capa_Objetos.General;
 
 namespace Capa_Negocio.Catalogos
 {
@@ -10,27 +10,27 @@ namespace Capa_Negocio.Catalogos
     {
         VehiculosClientes obj_Negocio_VehiculoClientes = new VehiculosClientes();
 
-        public DataTable SelectVehiculosClientes(int id_cliente)
+        public CO_Respuesta SelectVehiculosClientes(int id_cliente)
         {
             return obj_Negocio_VehiculoClientes.SelectVehiculosClientes(id_cliente);
         }
 
-        public DataTable SelectVehiculoClienteDetalle(int id_vehiculoCliente)
+        public CO_Respuesta SelectVehiculoClienteDetalle(int id_vehiculoCliente)
         {
             return obj_Negocio_VehiculoClientes.SelectVehiculoClienteDetalle(id_vehiculoCliente);
         }
 
-        public bool InsertVehiculoCliente(CO_VehiculosClientes objVehiculoCliente)
+        public CO_Respuesta InsertVehiculoCliente(CO_VehiculosClientes objVehiculoCliente)
         {
             return obj_Negocio_VehiculoClientes.InsertVehiculoCliente(objVehiculoCliente);
         }
 
-        public bool UpdateVehiculoCliente(CO_VehiculosClientes objVehiculoCliente)
+        public CO_Respuesta UpdateVehiculoCliente(CO_VehiculosClientes objVehiculoCliente)
         {
             return obj_Negocio_VehiculoClientes.UpdateVehiculoCliente(objVehiculoCliente);
         }
 
-        public bool DeleteVehiculoCliente(int id_vehiculoCliente)
+        public CO_Respuesta DeleteVehiculoCliente(int id_vehiculoCliente)
         {
             return obj_Negocio_VehiculoClientes.DeleteVehiculoCliente(id_vehiculoCliente);
         }

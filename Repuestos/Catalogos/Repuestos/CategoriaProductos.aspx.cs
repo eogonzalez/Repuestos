@@ -3,6 +3,7 @@ using System.Web.UI.WebControls;
 using Capa_Negocio.Catalogos.Repuestos;
 using Capa_Objetos.Catalogos.Repuestos;
 using System.Data;
+using Capa_Objetos.General;
 
 namespace Repuestos.Inventario
 {
@@ -10,6 +11,7 @@ namespace Repuestos.Inventario
     {
         CN_CategoriaProductos obj_Negocio_Categoria = new CN_CategoriaProductos();
         CO_CategoriaProductos objCategoria = new CO_CategoriaProductos();
+        CO_Respuesta objRespuesta = new CO_Respuesta();
 
         #region Funciones del formulario
         
@@ -44,7 +46,7 @@ namespace Repuestos.Inventario
                     else
                     {
                         lkBtn_viewPanel_ModalPopupExtender.Show();
-                        ErrorMessage.Text = "Ha ocurrido un error al actualizar categoria";
+                        ErrorMessage.Text = "Ha ocurrido un error al actualizar categoria - "+objRespuesta.MensajeRespuesta;
                     }
 
                     break;
@@ -57,7 +59,7 @@ namespace Repuestos.Inventario
                     else
                     {
                         lkBtn_viewPanel_ModalPopupExtender.Show();
-                        ErrorMessage.Text = "Ha ocurrido un error al almacenar los datos";
+                        ErrorMessage.Text = "Ha ocurrido un error al almacenar los datos - "+objRespuesta.MensajeRespuesta;
                     }
                     break;
 
@@ -89,9 +91,15 @@ namespace Repuestos.Inventario
                         lkBtn_viewPanel_ModalPopupExtender.Show();
                         break;
 
-                    case "eliminar":
-                        EliminarCategoria(id_categoria);
-                        Llenar_gvCategorias();
+                    case "eliminar":                                                
+                        if (EliminarCategoria(id_categoria))
+                        {
+                            Llenar_gvCategorias();
+                        }
+                        else
+                        {
+                            ErrorPrincipal.Text = objRespuesta.MensajeRespuesta;
+                        }
                         break;
 
                     default:
@@ -113,7 +121,8 @@ namespace Repuestos.Inventario
         protected void Llenar_gvCategorias()
         {
             var miTabla = new DataTable();
-            miTabla = obj_Negocio_Categoria.SelectCategorias();
+            objRespuesta = obj_Negocio_Categoria.SelectCategorias();
+            miTabla = objRespuesta.DataTableRespuesta;
             gvCategorias.DataSource = miTabla;
             gvCategorias.DataBind();
         }
@@ -124,7 +133,8 @@ namespace Repuestos.Inventario
             btnGuardar.CommandName = "Editar";
 
             var tabla_datos = new DataTable();
-            tabla_datos = obj_Negocio_Categoria.SelectCategorias(id_categoria);
+            objRespuesta = obj_Negocio_Categoria.SelectCategorias(id_categoria);
+            tabla_datos = objRespuesta.DataTableRespuesta;
             var row = tabla_datos.Rows[0];
 
             txtCategoria.Text = row["nombre"].ToString();
@@ -138,7 +148,8 @@ namespace Repuestos.Inventario
             objCategoria.Categoria = txtCategoria.Text;
             objCategoria.Descripcion = txtDescripcion.Text;
 
-            respuesta = obj_Negocio_Categoria.InsertCategoria(objCategoria);
+            objRespuesta = obj_Negocio_Categoria.InsertCategoria(objCategoria);
+            respuesta = objRespuesta.BoolRespuesta;
 
             return respuesta;
         }
@@ -150,18 +161,22 @@ namespace Repuestos.Inventario
             objCategoria.Categoria = txtCategoria.Text;
             objCategoria.Descripcion = txtDescripcion.Text;
 
-            respuesta = obj_Negocio_Categoria.UpdateCategoria(objCategoria);
+            objRespuesta = obj_Negocio_Categoria.UpdateCategoria(objCategoria);
+            respuesta = objRespuesta.BoolRespuesta;
 
             return respuesta;
         }
 
-        protected void EliminarCategoria(int id_categoria)
+        protected bool EliminarCategoria(int id_categoria)
         {
-            obj_Negocio_Categoria.DeleteCategoria(id_categoria);
+            objRespuesta = obj_Negocio_Categoria.DeleteCategoria(id_categoria);
+            return objRespuesta.BoolRespuesta;
         }
 
         protected void LimpiarPanel()
         {
+            ErrorPrincipal.Text = string.Empty;
+            ErrorMessage.Text = string.Empty;
             txtCategoria.Text = string.Empty;
             txtDescripcion.Text = string.Empty;
         }
