@@ -49,6 +49,7 @@
     <Compile Include="Administracion\Inventario\Compras.cs" />
     <Compile Include="Administracion\Inventario\Inventarios.cs" />
     <Compile Include="Administracion\Servicios\Servicios.cs" />
+    <Compile Include="Administracion\Servicios\Tipo_Servicio.cs" />
     <Compile Include="Administracion\Usuarios\TipoUsuarios.cs" />
     <Compile Include="Administracion\Usuarios\Usuarios.cs" />
     <Compile Include="Catalogos\Clientes.cs" />

@@ -43,6 +43,7 @@
     <Compile Include="Administracion\Inventario\CN_Compras.cs" />
     <Compile Include="Administracion\Inventario\CN_Inventarios.cs" />
     <Compile Include="Administracion\Servicios\CN_Servicios.cs" />
+    <Compile Include="Administracion\Servicios\CN_Tipo_Servicio.cs" />
     <Compile Include="Administracion\Usuarios\CN_TipoUsuarios.cs" />
     <Compile Include="Administracion\Usuarios\CN_Usuarios.cs" />
     <Compile Include="Catalogos\CN_Clientes.cs" />
