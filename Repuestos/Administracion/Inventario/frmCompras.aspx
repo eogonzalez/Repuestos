@@ -109,15 +109,13 @@
 
     </div>
 
-    </div>
-
     <%--panel--%>
     <div>
         <%--Panel de productos--%>
         <asp:Panel runat="server" ID="pnl_Producto" CssClass="panel panel-primary" BorderColor="Black" BackColor="White"
             BorderStyle="Inset" BorderWidth="1px" Style="overflow: auto; max-height: 445px; width: 40%;">
 
-            <div class="panel-heading">Adjunto de Documentacion</div>
+            <div class="panel-heading">Adjunto Producto</div>
             <p class="text-danger">
                 <asp:Literal runat="server" ID="ErrorMessage" />
             </p>

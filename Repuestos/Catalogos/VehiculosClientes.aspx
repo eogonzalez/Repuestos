@@ -102,7 +102,7 @@
 
                 <%--Campo Vehiculo--%>
                 <div class="form-group">
-                    <asp:Label runat="server" AssociatedControlID="ddl_vehiculo" CssClass="control-label col-xs-2" Text="Linea: "></asp:Label>
+                    <asp:Label runat="server" AssociatedControlID="ddl_vehiculo" CssClass="control-label col-xs-2" Text="Vehiculo: "></asp:Label>
                     <div class="col-xs-10">
                         <asp:DropDownList runat="server" ID="ddl_vehiculo" CssClass="form-control">
                         </asp:DropDownList>
