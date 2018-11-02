@@ -24,7 +24,7 @@
 
                             <asp:Label AssociatedControlID="ddlCliente" Text="Cliente: " runat="server" CssClass="control-label col-xs-2" />
                             <div class="col-xs-4">
-                                <asp:DropDownList runat="server" ID="ddlCliente" CssClass="form-control" OnSelectedIndexChanged="ddlCliente_SelectedIndexChanged" AutoPostBack="true"/>
+                                <asp:DropDownList runat="server" ID="ddlCliente" CssClass="form-control" OnSelectedIndexChanged="ddlCliente_SelectedIndexChanged" AutoPostBack="true" />
                             </div>
                         </div>
 
@@ -61,7 +61,7 @@
                                 <asp:TextBox runat="server" ID="txtTotal" CssClass="form-control" TextMode="Number" Enabled="false"></asp:TextBox>
                             </div>
                             <div class="col-xs-4 col-md-offset-2">
-                                <asp:LinkButton ID="lkbtn_GuardarEncabezado" runat="server" CssClass="btn btn-danger" OnClick="lkbtn_GuardarEncabezado_Click">
+                                <asp:LinkButton ID="lkbtn_GuardarEncabezado" runat="server" CssClass="btn btn-danger" OnClick="lkbtn_GuardarEncabezado_Click" CommandName="Guardar">
                                 <span aria-hidden="true" class="glyphicon glyphicon-floppy-save"></span> Guardar Encabezado
                                 </asp:LinkButton>
                             </div>
@@ -108,18 +108,30 @@
                                 GridLines="None"
                                 EmptyDataText="No se han agregado detalle"
                                 AutoGenerateColumns="false"
+                                AllowPaging="true"
+                                PageSize="5"
                                 OnRowCommand="gvProductos_RowCommand"
                                 OnPageIndexChanging="gvProductos_PageIndexChanging"
                                 OnRowDataBound="gvProductos_RowDataBound">
 
+                                <%--Propiedades para establecer el paginador--%>
+                                <PagerSettings Mode="Numeric"
+                                    Position="Bottom"
+                                    PageButtonCount="10" />
+
+                                <PagerStyle BackColor="LightBlue"
+                                    Height="30px"
+                                    VerticalAlign="Bottom"
+                                    HorizontalAlign="Center" />
+
                                 <Columns>
-                                    <asp:BoundField DataField="correlativo" SortExpression="correlativo" ItemStyle-CssClass="hiddencol" HeaderStyle-CssClass="hiddencol" />
-                                    <asp:BoundField DataField="repuesto" HeaderText="Repuesto" />
+                                    <asp:BoundField DataField="corr_servicio_repuesto" SortExpression="corr_servicio_repuesto" ItemStyle-CssClass="hiddencol" HeaderStyle-CssClass="hiddencol" />
+                                    <asp:BoundField DataField="producto" HeaderText="Producto" />
                                     <asp:BoundField DataField="cantidad" HeaderText="Cantidad" />
-                                    <asp:BoundField DataField="precio" HeaderText="Precio" />
-                                    <asp:BoundField DataField="subtotal" HeaderText="Subtotal" />
-                                    <asp:ButtonField ButtonType="Button" Text="Modificar" HeaderText="Modificar" CommandName="modificarProducto" ControlStyle-CssClass="btn btn-success" />
-                                    <asp:ButtonField ButtonType="Button" Text="Eliminar" HeaderText="Eliminar" CommandName="eliminarProducto" ControlStyle-CssClass="btn btn-danger" />
+                                    <asp:BoundField DataField="precio_venta" HeaderText="Precio" />
+                                    <asp:BoundField DataField="sub_total" HeaderText="Subtotal" />
+                                    <asp:ButtonField ButtonType="Button" Text="Modificar" HeaderText="Modificar" CommandName="modificar" ControlStyle-CssClass="btn btn-success" />
+                                    <asp:ButtonField ButtonType="Button" Text="Eliminar" HeaderText="Eliminar" CommandName="eliminar" ControlStyle-CssClass="btn btn-danger" />
                                 </Columns>
                             </asp:GridView>
                         </div>
@@ -147,18 +159,28 @@
                                 GridLines="None"
                                 EmptyDataText="No se han agregado detalle"
                                 AutoGenerateColumns="false"
+                                AllowPaging="true"
+                                PageSize="5"
                                 OnRowCommand="gvServiciosExternos_RowCommand"
                                 OnPageIndexChanging="gvServiciosExternos_PageIndexChanging"
                                 OnRowDataBound="gvServiciosExternos_RowDataBound">
 
+                                <%--Propiedades para establecer el paginador--%>
+                                <PagerSettings Mode="Numeric"
+                                    Position="Bottom"
+                                    PageButtonCount="5" />
+
+                                <PagerStyle BackColor="LightBlue"
+                                    Height="30px"
+                                    VerticalAlign="Bottom"
+                                    HorizontalAlign="Center" />
+
                                 <Columns>
-                                    <asp:BoundField DataField="correlativo" SortExpression="correlativo" ItemStyle-CssClass="hiddencol" HeaderStyle-CssClass="hiddencol" />
-                                    <asp:BoundField DataField="repuesto" HeaderText="Repuesto" />
-                                    <asp:BoundField DataField="cantidad" HeaderText="Cantidad" />
+                                    <asp:BoundField DataField="corr_servicio_externo" SortExpression="corr_servicio_externo" ItemStyle-CssClass="hiddencol" HeaderStyle-CssClass="hiddencol" />
+                                    <asp:BoundField DataField="descripcion" HeaderText="Servicio" />
                                     <asp:BoundField DataField="precio" HeaderText="Precio" />
-                                    <asp:BoundField DataField="subtotal" HeaderText="Subtotal" />
-                                    <asp:ButtonField ButtonType="Button" Text="Modificar" HeaderText="Modificar" CommandName="modificarProducto" ControlStyle-CssClass="btn btn-success" />
-                                    <asp:ButtonField ButtonType="Button" Text="Eliminar" HeaderText="Eliminar" CommandName="eliminarProducto" ControlStyle-CssClass="btn btn-danger" />
+                                    <asp:ButtonField ButtonType="Button" Text="Modificar" HeaderText="Modificar" CommandName="modificar" ControlStyle-CssClass="btn btn-success" />
+                                    <asp:ButtonField ButtonType="Button" Text="Eliminar" HeaderText="Eliminar" CommandName="eliminar" ControlStyle-CssClass="btn btn-danger" />
                                 </Columns>
                             </asp:GridView>
                         </div>
@@ -198,28 +220,37 @@
                 <div class="form-group">
                     <asp:Label runat="server" AssociatedControlID="ddlProducto" CssClass="control-label col-xs-2" Text="Repuesto:"></asp:Label>
                     <div class="col-xs-10">
-                        <asp:DropDownList ID="ddlProducto" runat="server" CssClass="form-control input-sm">
+                        <asp:DropDownList ID="ddlProducto" runat="server" CssClass="form-control input-sm" OnSelectedIndexChanged="ddlProducto_SelectedIndexChanged" AutoPostBack="true">
                         </asp:DropDownList>
                     </div>
 
                 </div>
 
                 <div class="form-group">
-                    <asp:Label runat="server" AssociatedControlID="txtCantidad" CssClass="control-label col-xs-2" Text="Cantidad:"></asp:Label>
+                    <asp:Label runat="server" AssociatedControlID="txtCantidadDisponible" CssClass="control-label col-xs-2" Text="Cantidad Diponible:"></asp:Label>
                     <div class="col-xs-4">
-                        <asp:TextBox ID="txtCantidad" runat="server" CssClass="form-control input-sm"></asp:TextBox>
+                        <asp:TextBox ID="txtCantidadDisponible" runat="server" CssClass="form-control input-sm"></asp:TextBox>
                     </div>
+
 
                     <asp:Label runat="server" AssociatedControlID="txtPrecio" CssClass="control-label col-xs-2" Text="Precio Q."></asp:Label>
                     <div class="col-xs-4">
                         <asp:TextBox ID="txtPrecio" runat="server" CssClass="form-control input-sm"></asp:TextBox>
+                    </div>
+
+                </div>
+
+                <div class="form-group">
+                    <asp:Label runat="server" AssociatedControlID="txtCantidad" CssClass="control-label col-xs-2" Text="Cantidad:"></asp:Label>
+                    <div class="col-xs-10">
+                        <asp:TextBox ID="txtCantidad" runat="server" CssClass="form-control input-sm"></asp:TextBox>
                     </div>
                 </div>
 
             </div>
 
             <div class="panel-footer">
-                <asp:Button runat="server" ID="btnGuardarProducto" CssClass="btn btn-primary" Text="Agregar" CommandName="GuardarProducto" OnClick="btnGuardarProducto_Click" />
+                <asp:Button runat="server" ID="btnGuardarProducto" CssClass="btn btn-primary" Text="Agregar" CommandName="Guardar" OnClick="btnGuardarProducto_Click" />
                 <asp:Button runat="server" ID="btnSalir" CssClass="btn btn-default" Text="Salir" CausesValidation="false" OnClick="btnSalir_Click" />
             </div>
 
@@ -235,10 +266,22 @@
                 <asp:Literal runat="server" ID="ErrorMessageServicioExterno" />
             </p>
             <div class="panel-body form-horizontal">
+
+                <div class="form-group">
+                    <asp:Label runat="server" AssociatedControlID="txtDescripcion" CssClass="control-label col-xs-2" Text="Descripcion:"></asp:Label>
+                    <div class="col-xs-4">
+                        <asp:TextBox ID="txtDescripcion" runat="server" CssClass="form-control input-sm"></asp:TextBox>
+                    </div>
+
+                    <asp:Label runat="server" AssociatedControlID="txtPrecioServicio" CssClass="control-label col-xs-2" Text="Precio Q."></asp:Label>
+                    <div class="col-xs-4">
+                        <asp:TextBox ID="txtPrecioServicio" runat="server" CssClass="form-control input-sm"></asp:TextBox>
+                    </div>
+                </div>
             </div>
 
             <div class="panel-footer">
-                <asp:Button runat="server" ID="btnGuardarServicioExterno" CssClass="btn btn-primary" Text="Agregar" CommandName="GuardarServicio" OnClick="btnGuardarServicioExterno_Click" />
+                <asp:Button runat="server" ID="btnGuardarServicioExterno" CssClass="btn btn-primary" Text="Agregar" CommandName="Guardar" OnClick="btnGuardarServicioExterno_Click" />
                 <asp:Button runat="server" ID="btnSalirServicioExterno" CssClass="btn btn-default" Text="Salir" CausesValidation="false" OnClick="btnSalirServicioExterno_Click" />
             </div>
         </asp:Panel>

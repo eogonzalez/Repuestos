@@ -194,5 +194,6 @@ namespace Capa_Datos.Catalogos.Repuestos
 
             return objRespuesta;
         }
+
     }
 }

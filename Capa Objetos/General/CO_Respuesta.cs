@@ -13,5 +13,6 @@ namespace Capa_Objetos.General
         public DataTable DataTableRespuesta { get; set; }
         public string MensajeRespuesta { get; set; }
         public int IntRespuesta { get; set; }
+        public decimal DecimalRespuesta { get; set; }
     }
 }
