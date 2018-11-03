@@ -86,5 +86,37 @@ namespace Capa_Datos.Administracion.Inventario
 
             return objRespuesta;
         }
+
+        public CO_Respuesta SelectInventarios()
+        {
+            var objRespuesta = new CO_Respuesta();
+            var sql_query = string.Empty;
+
+            sql_query = " Select inv.id_producto,p.nombre,sum(inv.cantidad) as disponible,MAX(precio_venta) as Precio_maximo " +
+                        " from Inventarios inv " +
+                        " inner join Produtos p " +
+                        " on inv.id_producto = p.id_producto " +
+                        " Group by inv.id_producto,p.nombre ";
+
+            using (var conexion = objConexion.Conectar())
+            {
+                try
+                {
+                    var comando = new SqlCommand(sql_query, conexion);
+
+                    var dataAdapter = new SqlDataAdapter(comando);
+                    var tabla = new DataTable();
+                    dataAdapter.Fill(tabla);
+                    objRespuesta.DataTableRespuesta = tabla;
+                }
+                catch (Exception e)
+                {
+                    objRespuesta.MensajeRespuesta = e.Message;
+                }
+
+            }
+
+            return objRespuesta;
+        }
     }
 }
