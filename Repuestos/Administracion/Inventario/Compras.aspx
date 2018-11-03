@@ -1,6 +1,5 @@
 ﻿<%@ Page Title="Compras" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Compras.aspx.cs" Inherits="Repuestos.Inventario.Compras" %>
 
-<%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 
     <%--Definicion del panel principal--%>
@@ -64,6 +63,5 @@
             </div>
         </div>
     </div>
-
 
 </asp:Content>

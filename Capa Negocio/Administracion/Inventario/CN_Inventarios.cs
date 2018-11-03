@@ -10,5 +10,10 @@ namespace Capa_Negocio.Administracion.Inventario
         {
             return obj_Negocio_Inventarios.SelectProductoInventario(id_producto);
         }
+
+        public CO_Respuesta SelectProductosInventario()
+        {
+            return obj_Negocio_Inventarios.SelectProductosInventario();
+        }
     }
 }

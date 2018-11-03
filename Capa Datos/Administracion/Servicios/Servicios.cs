@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Capa_Objetos.Administracion.Servicios;
+using Capa_Objetos.Administracion.Facturacion;
 
 namespace Capa_Datos.Administracion.Servicios
 {
@@ -583,5 +584,131 @@ namespace Capa_Datos.Administracion.Servicios
 
             return objRespuesta;
         }
+
+        public CO_Respuesta CerrarServicio(CO_Facturacion objFacturacion, CO_Servicios objServicio)
+        {
+            var objRespuesta = new CO_Respuesta();
+            objRespuesta.BoolRespuesta = false;
+            var sql_query = string.Empty;
+
+            var obj_Datos_Factura = new Administracion.Facturacion.Facturacion();
+          
+            /*Selecciono repuestos y servicios*/
+            sql_query = " select 'R' as tipo, corr_servicio_repuesto, id_producto, cantidad, precio_venta, sub_total " +
+                " from Servicio_Repuesto_Detalle "+
+                " where id_servicio = @id_servicio1 "+
+                " union "+
+                " select 'S' as tipo, corr_servicio_externo, corr_servicio_externo, 1 as cantidad, precio, precio " +
+                " from Servicio_Externo_Detalle "+
+                " where id_servicio = @id_servicio2; ";
+
+            using (var conecta = objConexion.Conectar())
+            {
+                var comando = new SqlCommand(sql_query, conecta);
+                comando.Parameters.AddWithValue("id_servicio1", objServicio.Id_Servicio);
+                comando.Parameters.AddWithValue("id_servicio2", objServicio.Id_Servicio);
+
+                var TablaProductos = new DataTable();
+                var dataAdapter = new SqlDataAdapter(comando);
+                dataAdapter.Fill(TablaProductos);
+
+                try
+                {
+                    /*Creo encabezado de factura*/
+                    objRespuesta = obj_Datos_Factura.InsertEncabezadoFactura(objFacturacion);
+                    objFacturacion.Id_Factura = objRespuesta.IntRespuesta;
+                }
+                catch (Exception e)
+                {
+
+                    objRespuesta.MensajeRespuesta = e.Message;
+                }
+
+
+                conecta.Open();
+
+                //Recorro productos y servicios y los agrego al inventario y al detalle de factura
+                foreach (DataRow row in TablaProductos.Rows)
+                {
+
+                    int id_producto = Convert.ToInt32(row["id_producto"].ToString());
+                    int cantidad = Convert.ToInt32(row["cantidad"].ToString());
+                    decimal precio_costo = Convert.ToDecimal(row["precio_venta"].ToString());
+                    decimal porcentaje_ganacia = 0.00m;
+                    decimal precio_venta = Convert.ToDecimal(row["precio_venta"].ToString());
+
+                    if (row["tipo"].ToString() == "R")
+                    {
+                        sql_query = " INSERT INTO [dbo].[Inventarios] " +
+                        " ([tipo_movimiento],[id_compra_servicio],[id_producto] " +
+                        " ,[cantidad],[precio_costo],[porcentaje_ganancia],[precio_venta]) " +
+                        " VALUES " +
+                        " (@tipo_movimiento, @id_compra_servicio, @id_producto " +
+                        " , @cantidad, @precio_costo, @porcentaje_ganancia, @precio_venta) ";
+
+                        var comando_insert = new SqlCommand(sql_query, conecta);
+                        comando_insert.Parameters.AddWithValue("tipo_movimiento", 2);
+                        comando_insert.Parameters.AddWithValue("id_compra_servicio", objServicio.Id_Servicio);
+                        comando_insert.Parameters.AddWithValue("id_producto", id_producto);
+                        comando_insert.Parameters.AddWithValue("cantidad", cantidad*-1);
+                        comando_insert.Parameters.AddWithValue("precio_costo", precio_costo);
+                        comando_insert.Parameters.AddWithValue("porcentaje_ganancia", porcentaje_ganacia);
+                        comando_insert.Parameters.AddWithValue("precio_venta", precio_venta);
+
+                        try
+                        {
+
+                            comando_insert.ExecuteScalar();
+                            objRespuesta.BoolRespuesta = true;
+                        }
+                        catch (Exception e)
+                        {
+                            objRespuesta.BoolRespuesta = false;
+                            objRespuesta.MensajeRespuesta = e.Message;
+                        }
+                    }
+
+                    objFacturacion.Tipo = row["tipo"].ToString();
+                    objFacturacion.Id_Producto_Servicio = id_producto;
+                    objFacturacion.Cantidad = cantidad;
+                    objFacturacion.Precio = precio_venta;
+                    objFacturacion.SubTotal = Convert.ToDecimal(row["sub_total"].ToString());
+
+                    try
+                    {
+                        objRespuesta = obj_Datos_Factura.InsertDetalleFactura(objFacturacion);
+                    }
+                    catch (Exception e)
+                    {
+                        objRespuesta.MensajeRespuesta = e.Message;
+                    }
+
+                }
+
+                /*Actualizo Encabezado de Servicio*/
+                sql_query = "UPDATE [dbo].[servicio_encabezado]" +
+                    " SET [estado] = @estado " +
+                    " WHERE id_servicio = @id_servicio; ";
+                var comando_up = new SqlCommand(sql_query, conecta);
+                comando_up.Parameters.AddWithValue("estado", "CERRADO");
+                comando_up.Parameters.AddWithValue("id_servicio", objServicio.Id_Servicio);
+
+                try
+                {
+                    /*Ejecuto Query*/
+                    /*conecta.Open();*/
+                    comando_up.ExecuteNonQuery();
+                    objRespuesta.BoolRespuesta = true;
+                }
+                catch (Exception e)
+                {
+                    objRespuesta.BoolRespuesta = false;
+                    objRespuesta.MensajeRespuesta = e.Message;
+                }
+            }
+
+            return objRespuesta;
+        }
+        
     }
 }

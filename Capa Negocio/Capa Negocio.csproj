@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Administracion\Facturacion\CN_Facturacion.cs" />
     <Compile Include="Administracion\Inventario\CN_Compras.cs" />
     <Compile Include="Administracion\Inventario\CN_Inventarios.cs" />
     <Compile Include="Administracion\Servicios\CN_Servicios.cs" />

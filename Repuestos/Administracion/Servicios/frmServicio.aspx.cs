@@ -1,13 +1,10 @@
 ﻿using Capa_Objetos.General;
 using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
 using System.Web.UI.WebControls;
 using Capa_Objetos.Administracion.Servicios;
 using Capa_Negocio.Administracion.Servicios;
+using Capa_Objetos.Administracion.Facturacion;
 
 namespace Repuestos.Administracion.Servicios
 {
@@ -46,6 +43,11 @@ namespace Repuestos.Administracion.Servicios
                     ddlVehiculo.Enabled = true;
                     Llenar_gvProductos(id_servicio);
                     Llenar_gvServiciosExternos(id_servicio);
+
+                    if (Request.QueryString["st"] == "C")
+                    {
+                        BloquearControles();
+                    }
                 }
             }
         }
@@ -53,11 +55,6 @@ namespace Repuestos.Administracion.Servicios
         protected void lkbRegresar_Click(object sender, EventArgs e)
         {
             Response.Redirect("~/Administracion/Servicios/Servicios.aspx");
-        }
-
-        protected void lkbtnCerrarCompra_Click(object sender, EventArgs e)
-        {
-
         }
 
         protected void btnSalir_Click(object sender, EventArgs e)
@@ -122,7 +119,17 @@ namespace Repuestos.Administracion.Servicios
 
         protected void gvProductos_RowDataBound(object sender, GridViewRowEventArgs e)
         {
+            if (e.Row.RowType != DataControlRowType.DataRow)
+                return;
 
+            if (Request.QueryString["st"] != null)
+            {
+                if (Request.QueryString["st"] == "C")
+                {
+                    e.Row.Cells[5].Controls.Clear();
+                    e.Row.Cells[6].Controls.Clear();
+                }
+            }
         }
 
         protected void btnGuardarProducto_Click(object sender, EventArgs e)
@@ -301,7 +308,17 @@ namespace Repuestos.Administracion.Servicios
 
         protected void gvServiciosExternos_RowDataBound(object sender, GridViewRowEventArgs e)
         {
+            if (e.Row.RowType != DataControlRowType.DataRow)
+                return;
 
+            if (Request.QueryString["st"] != null)
+            {
+                if (Request.QueryString["st"] == "C")
+                {
+                    e.Row.Cells[3].Controls.Clear();
+                    e.Row.Cells[4].Controls.Clear();
+                }
+            }
         }
 
         protected void lkBtn_AgregarProducto_Click(object sender, EventArgs e)
@@ -421,6 +438,56 @@ namespace Repuestos.Administracion.Servicios
             var id_producto = 0;
             id_producto = Convert.ToInt32(ddlProducto.SelectedValue.ToString());
             ActualizarProductoInventario(id_producto);
+        }
+
+        protected void lkbtnCerrarServicio_Click(object sender, EventArgs e)
+        {
+            if (Session["IDServicio"] != null)
+            {
+                lkbtn_viewPanelCerrarServicio_ModalPopupExtender.Show();
+            }
+            else
+            {
+                divAlertError.Visible = true;
+                ErrorMessagePrincipal.Text = "No es posible cerrar servicio, no se ha creado encabezado.";
+            }
+            
+        }
+
+        protected void btnCerrarServicio_Click(object sender, EventArgs e)
+        {
+
+            int id_servicio = Convert.ToInt32(Session["IDServicio"].ToString());
+            var objFacturacion = new Capa_Objetos.Administracion.Facturacion.CO_Facturacion();
+            
+            /*Obtengo valores para cierre*/
+            objFacturacion.Numero_Factura = Convert.ToInt32(txtNumeroFactura.Text);
+            objFacturacion.Serie = txtSerieFactura.Text;
+            objFacturacion.FechaFactura = DateTime.Today;
+
+            objServicios.Id_Servicio = id_servicio;
+            objServicios.Id_Cliente = Convert.ToInt32(ddlCliente.SelectedValue.ToString());
+            objFacturacion.Id_Cliente = objServicios.Id_Cliente;
+            objServicios.CostoServicio = Convert.ToDecimal(txtCostoServicio.Text);
+            objFacturacion.CostoServicio = objServicios.CostoServicio;
+
+            if (CerrarServicio(objFacturacion, objServicios))
+            {
+                BloquearControles();
+                divAlertCorrecto.Visible = true;
+                MensajeCorrectoPrincipal.Text = "Servicio cerrado correctamente, se creo factura y se dieron de baja los productos del inventario.";
+            }
+            else
+            {
+                divAlertError.Visible = true;
+                ErrorMessagePrincipal.Text = "No es posible cerrar servicio, - " + objRespuesta.MensajeRespuesta;
+            }
+
+        }
+
+        protected void btnSalirCerrarFactura_Click(object sender, EventArgs e)
+        {
+
         }
 
         #endregion
@@ -697,16 +764,16 @@ namespace Repuestos.Administracion.Servicios
         protected void Llenar_ddlRepuestos()
         {
             var dt = new DataTable();
-            Capa_Negocio.Catalogos.Repuestos.CN_Productos objProductos = new Capa_Negocio.Catalogos.Repuestos.CN_Productos();
-            objRespuesta = objProductos.SelectProductos();
+            Capa_Negocio.Administracion.Inventario.CN_Inventarios objProductos = new Capa_Negocio.Administracion.Inventario.CN_Inventarios();
+            objRespuesta = objProductos.SelectProductosInventario();
             dt = objRespuesta.DataTableRespuesta;
 
             if (dt.Rows.Count > 0)
             {
-                var repuesto = dt.Columns["repuesto"].ToString();
-                var marca = dt.Columns["marca"].ToString();
-                var vehiculo = dt.Columns["vehiculo"].ToString();
-                var valor_combo = repuesto + " - " + marca + " - " + vehiculo;
+                //var repuesto = dt.Columns["repuesto"].ToString();
+                //var marca = dt.Columns["marca"].ToString();
+                //var vehiculo = dt.Columns["vehiculo"].ToString();
+                //var valor_combo = repuesto + " - " + marca + " - " + vehiculo;
 
                 ddlProducto.DataTextField = dt.Columns["valor_combo"].ToString();
                 ddlProducto.DataValueField = dt.Columns["id_producto"].ToString();
@@ -724,16 +791,26 @@ namespace Repuestos.Administracion.Servicios
             dt = objRespuesta.DataTableRespuesta;
             var row = dt.Rows[0];
 
-            if (row["precio"] != null)
+            if (id_producto > 0)
             {
-                txtCantidadDisponible.Text = row["disponible"].ToString();
-                txtPrecio.Text = Convert.ToDecimal(row["precio"]).ToString("#.##");
+                if (row["precio"] != null)
+                {
+                    txtCantidadDisponible.Text = row["disponible"].ToString();
+                    txtPrecio.Text = Convert.ToDecimal(row["precio"]).ToString("#.##");
+                }
+                else
+                {
+                    txtCantidadDisponible.Text = "0";
+                    txtPrecio.Text = "0.00";
+                }
             }
             else
             {
+                ddlProducto.SelectedValue = "0";
                 txtCantidadDisponible.Text = "0";
                 txtPrecio.Text = "0.00";
-            }            
+            }
+                        
         }
 
         protected void LimpiarPaneles()
@@ -793,6 +870,30 @@ namespace Repuestos.Administracion.Servicios
             objRespuesta = obj_Negocio_Servicios.DeleteDetalleRepuesto(correlativo_repuesto);
             return objRespuesta.BoolRespuesta;
         }
+
+        protected bool CerrarServicio(CO_Facturacion objFacturacion,CO_Servicios objServicio)
+        {
+            objRespuesta = obj_Negocio_Servicios.CerrarServicio(objFacturacion, objServicio);
+            return objRespuesta.BoolRespuesta;
+        }
+
+        protected void BloquearControles()
+        {
+            btnCerrarServicio.Enabled = false;
+            lkBtn_AgregarProducto.Attributes.Add("disabled", "true");
+            lkBtn_AgregarServicioExterno.Attributes.Add("disabled","true");
+            lkbtn_GuardarEncabezado.Attributes.Add("disabled", "true");
+            btnCerrarServicio.Enabled = false;
+            lkbtnCerrarServicio.Attributes.Add("disabled", "true");
+
+            ddlCliente.Enabled = false;
+            txtFechaServicio.Enabled = false;
+            ddlVehiculo.Enabled = false;
+            ddlTipoServicio.Enabled = false;
+            txtKilometraje.Enabled = false;
+
+        }
+
         #endregion
 
     }

@@ -78,7 +78,7 @@
                                 <li><a runat="server" class="dropdown-item" href="~/Administracion/Inventario/Inventarios.aspx">Inventarios</a></li>
                                 <li><a runat="server" class="dropdown-item" href="~/Administracion/Servicios/Servicios.aspx">Servicios</a></li>
                                 <li><a runat="server" class="dropdown-item" href="~/Administracion/Servicios/TipoServicio.aspx">Tipo Servicio</a></li>
-                                <li><a runat="server" class="dropdown-item" href="~/Administracion/Inventario/Inventarios.aspx">Facturacion</a></li>
+                                <li><a runat="server" class="dropdown-item" href="~/Administracion/Facturacion/Facturas.aspx">Facturacion</a></li>
                             </ul>
                         </li>
 

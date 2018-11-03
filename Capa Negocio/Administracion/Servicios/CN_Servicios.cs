@@ -1,5 +1,6 @@
 ﻿using Capa_Objetos.General;
 using Capa_Objetos.Administracion.Servicios;
+using Capa_Objetos.Administracion.Facturacion;
 
 namespace Capa_Negocio.Administracion.Servicios
 {
@@ -80,6 +81,11 @@ namespace Capa_Negocio.Administracion.Servicios
         public CO_Respuesta DeleteDetalleServicioExterno(int correlativo_servicio)
         {
             return obj_Negocio_Servicios.DeleteDetalleServicioExterno(correlativo_servicio);
+        }
+
+        public CO_Respuesta CerrarServicio(CO_Facturacion objFacturacion, CO_Servicios objServicio)
+        {
+            return obj_Negocio_Servicios.CerrarServicio(objFacturacion, objServicio);
         }
     }
 }

@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Administracion\Facturacion\Facturacion.cs" />
     <Compile Include="Administracion\Inventario\Compras.cs" />
     <Compile Include="Administracion\Inventario\Inventarios.cs" />
     <Compile Include="Administracion\Servicios\Servicios.cs" />

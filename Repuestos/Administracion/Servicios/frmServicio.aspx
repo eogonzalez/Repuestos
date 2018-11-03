@@ -139,6 +139,7 @@
                 </asp:UpdatePanel>
             </div>
 
+            <%--Detalle de servicios--%>
             <h3><span class="label label-primary">Otros Servicios</span></h3>
             <div class="thumbnail">
                 <asp:UpdatePanel runat="server">
@@ -196,9 +197,14 @@
             <span aria-hidden="true" class="glyphicon glyphicon-arrow-left"></span> Regresar
             </asp:LinkButton>
 
-            <asp:LinkButton ID="lkbtnCerrarCompra" runat="server" CssClass="btn btn-danger" OnClick="lkbtnCerrarCompra_Click" OnClientClick="return confirm(&quot;¿Esta seguro de cerrar Servicio?. &quot;)">
+            <asp:LinkButton ID="lkbtnCerrarServicio" runat="server" CssClass="btn btn-danger" OnClick="lkbtnCerrarServicio_Click" OnClientClick="return confirm(&quot;¿Esta seguro de cerrar Servicio?. &quot;)">
             <span aria-hidden="true" class="glyphicon glyphicon-floppy-save"></span> Cerrar Servicio
             </asp:LinkButton>
+            <asp:LinkButton runat="server" ID="lkbtn_viewPanelCerrarServicio"></asp:LinkButton>
+
+            <cc1:ModalPopupExtender ID="lkbtn_viewPanelCerrarServicio_ModalPopupExtender" runat="server" BackgroundCssClass="modalBackground"
+                BehaviorID="lkbtn_viewPanelCerrarServicio_ModalPopupExtender" PopupControlID="pnl_CerrarServicio" TargetControlID="lkbtn_viewPanelCerrarServicio">
+            </cc1:ModalPopupExtender>
 
         </div>
 
@@ -283,6 +289,36 @@
             <div class="panel-footer">
                 <asp:Button runat="server" ID="btnGuardarServicioExterno" CssClass="btn btn-primary" Text="Agregar" CommandName="Guardar" OnClick="btnGuardarServicioExterno_Click" />
                 <asp:Button runat="server" ID="btnSalirServicioExterno" CssClass="btn btn-default" Text="Salir" CausesValidation="false" OnClick="btnSalirServicioExterno_Click" />
+            </div>
+        </asp:Panel>
+    </div>
+
+    <%--panel para cerrar servicio--%>
+    <div>
+        <asp:Panel runat="server" ID="pnl_CerrarServicio" CssClass="panel panel-primary" BorderColor="Black" BackColor="White"
+            BorderStyle="Inset" BorderWidth="1px" Style="overflow: auto; max-height: 445px; width: 40%;">
+            <div class="panel-heading">Agregar Servicio Externo</div>
+            <p class="text-danger">
+                <asp:Literal runat="server" ID="Literal1" />
+            </p>
+            <div class="panel-body form-horizontal">
+
+                <div class="form-group">
+                    <asp:Label runat="server" AssociatedControlID="txtNumeroFactura" CssClass="control-label col-xs-2" Text="Numero Factura:"></asp:Label>
+                    <div class="col-xs-4">
+                        <asp:TextBox ID="txtNumeroFactura" runat="server" CssClass="form-control input-sm"></asp:TextBox>
+                    </div>
+
+                    <asp:Label runat="server" AssociatedControlID="txtSerieFactura" CssClass="control-label col-xs-2" Text="Serie Factura:"></asp:Label>
+                    <div class="col-xs-4">
+                        <asp:TextBox ID="txtSerieFactura" runat="server" CssClass="form-control input-sm"></asp:TextBox>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel-footer">
+                <asp:Button runat="server" ID="btnCerrarServicio" CssClass="btn btn-primary" Text="Cerrar" CommandName="Cerrar Servicio" OnClick="btnCerrarServicio_Click" />
+                <asp:Button runat="server" ID="btnSalirCerrarFactura" CssClass="btn btn-default" Text="Salir" CausesValidation="false" OnClick="btnSalirCerrarFactura_Click" />
             </div>
         </asp:Panel>
     </div>

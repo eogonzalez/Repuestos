@@ -282,7 +282,7 @@ namespace Repuestos.Administracion.Inventario
             objCompras.Serie = txtSerieCompra.Text;
             objCompras.Id_Producto = Convert.ToInt32(ddlProducto.SelectedValue.ToString());
             objCompras.Cantidad = Convert.ToInt32(txtCantidad.Text);
-            objCompras.Precio = Convert.ToDouble(txtPrecio.Text);
+            objCompras.Precio = Convert.ToDecimal(txtPrecio.Text);
             objCompras.SubTotal = objCompras.Cantidad * objCompras.Precio;
             
             objRespuesta = obj_Negocio_Compras.InsertDetalleCompra(objCompras);            
@@ -369,7 +369,7 @@ namespace Repuestos.Administracion.Inventario
 
             objCompras.Cantidad = Convert.ToInt32(txtCantidad.Text.Replace(",",""));            
 
-            objCompras.Precio = Convert.ToDouble(txtPrecio.Text);
+            objCompras.Precio = Convert.ToDecimal(txtPrecio.Text);
             objCompras.SubTotal = objCompras.Cantidad * objCompras.Precio;
 
             objRespuesta = obj_Negocio_Compras.UpdateDetalleCompra(objCompras);
