@@ -18,10 +18,10 @@ namespace Capa_Datos.Administracion.Facturacion
 
             sql_query = " INSERT INTO [dbo].[Factura_Encabezado] " +
                 " ([numero_factura],[serie] " +
-                " ,[id_cliente],[fecha_factura],[estado]) " +
+                " ,[id_cliente],[fecha_factura],[estado],[costo_servicio]) " +
                 " VALUES " +
                 " (@numero_factura, @serie " +
-                " , @id_cliente, @fecha_factura, @estado); " +
+                " , @id_cliente, @fecha_factura, @estado,@costo_servicio); " +
                 " select SCOPE_IDENTITY(); ";
 
             using (var conecta = objConexion.Conectar())
@@ -31,6 +31,7 @@ namespace Capa_Datos.Administracion.Facturacion
                 comando.Parameters.AddWithValue("serie", objFacturacion.Serie);
                 comando.Parameters.AddWithValue("id_cliente", objFacturacion.Id_Cliente);
                 comando.Parameters.AddWithValue("fecha_factura", objFacturacion.FechaFactura);
+                comando.Parameters.AddWithValue("costo_servicio", objFacturacion.CostoServicio);
                 comando.Parameters.AddWithValue("estado", "CERRADO");
 
                 try
@@ -197,14 +198,19 @@ namespace Capa_Datos.Administracion.Facturacion
             var objRespuesta = new CO_Respuesta();
             var sql_query = string.Empty;
 
-            sql_query = " select fd.correlativo,fd.cantidad,FD.tipo, descripcion = case FD.tipo when 'R' then concat(p.nombre,' - ',p.marca) else SE.descripcion end, " +
-                " fd.precio, fd.subtotal "+
-                " from Factura_Detalle FD "+
-                " left join Produtos P on "+
-                " fd.id_producto_servicio = p.id_producto "+
-                " left join Servicio_Externo_Detalle SE on "+
-                " fd.id_producto_servicio = SE.corr_servicio_externo "+
-                " where FD.id_factura = @id_factura ";
+            sql_query = " select fd.correlativo,fd.cantidad,FD.tipo, "+
+            " descripcion = case FD.tipo when 'R' then concat(p.nombre, ' - ', p.marca) else SE.descripcion end, "+
+            " fd.precio, fd.subtotal , fe.numero_factura, fe.serie, fe.total, fe.fecha_factura, cl.nombres, cl.nit, cl.direccion,FE.costo_servicio " +
+            " from Factura_Detalle FD "+
+            " left join Produtos P on "+
+            " fd.id_producto_servicio = p.id_producto "+
+            " left join Servicio_Externo_Detalle SE on "+
+            " fd.id_producto_servicio = SE.corr_servicio_externo "+
+            " left join Factura_Encabezado FE "+
+            " on FD.id_factura = FE.id_factura "+
+            " left join clientes CL "+
+            " on FE.id_cliente = CL.id_cliente "+
+            " where FD.id_factura = @id_factura ";
 
             using (var conecta = objConexion.Conectar())
             {

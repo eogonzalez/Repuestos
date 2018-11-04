@@ -1,5 +1,7 @@
 ﻿using Capa_Negocio.Administracion.Facturacion;
 using Capa_Objetos.General;
+using CrystalDecisions.CrystalReports.Engine;
+using CrystalDecisions.Shared;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -41,7 +43,11 @@ namespace Repuestos.Administracion.Facturacion
                 {
                     case "mostrar":
                         Response.Redirect("~/Administracion/Facturacion/frmFactura.aspx?idf=" + id_factura + "&st=" + estado);
-                        break;                    
+                        break;
+                    case "imprimir":
+                        /*Opcion que genera pdf y lo muestra*/
+                        ImprimirReporte(id_factura);
+                        break;
                     default:
                         break;
                 }
@@ -67,6 +73,33 @@ namespace Repuestos.Administracion.Facturacion
             gvFacturas.DataBind();
 
         }
+
+        protected void ImprimirReporte(int id_factura)
+        {
+            string pathdb = "~/Administracion/Facturacion/Factura_rep.rpt";
+
+            string path = Server.MapPath(pathdb);
+            ReportDocument reporte = new ReportDocument();
+            var dt_detalle = new DataTable();
+
+            reporte.Load(path);
+
+            objRespuesta = obj_Negocio_Facturacion.SelectDetalleFactura(id_factura);
+            dt_detalle = objRespuesta.DataTableRespuesta;
+          
+            reporte.SetDataSource(dt_detalle);
+            reporte.Refresh();
+
+            string saveFilePath = Server.MapPath("~/doctos");
+
+            string nombreArchivo = "formulario.pdf";
+            string nombreDocto = saveFilePath + "\\" + nombreArchivo;
+
+            reporte.ExportToDisk(ExportFormatType.PortableDocFormat, nombreDocto);
+            Response.Redirect("~/doctos/" + nombreArchivo);
+                            
+        }
+
         #endregion
     }
 }

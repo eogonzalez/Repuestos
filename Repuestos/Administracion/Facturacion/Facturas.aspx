@@ -43,6 +43,7 @@
 
                         <%--Boton de Modificar--%>
                         <asp:ButtonField ButtonType="Button" Text="Mostrar Detalles" HeaderText="Mostrar" CommandName="mostrar" ControlStyle-CssClass="btn btn-success" />
+                         <asp:ButtonField ButtonType="Button" Text="Imprimir" HeaderText="Formulario" CommandName="imprimir" ControlStyle-CssClass="btn btn-info" />
                     </Columns>
                 </asp:GridView>
             </div>

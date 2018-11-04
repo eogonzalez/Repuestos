@@ -241,7 +241,7 @@ namespace Repuestos.Catalogos.Vehiculos
                 ddl_marca.DataSource = dt;
                 ddl_marca.DataBind();
             }
-            ddl_marca.Items.Insert(0, new ListItem("Seleccione Marca", "NA"));
+            ddl_marca.Items.Insert(0, new ListItem("Seleccione Marca", "0"));
         }
 
         protected void Llenar_ddlModelo()
@@ -258,7 +258,7 @@ namespace Repuestos.Catalogos.Vehiculos
                 ddl_modelo.DataSource = dt;
                 ddl_modelo.DataBind();
             }
-            ddl_modelo.Items.Insert(0, new ListItem("Seleccione Modelo", "NA"));
+            ddl_modelo.Items.Insert(0, new ListItem("Seleccione Modelo", "0"));
         }
 
         protected void Llenar_ddlModelo(int id_linea)
@@ -275,7 +275,7 @@ namespace Repuestos.Catalogos.Vehiculos
                 ddl_modelo.DataSource = dt;
                 ddl_modelo.DataBind();
             }
-            ddl_modelo.Items.Insert(0, new ListItem("Seleccione Modelo", "NA"));
+            ddl_modelo.Items.Insert(0, new ListItem("Seleccione Modelo", "0"));
         }
 
         protected void Llenar_ddlLinea()
@@ -292,7 +292,7 @@ namespace Repuestos.Catalogos.Vehiculos
                 ddl_linea.DataSource = dt;
                 ddl_linea.DataBind();
             }
-            ddl_linea.Items.Insert(0, new ListItem("Seleccione Linea", "NA"));
+            ddl_linea.Items.Insert(0, new ListItem("Seleccione Linea", "0"));
         }
 
         protected void Llenar_ddlLinea(int id_marca)
@@ -309,7 +309,7 @@ namespace Repuestos.Catalogos.Vehiculos
                 ddl_linea.DataSource = dt;
                 ddl_linea.DataBind();
             }
-            ddl_linea.Items.Insert(0, new ListItem("Seleccione Linea", "NA"));
+            ddl_linea.Items.Insert(0, new ListItem("Seleccione Linea", "0"));
         }
 
         protected void Llenar_ddlTipoVehiculo()
@@ -326,7 +326,7 @@ namespace Repuestos.Catalogos.Vehiculos
                 ddl_tipo_vehiculo.DataSource = dt;
                 ddl_tipo_vehiculo.DataBind();
             }
-            ddl_tipo_vehiculo.Items.Insert(0, new ListItem("Seleccione Tipo", "NA"));
+            ddl_tipo_vehiculo.Items.Insert(0, new ListItem("Seleccione Tipo", "0"));
         }
 
         #endregion
