@@ -227,6 +227,7 @@
     <Content Include="Account\Forgot.aspx" />
     <Content Include="Account\Lockout.aspx" />
     <Content Include="Account\Login.aspx" />
+    <Content Include="Account\Logout.aspx" />
     <Content Include="Account\Manage.aspx" />
     <Content Include="Account\ManageLogins.aspx" />
     <Content Include="Account\ManagePassword.aspx" />
@@ -235,14 +236,18 @@
     <Content Include="Account\RegisterExternalLogin.aspx" />
     <Content Include="Account\ResetPassword.aspx" />
     <Content Include="Account\ResetPasswordConfirmation.aspx" />
+    <Content Include="Account\SolicitudRegistro.aspx" />
     <Content Include="Account\TwoFactorAuthenticationSignIn.aspx" />
     <Content Include="Account\VerifyPhoneNumber.aspx" />
     <Content Include="Administracion\Facturacion\Facturas.aspx" />
     <Content Include="Administracion\Facturacion\frmFactura.aspx" />
     <Content Include="Administracion\Inventario\frmCompras.aspx" />
+    <Content Include="Administracion\Menu\Menu.aspx" />
+    <Content Include="Administracion\Menu\MenuOpcion.aspx" />
     <Content Include="Administracion\Servicios\frmServicio.aspx" />
     <Content Include="Administracion\Servicios\Servicios.aspx" />
     <Content Include="Administracion\Servicios\TipoServicio.aspx" />
+    <Content Include="Administracion\Usuarios\PermisosPerfiles.aspx" />
     <Content Include="Administracion\Usuarios\TipoUsuarios.aspx" />
     <Content Include="Administracion\Usuarios\Usuarios.aspx" />
     <Content Include="Catalogos\Clientes.aspx" />
@@ -381,6 +386,13 @@
     <Compile Include="Account\Login.aspx.designer.cs">
       <DependentUpon>Login.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Account\Logout.aspx.cs">
+      <DependentUpon>Logout.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Account\Logout.aspx.designer.cs">
+      <DependentUpon>Logout.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Account\Manage.aspx.cs">
       <DependentUpon>Manage.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -437,6 +449,13 @@
     <Compile Include="Account\ResetPasswordConfirmation.aspx.designer.cs">
       <DependentUpon>ResetPasswordConfirmation.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Account\SolicitudRegistro.aspx.cs">
+      <DependentUpon>SolicitudRegistro.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Account\SolicitudRegistro.aspx.designer.cs">
+      <DependentUpon>SolicitudRegistro.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Account\TwoFactorAuthenticationSignIn.aspx.cs">
       <DependentUpon>TwoFactorAuthenticationSignIn.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -483,6 +502,20 @@
     <Compile Include="Administracion\Inventario\frmCompras.aspx.designer.cs">
       <DependentUpon>frmCompras.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Administracion\Menu\Menu.aspx.cs">
+      <DependentUpon>Menu.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Administracion\Menu\Menu.aspx.designer.cs">
+      <DependentUpon>Menu.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Administracion\Menu\MenuOpcion.aspx.cs">
+      <DependentUpon>MenuOpcion.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Administracion\Menu\MenuOpcion.aspx.designer.cs">
+      <DependentUpon>MenuOpcion.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Administracion\Servicios\frmServicio.aspx.cs">
       <DependentUpon>frmServicio.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -503,6 +536,13 @@
     </Compile>
     <Compile Include="Administracion\Servicios\TipoServicio.aspx.designer.cs">
       <DependentUpon>TipoServicio.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Administracion\Usuarios\PermisosPerfiles.aspx.cs">
+      <DependentUpon>PermisosPerfiles.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Administracion\Usuarios\PermisosPerfiles.aspx.designer.cs">
+      <DependentUpon>PermisosPerfiles.aspx</DependentUpon>
     </Compile>
     <Compile Include="Administracion\Usuarios\TipoUsuarios.aspx.cs">
       <DependentUpon>TipoUsuarios.aspx</DependentUpon>

@@ -3,32 +3,30 @@
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
 
     <div class="jumbotron">
-        <h1>ASP.NET</h1>
-        <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS, and JavaScript.</p>
-        <p><a href="http://www.asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+        <h1>Administrador de Taller</h1>
+        <p class="lead">Esta es una aplicacion para la administracion y gestion de cualquier Taller Mecanico que, desee llevar un control de los servicios que realiza a los vehiculos de los clientes.</p>
     </div>
 
     <div class="row">
-        <div class="col-md-4">
-            <h2>Getting started</h2>
+        <div class="col-md-6">
+            <h2>Administracion de Inventarios</h2>
             <p>
-                ASP.NET Web Forms lets you build dynamic websites using a familiar drag-and-drop, event-driven model.
-            A design surface and hundreds of controls and components let you rapidly build sophisticated, powerful UI-driven sites with data access.
+                Lleve un control eficiente y automatizado de los inventarios de su negocio.
             </p>
-            <p>
+<%--            <p>
                 <a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301948">Learn more &raquo;</a>
-            </p>
+            </p>--%>
         </div>
-        <div class="col-md-4">
-            <h2>Get more libraries</h2>
+        <div class="col-md-6">
+            <h2>Servicios a Vehiculos</h2>
             <p>
-                NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.
+                Administre los servicios de los clientes, y permitales llevar un seguimiento de las reparaciones realizadas a sus vehiculos.
             </p>
-            <p>
+<%--            <p>
                 <a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301949">Learn more &raquo;</a>
-            </p>
+            </p>--%>
         </div>
-        <div class="col-md-4">
+        <%--<div class="col-md-4">
             <h2>Web Hosting</h2>
             <p>
                 You can easily find a web hosting company that offers the right mix of features and price for your applications.
@@ -36,7 +34,7 @@
             <p>
                 <a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301950">Learn more &raquo;</a>
             </p>
-        </div>
+        </div>--%>
     </div>
 
 </asp:Content>

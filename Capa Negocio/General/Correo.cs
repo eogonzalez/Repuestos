@@ -1,0 +1,31 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net.Mail;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Capa_Negocio.General
+{
+    public class Correo
+    {
+        SmtpClient server = new SmtpClient("smtp.gmail.com", 587);
+
+        public Correo()
+        {
+            /*
+             * Autenticacion en el Servidor
+             * Utilizaremos nuestra cuenta de correo
+             *
+             */
+
+            server.Credentials = new System.Net.NetworkCredential("alertas.verpi@gmail.com", "iPhone12345678");
+            server.EnableSsl = true;
+        }
+
+        public void EnviarCorreo(MailMessage mensaje)
+        {
+            server.Send(mensaje);
+        }
+    }
+}

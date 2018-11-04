@@ -7,7 +7,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title><%: Page.Title %> - Mi aplicación ASP.NET</title>
+    <title><%: Page.Title %> - Administrador de Taller</title>
 
     <asp:PlaceHolder runat="server">
         <%: Scripts.Render("~/bundles/modernizr") %>
@@ -39,71 +39,33 @@
             </Scripts>
         </asp:ScriptManager>
 
-        <div class="navbar navbar-inverse navbar-fixed-top">
-            <div class="container">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" runat="server" href="~/">Nombre de la aplicación</a>
+        <asp:UpdatePanel runat="server" ID="UPMenuDinamico">
+            <ContentTemplate>
+                <div class="navbar navbar-inverse navbar-fixed-top">
+                    <div class="container">
+                        <div class="navbar-header">
+                            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
+                        </div>
+                        <div class="collapse navbar-collapse">
+
+                            <asp:Menu runat="server" ID="menuDinamico"
+                                Orientation="Horizontal" RenderingMode="List"
+                                IncludeStyleBlock="false"
+                                StaticMenuStyle-CssClass="nav navbar-nav"
+                                StaticMenuItemStyle-CssClass="StaticMenuItem"
+                                DynamicMenuStyle-CssClass="dropdown-menu">
+                            </asp:Menu>
+
+                        </div>
+                    </div>
                 </div>
-                <div class="navbar-collapse collapse">
-                    }
+            </ContentTemplate>
+        </asp:UpdatePanel>
 
-                    <ul class="nav navbar-nav">
-                        <li><a runat="server" href="~/">Inicio</a></li>
-                        <li><a runat="server" href="~/About">Acerca de</a></li>
-                        <li><a runat="server" href="~/Contact">Contacto</a></li>
-
-                        <li class="dropdown">
-                            <a runat="server" href="#" data-toggle="dropdown" class="dropdown-toggle">Catalogos</a>
-                            <ul class="dropdown-menu">
-                                <li><a runat="server" class="dropdwon-item" href="~/Catalogos/Proveedores.aspx">Proveedores</a></li>
-                                <li><a runat="server" class="dropdown-item" href="~/Catalogos/Clientes.aspx">Clientes</a></li>
-                                <li><a runat="server" class="dropdown-item" href="~/Catalogos/Vehiculos/Lineas.aspx">Lineas</a></li>
-                                <li><a runat="server" class="dropdown-item" href="~/Catalogos/Vehiculos/Marcas.aspx">Marcas</a></li>
-                                <li><a runat="server" class="dropdown-item" href="~/Catalogos/Vehiculos/Modelos.aspx">Modelos</a></li>
-                                <li><a runat="server" class="dropdown-item" href="~/Catalogos/Vehiculos/TipoVehiculos.aspx">Tipos Vehiculos</a></li>
-                                <li><a runat="server" class="dropdown-item" href="~/Catalogos/Vehiculos/Vehiculos.aspx">Vehiculos</a></li>
-                                <li><a runat="server" class="dropdown-item" href="~/Catalogos/Repuestos/CategoriaProductos.aspx">Categoria Repuestos</a></li>
-                                <li><a runat="server" class="dropdown-item" href="~/Catalogos/Repuestos/Productos.aspx">Repuestos</a></li>
-                            </ul>
-                        </li>
-                        <li class="dropdown">
-                            <a runat="server" href="#" data-toggle="dropdown" class="dropdown-toggle">Administracion</a>
-                            <ul class="dropdown-menu">
-                                <li><a runat="server" class="dropdown-item" href="~/Administracion/Inventario/Compras.aspx">Compras</a></li>
-                                <li><a runat="server" class="dropdown-item" href="~/Administracion/Inventario/Inventarios.aspx">Inventarios</a></li>
-                                <li><a runat="server" class="dropdown-item" href="~/Administracion/Servicios/Servicios.aspx">Servicios</a></li>
-                                <li><a runat="server" class="dropdown-item" href="~/Administracion/Servicios/TipoServicio.aspx">Tipo Servicio</a></li>
-                                <li><a runat="server" class="dropdown-item" href="~/Administracion/Facturacion/Facturas.aspx">Facturacion</a></li>
-                            </ul>
-                        </li>
-
-                    </ul>
-
-
-                    <asp:LoginView runat="server" ViewStateMode="Disabled">
-                        <AnonymousTemplate>
-                            <ul class="nav navbar-nav navbar-right">
-                                <li><a runat="server" href="~/Account/Register">Registrarse</a></li>
-                                <li><a runat="server" href="~/Account/Login">Iniciar sesión</a></li>
-                            </ul>
-                        </AnonymousTemplate>
-                        <LoggedInTemplate>
-                            <ul class="nav navbar-nav navbar-right">
-                                <li><a runat="server" href="~/Account/Manage" title="Manage your account">Hello, <%: Context.User.Identity.GetUserName()  %> !</a></li>
-                                <li>
-                                    <asp:LoginStatus runat="server" LogoutAction="Redirect" LogoutText="Cerrar sesión" LogoutPageUrl="~/" OnLoggingOut="Unnamed_LoggingOut" />
-                                </li>
-                            </ul>
-                        </LoggedInTemplate>
-                    </asp:LoginView>
-                </div>
-            </div>
-        </div>
         <div class="container body-content">
             <asp:UpdatePanel runat="server">
                 <ContentTemplate>
@@ -114,7 +76,7 @@
 
             <hr />
             <footer>
-                <p>&copy; <%: DateTime.Now.Year %> - Mi aplicación ASP.NET</p>
+                <p>&copy; <%: DateTime.Now.Year %> - Administrador de Taller</p>
             </footer>
         </div>
     </form>

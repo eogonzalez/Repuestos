@@ -7,10 +7,10 @@
 // </generado automáticamente>
 //------------------------------------------------------------------------------
 
-namespace Repuestos.Administracion.Usuarios {
+namespace Repuestos.Administracion.Menu {
     
     
-    public partial class TipoUsuarios {
+    public partial class Menu {
         
         /// <summary>
         /// Control lkBtn_nuevo.
@@ -22,13 +22,13 @@ namespace Repuestos.Administracion.Usuarios {
         protected global::System.Web.UI.WebControls.LinkButton lkBtn_nuevo;
         
         /// <summary>
-        /// Control lkBtn_test.
+        /// Control lkBtn_viewPanel.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton lkBtn_test;
+        protected global::System.Web.UI.WebControls.LinkButton lkBtn_viewPanel;
         
         /// <summary>
         /// Control lkBtn_nuevo_ModalPopupExtender.
@@ -40,22 +40,22 @@ namespace Repuestos.Administracion.Usuarios {
         protected global::AjaxControlToolkit.ModalPopupExtender lkBtn_nuevo_ModalPopupExtender;
         
         /// <summary>
-        /// Control lkBtn_testModalPopupExtender.
+        /// Control lkBtn_viewPanel_ModalPopupExtender.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::AjaxControlToolkit.ModalPopupExtender lkBtn_testModalPopupExtender;
+        protected global::AjaxControlToolkit.ModalPopupExtender lkBtn_viewPanel_ModalPopupExtender;
         
         /// <summary>
-        /// Control gvTipoUsuario.
+        /// Control gvMenu.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView gvTipoUsuario;
+        protected global::System.Web.UI.WebControls.GridView gvMenu;
         
         /// <summary>
         /// Control pnl_nuevo.
@@ -76,22 +76,103 @@ namespace Repuestos.Administracion.Usuarios {
         protected global::System.Web.UI.WebControls.Literal ErrorMessage;
         
         /// <summary>
-        /// Control txtNombre.
+        /// Control txtNombreOpcion.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtNombre;
+        protected global::System.Web.UI.WebControls.TextBox txtNombreOpcion;
         
         /// <summary>
-        /// Control txtDescripcion.
+        /// Control txtDescripcionOpcion.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtDescripcion;
+        protected global::System.Web.UI.WebControls.TextBox txtDescripcionOpcion;
+        
+        /// <summary>
+        /// Control txtURL.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtURL;
+        
+        /// <summary>
+        /// Control txtComando.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtComando;
+        
+        /// <summary>
+        /// Control txtOrden.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtOrden;
+        
+        /// <summary>
+        /// Control Label3.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Label3;
+        
+        /// <summary>
+        /// Control cb_obligatorio.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox cb_obligatorio;
+        
+        /// <summary>
+        /// Control Label1.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Label1;
+        
+        /// <summary>
+        /// Control cb_visible.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox cb_visible;
+        
+        /// <summary>
+        /// Control LblLogin.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label LblLogin;
+        
+        /// <summary>
+        /// Control cb_login.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox cb_login;
         
         /// <summary>
         /// Control btnGuardar.

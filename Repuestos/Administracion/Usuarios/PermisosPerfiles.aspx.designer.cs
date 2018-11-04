@@ -10,7 +10,7 @@
 namespace Repuestos.Administracion.Usuarios {
     
     
-    public partial class TipoUsuarios {
+    public partial class PermisosPerfiles {
         
         /// <summary>
         /// Control lkBtn_nuevo.
@@ -22,13 +22,13 @@ namespace Repuestos.Administracion.Usuarios {
         protected global::System.Web.UI.WebControls.LinkButton lkBtn_nuevo;
         
         /// <summary>
-        /// Control lkBtn_test.
+        /// Control lkBtn_viewPanel.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton lkBtn_test;
+        protected global::System.Web.UI.WebControls.LinkButton lkBtn_viewPanel;
         
         /// <summary>
         /// Control lkBtn_nuevo_ModalPopupExtender.
@@ -40,22 +40,22 @@ namespace Repuestos.Administracion.Usuarios {
         protected global::AjaxControlToolkit.ModalPopupExtender lkBtn_nuevo_ModalPopupExtender;
         
         /// <summary>
-        /// Control lkBtn_testModalPopupExtender.
+        /// Control lkBtn_viewPanel_ModalPopupExtender.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::AjaxControlToolkit.ModalPopupExtender lkBtn_testModalPopupExtender;
+        protected global::AjaxControlToolkit.ModalPopupExtender lkBtn_viewPanel_ModalPopupExtender;
         
         /// <summary>
-        /// Control gvTipoUsuario.
+        /// Control gvPermisosPerfiles.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView gvTipoUsuario;
+        protected global::System.Web.UI.WebControls.GridView gvPermisosPerfiles;
         
         /// <summary>
         /// Control pnl_nuevo.
@@ -76,22 +76,76 @@ namespace Repuestos.Administracion.Usuarios {
         protected global::System.Web.UI.WebControls.Literal ErrorMessage;
         
         /// <summary>
-        /// Control txtNombre.
+        /// Control cboPerfil.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtNombre;
+        protected global::System.Web.UI.WebControls.DropDownList cboPerfil;
         
         /// <summary>
-        /// Control txtDescripcion.
+        /// Control cboMenu.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtDescripcion;
+        protected global::System.Web.UI.WebControls.DropDownList cboMenu;
+        
+        /// <summary>
+        /// Control cb_acceder.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox cb_acceder;
+        
+        /// <summary>
+        /// Control cb_insertar.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox cb_insertar;
+        
+        /// <summary>
+        /// Control cb_editar.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox cb_editar;
+        
+        /// <summary>
+        /// Control cb_borrar.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox cb_borrar;
+        
+        /// <summary>
+        /// Control cb_aprobar.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox cb_aprobar;
+        
+        /// <summary>
+        /// Control cb_rechazar.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox cb_rechazar;
         
         /// <summary>
         /// Control btnGuardar.

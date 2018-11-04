@@ -40,11 +40,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Administracion\Menu\CEMenu.cs" />
     <Compile Include="Administracion\Facturacion\CO_Facturacion.cs" />
     <Compile Include="Administracion\Inventario\CO_Compras.cs" />
     <Compile Include="Administracion\Inventario\CO_Inventarios.cs" />
     <Compile Include="Administracion\Servicios\CO_Servicios.cs" />
     <Compile Include="Administracion\Servicios\CO_Tipo_Servicio.cs" />
+    <Compile Include="Administracion\Usuarios\CEPermisosPerfiles.cs" />
     <Compile Include="Administracion\Usuarios\CO_TipoUsuarios.cs" />
     <Compile Include="Administracion\Usuarios\CO_Usuarios.cs" />
     <Compile Include="Catalogos\CO_Clientes.cs" />
@@ -57,6 +59,7 @@
     <Compile Include="Catalogos\Vehiculos\CO_Modelos.cs" />
     <Compile Include="Catalogos\Vehiculos\CO_TipoVehiculos.cs" />
     <Compile Include="Catalogos\Vehiculos\CO_Vehiculos.cs" />
+    <Compile Include="General\CEUsuario.cs" />
     <Compile Include="General\CO_Respuesta.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data;
 using System.Data.SqlClient;
 
 namespace Capa_Datos.General
@@ -204,27 +205,6 @@ namespace Capa_Datos.General
 
                 try
                 {
-                    //Query que inserta el usuario a los permisos respectivos
-                    sql_query = " INSERT INTO G_UsuarioPermiso " +
-                        " (id_usuario,id_tipousuario,fecha_creacion " +
-                        " ,fecha_modificacion,estado,id_usuarioAutoriza) " +
-                        " VALUES " +
-                        " (@id_usuario,@id_tipousuario,@fecha_creacion " +
-                        " ,@fecha_modificacion,@estado,@id_usuarioAutoriza) ";
-
-                    var command = new SqlCommand(sql_query, cn);
-                    command.Parameters.AddWithValue("id_usuario", id_usuario);
-                    command.Parameters.AddWithValue("id_tipousuario", id_tipousuario);
-                    command.Parameters.AddWithValue("fecha_creacion", DateTime.Now);
-                    command.Parameters.AddWithValue("fecha_modificacion", DateTime.Now);
-                    command.Parameters.AddWithValue("estado", 'A');
-                    command.Parameters.AddWithValue("id_usuarioAutoriza", id_usuarioAutoriza);
-
-                    cn.Open();
-                    if (command.ExecuteNonQuery() > 0)
-                    {
-                        respuesta = true;
-                    }
 
 
                     //Query que actualiza el estado del usuario en la tabla de usuarios
@@ -232,7 +212,7 @@ namespace Capa_Datos.General
                         " SET estado = @estado " +
                         " ,id_usuarioAutoriza = @id_usuarioAutoriza " +
                         " WHERE id_usuario = @id_usuario ";
-
+                    cn.Open();
                     var command2 = new SqlCommand(sql_query, cn);
                     command2.Parameters.AddWithValue("estado", 'A');
                     command2.Parameters.AddWithValue("id_usuarioAutoriza", id_usuarioAutoriza);
@@ -348,6 +328,72 @@ namespace Capa_Datos.General
                     {
                         respuesta = true;
                     }
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
+
+            }
+
+            return respuesta;
+        }
+
+        public DataSet SelectSolicitudRegistroUsuarios()
+        {
+            DataSet ds_usuarios = new DataSet();
+            SqlDataAdapter da_usuarios;
+
+            string sql_query = string.Empty;
+
+            using (SqlConnection cn = objConexion.Conectar())
+            {
+                sql_query = " SELECT id_usuario " +
+                    " ,nombres ,apellidos ,cui " +
+                    " ,correo,fecha_registro " +
+                    " FROM g_usuarios " +
+                    " where estado = 'C' ";
+                try
+                {
+                    SqlCommand command = new SqlCommand(sql_query, cn);
+                    da_usuarios = new SqlDataAdapter(command);
+
+                    da_usuarios.Fill(ds_usuarios);
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
+            }
+
+
+            return ds_usuarios;
+        }
+
+        public DataTable SelectComboPerfiles()
+        {
+            var respuesta = new DataTable();
+
+            string sql_query = string.Empty;
+
+
+            using (SqlConnection cn = objConexion.Conectar())
+            {
+                try
+                {
+
+                    sql_query = " SELECT [id_tipousuario] " +
+                        " ,[nombre] " +
+                        " FROM [dbo].[G_TipoUsuario] " +
+                        " where estado = 'A'; ";
+
+                    var command = new SqlCommand(sql_query, cn);
+                    SqlDataAdapter da = new SqlDataAdapter(command);
+
+                    da.Fill(respuesta);
+
                 }
                 catch (Exception)
                 {

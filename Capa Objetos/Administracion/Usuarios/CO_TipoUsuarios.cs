@@ -6,7 +6,14 @@ using System.Threading.Tasks;
 
 namespace Capa_Objetos.Administracion.Usuarios
 {
-    class CO_TipoUsuarios
+    public class CO_TipoUsuarios
     {
+        public string Nombre { get; set; }
+        public string Descripcion { get; set; }
+        //public string TipoPermiso { get; set; }
+
+        public int ID_TipoUsuario { get; set; }
+        public int ID_UsuarioAutoriza { get; set; }
+
     }
 }
