@@ -64,6 +64,8 @@
     <Compile Include="Catalogos\Vehiculos\TipoVehiculos.cs" />
     <Compile Include="Catalogos\Vehiculos\Vehiculos.cs" />
     <Compile Include="General\Conexion.cs" />
+    <Compile Include="General\General.cs" />
+    <Compile Include="General\Login.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

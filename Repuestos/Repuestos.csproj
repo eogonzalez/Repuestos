@@ -237,7 +237,6 @@
     <Content Include="Account\ResetPasswordConfirmation.aspx" />
     <Content Include="Account\TwoFactorAuthenticationSignIn.aspx" />
     <Content Include="Account\VerifyPhoneNumber.aspx" />
-    <Content Include="Administracion\Facturacion\Factura.aspx" />
     <Content Include="Administracion\Facturacion\Facturas.aspx" />
     <Content Include="Administracion\Facturacion\frmFactura.aspx" />
     <Content Include="Administracion\Inventario\frmCompras.aspx" />
@@ -451,13 +450,6 @@
     </Compile>
     <Compile Include="Account\VerifyPhoneNumber.aspx.designer.cs">
       <DependentUpon>VerifyPhoneNumber.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Administracion\Facturacion\Factura.aspx.cs">
-      <DependentUpon>Factura.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Administracion\Facturacion\Factura.aspx.designer.cs">
-      <DependentUpon>Factura.aspx</DependentUpon>
     </Compile>
     <Compile Include="Administracion\Facturacion\Facturas.aspx.cs">
       <DependentUpon>Facturas.aspx</DependentUpon>
