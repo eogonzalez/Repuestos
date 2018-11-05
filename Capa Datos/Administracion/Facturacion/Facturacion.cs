@@ -141,7 +141,7 @@ namespace Capa_Datos.Administracion.Facturacion
             var objRespuesta = new CO_Respuesta();
             var sql_query = string.Empty;
 
-            sql_query = "select id_factura, CONCAT(numero_factura, ' - ', serie) as numero_factura, fecha_factura, total, estado "+
+            sql_query = "select id_factura, CONCAT(numero_factura, ' - ', serie) as numero_factura, fecha_factura, convert(numeric(28,2),total) as total, estado " +
                 " from Factura_Encabezado ";
 
             using (var conexion = objConexion.Conectar())
@@ -168,7 +168,7 @@ namespace Capa_Datos.Administracion.Facturacion
             var objRespuesta = new CO_Respuesta();
             var sql_query = string.Empty;
 
-            sql_query = "select numero_factura, serie, id_cliente, fecha_factura, total "+
+            sql_query = "select numero_factura, serie, id_cliente, fecha_factura, convert(numeric(28,2),total) as total " +
                 " from Factura_Encabezado "+
                 " where id_factura = @id_factura; ";
 
@@ -200,7 +200,7 @@ namespace Capa_Datos.Administracion.Facturacion
 
             sql_query = " select fd.correlativo,fd.cantidad,FD.tipo, "+
             " descripcion = case FD.tipo when 'R' then concat(p.nombre, ' - ', p.marca) else SE.descripcion end, "+
-            " fd.precio, fd.subtotal , fe.numero_factura, fe.serie, fe.total, fe.fecha_factura, cl.nombres, cl.nit, cl.direccion,FE.costo_servicio " +
+            " convert(numeric(28,2),fd.precio) as precio, convert(numeric(28,2),fd.subtotal) as subtotal , fe.numero_factura, fe.serie, convert(numeric(28,2),fe.total) as total, fe.fecha_factura, cl.nombres, cl.nit, cl.direccion, convert(numeric(28,2),FE.costo_servicio) as costo_servicio " +
             " from Factura_Detalle FD "+
             " left join Produtos P on "+
             " fd.id_producto_servicio = p.id_producto "+

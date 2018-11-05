@@ -92,7 +92,7 @@ namespace Capa_Datos.Administracion.Inventario
             var objRespuesta = new CO_Respuesta();
             var sql_query = string.Empty;
 
-            sql_query = " Select inv.id_producto,p.nombre,sum(inv.cantidad) as disponible,MAX(precio_venta) as Precio_maximo " +
+            sql_query = " Select inv.id_producto,p.nombre,sum(inv.cantidad) as disponible, convert(numeric(28,2),MAX(precio_venta)) as Precio_maximo " +
                         " from Inventarios inv " +
                         " inner join Produtos p " +
                         " on inv.id_producto = p.id_producto " +

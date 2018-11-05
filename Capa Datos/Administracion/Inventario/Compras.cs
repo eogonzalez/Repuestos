@@ -20,7 +20,7 @@ namespace Capa_Datos.Administracion.Inventario
             var sql_query = string.Empty;
 
             sql_query = " SELECT a.[correlativo],a.[id_compra],a.[numero_compra],a.[serie],"+
-                " b.nombre as repuesto,[cantidad],[precio],[subtotal] "+
+                " b.nombre as repuesto,[cantidad],convert(numeric(28,2),[precio]) as precio ,convert(numeric(28,2),[subtotal] ) as subtotal " +
                 " FROM[dbo].[compras_detalle] A "+
                 " join Produtos B on "+
                 " a.id_producto = b.id_producto "+

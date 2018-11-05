@@ -355,7 +355,7 @@ namespace Repuestos.Administracion.Inventario
 
             ddlProducto.SelectedValue = row["id_producto"].ToString();
             txtCantidad.Text = row["cantidad"].ToString();
-            txtPrecio.Text = row["precio"].ToString();
+            txtPrecio.Text = Convert.ToDecimal(row["precio"]).ToString("#.##");
         }
 
         protected bool ActualizarDetalleCompra(int id_correlativo, int id_compra)

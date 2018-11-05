@@ -23,7 +23,7 @@ namespace Capa_Datos.Administracion.Servicios
             sql_query = "select "+
                 " A.id_servicio,  b.nombres,  "+
 	            " CONCAT(BB.Marca, ' ', DD.Linea, ' ', CC.modelo, ' ', EE.Tipo) as vehiculo,  "+
-	            " D.tipo_servicio, A.fecha_ingreso, A.costo_total, A.estado "+
+                " D.tipo_servicio, A.fecha_ingreso, convert(numeric(28,2),A.costo_total) as costo_total, A.estado " +
                 " from "+
                 " Servicio_Encabezado A "+
                 " inner join clientes B on "+
@@ -177,7 +177,7 @@ namespace Capa_Datos.Administracion.Servicios
 
             sql_query = "SELECT [id_cliente] ,[id_vehiculo_cliente] "+
                 " ,[id_tipo_servicio],[fecha_ingreso],[kilometraje_servicio] "+
-                " ,[costo_servicio],[costo_total],[estado] "+
+                " ,convert(numeric(28,2),[costo_servicio]) as costo_servicio,convert(numeric(28,2),[costo_total]) as costo_total,[estado] " +
                 " FROM[dbo].[Servicio_Encabezado] "+
                 " where id_servicio = @id_servicio ";
 
@@ -324,7 +324,7 @@ namespace Capa_Datos.Administracion.Servicios
             if (!panel)
             {
                 sql_query = " select A.corr_servicio_repuesto, Concat(b.nombre,' - ',b.marca) as producto, " +
-                    " cantidad, precio_venta, sub_total " +
+                    " cantidad, convert(numeric(28,2),precio_venta) as precio_venta, convert(numeric(28,2),sub_total) as sub_total " +
                     " from Servicio_Repuesto_Detalle A " +
                     " join Produtos B on " +
                     " A.id_producto = B.id_producto " +
@@ -333,7 +333,7 @@ namespace Capa_Datos.Administracion.Servicios
             }
             else
             {
-                sql_query = " select id_producto, cantidad, precio_venta "+
+                sql_query = " select id_producto, cantidad, convert(numeric(28,2),precio_venta) as precio_venta " +
                     " from Servicio_Repuesto_Detalle "+
                     " where corr_servicio_repuesto = @id_servicio; ";
             }
@@ -368,7 +368,7 @@ namespace Capa_Datos.Administracion.Servicios
 
             if (!panel)
             {
-                sql_query = " select corr_servicio_externo, descripcion, precio " +
+                sql_query = " select corr_servicio_externo, descripcion, convert(numeric(28,2),precio) as precio " +
                 " from Servicio_Externo_Detalle " +
                 " where id_servicio = @id_servicio; ";
             }
