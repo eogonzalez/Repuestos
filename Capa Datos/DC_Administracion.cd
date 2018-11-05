@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Capa_Datos.Administracion.Menu">
+    <Position X="5.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAABAAAAAAIAAAACAAgACAAAAAAAAAABAABAAAAA=</HashCode>
+      <FileName>Administracion\Menu\Menu.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Capa_Datos.Administracion.Facturacion.Facturacion">
+    <Position X="7.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAAAAAAIAAAAAAAAgAAAAAAEAACAAAAAAAAAAA=</HashCode>
+      <FileName>Administracion\Facturacion\Facturacion.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Capa_Datos.Administracion.Inventario.Compras">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EIAAAABAEQAQAAAAACAAAgACAACABAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Administracion\Inventario\Compras.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Capa_Datos.Administracion.Inventario.Inventarios">
+    <Position X="2.25" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAgAABAAAAAAAAAAACAIAAAA=</HashCode>
+      <FileName>Administracion\Inventario\Inventarios.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Capa_Datos.Administracion.Servicios.Servicios">
+    <Position X="4" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAQBAsAQAAAAAAAAAgAgAAAhAAACAAAgAAoAAAE=</HashCode>
+      <FileName>Administracion\Servicios\Servicios.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Capa_Datos.Administracion.Servicios.Tipo_Servicio">
+    <Position X="2.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAAAAAAAAAAAAgCAAAAIgAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Administracion\Servicios\Tipo_Servicio.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Capa_Datos.Administracion.Usuarios.PermisosPerfiles">
+    <Position X="9.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAQAAAQAAAAAgAABAAAAgAAAAAAAAAAABE=</HashCode>
+      <FileName>Administracion\Usuarios\PermisosPerfiles.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

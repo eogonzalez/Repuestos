@@ -1,0 +1,190 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Repuestos.Administracion.Facturacion.Facturas">
+    <Position X="2.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAABAAAAAAAAAAIAAAAEgAAAAAAAAJAAAIQAgA=</HashCode>
+      <FileName>Administracion\Facturacion\Facturas.aspx.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Repuestos.Administracion.Facturacion.frmFactura">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAQgAAAAAAggAAAAAEAbAAAAAAQAgAAABAJAAAIIEwA=</HashCode>
+      <FileName>Administracion\Facturacion\frmFactura.aspx.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Repuestos.Administracion.Inventario.frmCompras">
+    <Position X="4" Y="0.5" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AQRRTgAACBgBRBCAgCAQIQEABQYBEBAONAJogUoAIQA=</HashCode>
+      <FileName>Administracion\Inventario\frmCompras.aspx.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Repuestos.Administracion.Servicios.frmServicio">
+    <Position X="5.75" Y="0.5" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>UCRZREQoKx0xRQkSUpgSaSOUAQ4IigZOIIlAisoDEwA=</HashCode>
+      <FileName>Administracion\Servicios\frmServicio.aspx.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Repuestos.Administracion.Servicios.Servicios">
+    <Position X="7.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAAAAAAECAAAAAAACAAAAAAEAAAEEAAABAAAISAAA=</HashCode>
+      <FileName>Administracion\Servicios\Servicios.aspx.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Repuestos.Administracion.Servicios.TipoServicio">
+    <Position X="9.25" Y="0.5" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AQAQQgBACBCACAAAgBIIAAUAAAIAAAACEgBAAAoUBAA=</HashCode>
+      <FileName>Administracion\Servicios\TipoServicio.aspx.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Repuestos.Administracion.Usuarios.PermisosPerfiles">
+    <Position X="14.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAQYJIAAKADAAAgIMQAKUgCAEgAACCCAABQBoBBAE=</HashCode>
+      <FileName>Administracion\Usuarios\PermisosPerfiles.aspx.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Repuestos.Administracion.Usuarios.TipoUsuarios">
+    <Position X="12.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BQAAAAEAAAKADEAAABQBAAUIACBAQAASAAAEAAIABBA=</HashCode>
+      <FileName>Administracion\Usuarios\TipoUsuarios.aspx.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Repuestos.Administracion.Usuarios.Usuarios">
+    <Position X="11" Y="0.5" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>IQ4ARQIAAiyDPAEgYABIEAUAAAAgkAQCBoFAARokNgA=</HashCode>
+      <FileName>Administracion\Usuarios\Usuarios.aspx.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Repuestos.Catalogos.Clientes">
+    <Position X="9.25" Y="4" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AQAAQIQAJACACAAggAAEAgUAAAAAAAIiACBAAIoSBgA=</HashCode>
+      <FileName>Catalogos\Clientes.aspx.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Repuestos.Catalogos.Proveedores">
+    <Position X="0.5" Y="6" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>ASAAQAAggAGACAAggAAAAQUACCQIAAAiACBAAAsQBgA=</HashCode>
+      <FileName>Catalogos\Proveedores.aspx.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Repuestos.Catalogos.Marcas">
+    <Position X="12.75" Y="6.5" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AQAAQAAAAQCQCEAAgBCAIAcAEAAAAAQCAAAAAAoQBAA=</HashCode>
+      <FileName>Catalogos\Vehiculos\Marcas.aspx.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Repuestos.Catalogos.Modelos">
+    <Position X="7.5" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAgQAAAQACACACAgAAAAAUAAAAABAQCAIBQAIoQBAA=</HashCode>
+      <FileName>Catalogos\Vehiculos\Modelos.aspx.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Repuestos.Catalogos.VehiculosClientes">
+    <Position X="4" Y="6" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AQAEQAgAACCACAAQgAABAAUMAAAoIEICAEhQAEoQFAA=</HashCode>
+      <FileName>Catalogos\VehiculosClientes.aspx.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Repuestos.Catalogos.Vehiculos.Lineas">
+    <Position X="16.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAQAABCACAiAAAgAAQIA0AgQAEAAECAADAAAoQBSA=</HashCode>
+      <FileName>Catalogos\Vehiculos\Lineas.aspx.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Repuestos.Catalogos.Vehiculos.TipoVehiculos">
+    <Position X="11" Y="6.5" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AQQAQAAACACACAAEgAAABAUEAAAAJCACAABAAAowBAA=</HashCode>
+      <FileName>Catalogos\Vehiculos\TipoVehiculos.aspx.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Repuestos.Catalogos.Vehiculos.Vehiculos">
+    <Position X="2.25" Y="3.75" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AQAAwAAgCgCGCgAwkBAAgQUBAAAEAAQCAADBAAoQBQA=</HashCode>
+      <FileName>Catalogos\Vehiculos\Vehiculos.aspx.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Repuestos.Inventario.Compras">
+    <Position X="9.25" Y="7.5" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AACAAAAABACAAACAAAAAAIAAAARAAEAAAABAAAIQAAA=</HashCode>
+      <FileName>Administracion\Inventario\Compras.aspx.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Repuestos.Inventario.Inventarios">
+    <Position X="18" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAAAAAAAAAAAAAAAAAgBAAAAAAAAAAAgBAAAMQAAA=</HashCode>
+      <FileName>Administracion\Inventario\Inventarios.aspx.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Repuestos.Inventario.CategoriaProducto">
+    <Position X="18" Y="0.5" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AQAAYAAAAACASAiAgBAAAEUIAAAgAACDAABAAAoQBAQ=</HashCode>
+      <FileName>Catalogos\Repuestos\CategoriaProductos.aspx.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Repuestos.Inventario.Productos">
+    <Position X="18" Y="7" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AQAEYAgAAYCQCAAQgBAAAAUAACBQAIgCAABACEoQBAA=</HashCode>
+      <FileName>Catalogos\Repuestos\Productos.aspx.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

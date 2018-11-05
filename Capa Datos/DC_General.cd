@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Capa_Datos.General.Conexion">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>General\Conexion.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Capa_Datos.General.General">
+    <Position X="2.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>General\General.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Capa_Datos.General.Login">
+    <Position X="0.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAACAAAAAAACAgAAAAAUgAIAAAAgACEAAAAAAgAAAA=</HashCode>
+      <FileName>General\Login.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Capa_Datos.General.Usuario">
+    <Position X="2.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIBAECAABAAAAAAAAEAQAAAACAAAAAAAABAAgBAQAA=</HashCode>
+      <FileName>General\Usuario.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Capa_Datos.Catalogos.Clientes">
+    <Position X="2.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAAAAAAAEAAAAAAAgAEIAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Catalogos\Clientes.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Capa_Datos.Catalogos.Proveedores">
+    <Position X="4" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAgAEAAAEAQAAAAAgAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Catalogos\Proveedores.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Capa_Datos.Catalogos.VehiculosClientes">
+    <Position X="7.5" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAASAAAAAAAgACAAAAAAACAAAAAAAEAAA=</HashCode>
+      <FileName>Catalogos\VehiculosClientes.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Capa_Datos.Catalogos.Administracion.Usuarios.TipoUsuarios">
+    <Position X="7.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAAAAAAAACAAAAAAAAAgAIAAAAAIAAAAAAAAAAAAA=</HashCode>
+      <FileName>Administracion\Usuarios\TipoUsuarios.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Capa_Datos.Catalogos.Repuestos.CategoriaProductos">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAIAAAAAAAAAAAAAgAAAQAACAAAAAAAAAACAAA=</HashCode>
+      <FileName>Catalogos\Repuestos\CategoriaProductos.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Capa_Datos.Catalogos.Repuestos.Productos">
+    <Position X="2.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAEAAEAAAAAAgAAAAAEAEAAAAAAAAAAAAA=</HashCode>
+      <FileName>Catalogos\Repuestos\Productos.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Capa_Datos.Catalogos.Vehiculos.Lineas">
+    <Position X="4" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAAAAAAAAAAAICAAAAAgAAAAAAAAAAAAAACAAAAAA=</HashCode>
+      <FileName>Catalogos\Vehiculos\Lineas.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Capa_Datos.Catalogos.Vehiculos.Marcas">
+    <Position X="5.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAgAAAAAAABAQAAAAEAAABAA=</HashCode>
+      <FileName>Catalogos\Vehiculos\Marcas.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Capa_Datos.Catalogos.Vehiculos.Modelos">
+    <Position X="0.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAQAAAAAAAgIAAAAAAAAACAAAAAgAAAA=</HashCode>
+      <FileName>Catalogos\Vehiculos\Modelos.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Capa_Datos.Catalogos.Vehiculos.TipoVehiculos">
+    <Position X="9.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAEAAAAAAAAAAAAAAAAAAgAAAAAAAAAgBAAAAAAAAAA=</HashCode>
+      <FileName>Catalogos\Vehiculos\TipoVehiculos.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Capa_Datos.Catalogos.Vehiculos.Vehiculos">
+    <Position X="5.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAAAAAAgAEAAAAAQAAAAAAAAAABAA=</HashCode>
+      <FileName>Catalogos\Vehiculos\Vehiculos.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

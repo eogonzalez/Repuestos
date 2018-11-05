@@ -72,6 +72,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="DC_Administracion.cd" />
+    <None Include="DC_Catalogos.cd" />
+    <None Include="DC_General.cd" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
